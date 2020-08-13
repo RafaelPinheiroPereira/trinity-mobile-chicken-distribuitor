@@ -213,15 +213,15 @@ public class LoginActivity extends AppCompatActivity implements IView {
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         switch (requestCode) {
             case REQUEST_CODE_SIGN_IN:
-                if (resultCode == Activity.RESULT_OK && resultData != null) {
+               // if (resultCode == Activity.RESULT_OK && resultData != null) {
 
                     handleSignInResult(resultData);
 
-                } else {
-                    AbstractActivity.showToast(
-                            presenter.getContexto(),
-                            "Não foi possível realizar o vínculo  da conta com Google Drive");
-                }
+              //  } else {
+                   // AbstractActivity.showToast(
+                    //        presenter.getContexto(),
+                       //     "Não foi possível realizar o vínculo  da conta com Google Drive");
+               // }
                 break;
         }
 
@@ -232,33 +232,25 @@ public class LoginActivity extends AppCompatActivity implements IView {
 
         GoogleSignIn.getSignedInAccountFromIntent(resultData)
                 .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull final Exception e) {
+                        e -> AbstractActivity.showToast(
+                                presenter.getContexto(),
+                                "Não foi possível obter as credenciais do usuário: "
+                                        + e.getMessage()))
+                .addOnCompleteListener(
+                        task -> {
+
+                            if (task.isSuccessful()) {
                                 AbstractActivity.showToast(
                                         presenter.getContexto(),
-                                        "Não foi possível obter as credenciais do usuário: "
-                                                + e.getMessage());
-                            }
-                        })
-                .addOnCompleteListener(
-                        new OnCompleteListener<GoogleSignInAccount>() {
-                            @Override
-                            public void onComplete(@NonNull final Task<GoogleSignInAccount> task) {
+                                        "Usuário conectado: " + task.getResult().getEmail());
 
-                                if (task.isSuccessful()) {
-                                    AbstractActivity.showToast(
-                                            presenter.getContexto(),
-                                            "Usuário conectado: " + task.getResult().getEmail());
+                                btnLogin.setVisibility(View.VISIBLE);
 
-                                    btnLogin.setVisibility(View.VISIBLE);
+                            } else if (task.isCanceled()) {
 
-                                } else if (task.isCanceled()) {
-
-                                    AbstractActivity.showToast(
-                                            presenter.getContexto(),
-                                            "Usuário cancelou a operação.");
-                                }
+                                AbstractActivity.showToast(
+                                        presenter.getContexto(),
+                                        "Usuário cancelou a operação.");
                             }
                         });
     }
