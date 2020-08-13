@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
@@ -31,6 +31,7 @@ import com.br.tmchickendistributor.ui.mvp.login.ILoginMVP.IPresenter;
 import com.br.tmchickendistributor.ui.mvp.login.ILoginMVP.IView;
 import com.br.tmchickendistributor.ui.mvp.login.Presenter;
 import com.br.tmchickendistributor.util.ConstantsUtil;
+import com.br.tmchickendristributor.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -213,15 +214,15 @@ public class LoginActivity extends AppCompatActivity implements IView {
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         switch (requestCode) {
             case REQUEST_CODE_SIGN_IN:
-               // if (resultCode == Activity.RESULT_OK && resultData != null) {
+               if (resultCode == Activity.RESULT_OK && resultData != null) {
 
                     handleSignInResult(resultData);
 
-              //  } else {
-                   // AbstractActivity.showToast(
-                    //        presenter.getContexto(),
-                       //     "Não foi possível realizar o vínculo  da conta com Google Drive");
-               // }
+                } else {
+                    AbstractActivity.showToast(
+                           presenter.getContexto(),
+                            "Não foi possível realizar o vínculo  da conta com Google Drive");
+                }
                 break;
         }
 

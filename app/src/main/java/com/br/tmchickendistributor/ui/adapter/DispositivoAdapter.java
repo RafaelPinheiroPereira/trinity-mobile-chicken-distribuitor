@@ -6,9 +6,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.DispositivoImpressora;
 import com.br.tmchickendistributor.ui.mvp.impressora.IImpressoraMVP.IPresenter;
+import com.br.tmchickendristributor.R;
 import java.util.ArrayList;
 import java.util.List;
 

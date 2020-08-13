@@ -20,12 +20,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.DispositivoImpressora;
 import com.br.tmchickendistributor.ui.adapter.DispositivoAdapter;
 import com.br.tmchickendistributor.ui.mvp.impressora.IImpressoraMVP;
 import com.br.tmchickendistributor.ui.mvp.impressora.Presenter;
 import com.br.tmchickendistributor.util.ControleSessao;
+import com.br.tmchickendristributor.R;
 import java.util.Set;
 
 /**

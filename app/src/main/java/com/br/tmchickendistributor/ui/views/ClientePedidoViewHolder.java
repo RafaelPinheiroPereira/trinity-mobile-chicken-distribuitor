@@ -4,9 +4,10 @@ import android.view.View;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.realm.PedidoORM;
+import com.br.tmchickendristributor.R;
 
 public class ClientePedidoViewHolder extends ParentViewHolder   {
 

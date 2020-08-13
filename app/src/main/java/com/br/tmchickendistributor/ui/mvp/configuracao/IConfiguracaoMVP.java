@@ -3,6 +3,7 @@ package com.br.tmchickendistributor.ui.mvp.configuracao;
 import android.content.Context;
 import com.br.tmchickendistributor.data.model.Configuracao;
 import com.br.tmchickendistributor.util.ArquivoUtils;
+import com.br.tmchickendistributor.util.ControleSessao;
 
 public interface IConfiguracaoMVP {
 
@@ -30,6 +31,12 @@ public interface IConfiguracaoMVP {
         ArquivoUtils getArquivoUtils();
 
         void setArquivoUtils(ArquivoUtils arquivoUtils);
+
+        boolean verificarLogin();
+
+        public ControleSessao getControleSessao() ;
+
+        public void setControleSessao(final ControleSessao mControleSessao) ;
     }
 
     interface IModel {

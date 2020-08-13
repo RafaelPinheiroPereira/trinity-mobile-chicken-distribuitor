@@ -8,6 +8,7 @@ import com.br.tmchickendistributor.ui.mvp.configuracao.IConfiguracaoMVP.IModel;
 import com.br.tmchickendistributor.ui.mvp.configuracao.IConfiguracaoMVP.IPresenter;
 import com.br.tmchickendistributor.ui.mvp.configuracao.IConfiguracaoMVP.IView;
 import com.br.tmchickendistributor.util.ArquivoUtils;
+import com.br.tmchickendistributor.util.ControleSessao;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,7 @@ public class Presenter implements IPresenter {
 
     String mac;
     String cnpj;
+    ControleSessao mControleSessao;
 
 
     private ArquivoUtils mArquivoUtils ;
@@ -93,7 +95,19 @@ public class Presenter implements IPresenter {
         mArquivoUtils = arquivoUtils;
     }
 
+    @Override
+    public boolean verificarLogin() {
+        this.mControleSessao = new ControleSessao(getContext());
+        this.setControleSessao(this.mControleSessao);
+        return mControleSessao.checkLogin();
+    }
 
-
-
+    @Override
+    public ControleSessao getControleSessao() {
+        return mControleSessao;
+    }
+    @Override
+    public void setControleSessao(final ControleSessao mControleSessao) {
+        this.mControleSessao = mControleSessao;
+    }
 }

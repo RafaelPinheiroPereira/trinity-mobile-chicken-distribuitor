@@ -6,10 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.ItemPedido;
 import com.br.tmchickendistributor.ui.mvp.venda.IVendaMVP;
 import com.br.tmchickendistributor.util.FormatacaoMoeda;
+import com.br.tmchickendristributor.R;
 
 /**
  * Created by 04717299302 on 13/01/2017.

@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Conta;
+import com.br.tmchickendristributor.R;
 import java.util.List;
 
 public class ContaAdapter extends BaseAdapter {

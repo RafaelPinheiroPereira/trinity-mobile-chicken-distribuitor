@@ -7,10 +7,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.ui.mvp.home.IHomeMVP;
 import com.br.tmchickendistributor.ui.mvp.home.IHomeMVP.IPresenter;
+import com.br.tmchickendristributor.R;
 
 public class AlertDialogClient {
 

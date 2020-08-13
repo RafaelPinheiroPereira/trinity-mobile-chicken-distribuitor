@@ -7,8 +7,9 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.ui.mvp.pedido.IPedidoMVP;
+import com.br.tmchickendristributor.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class BottomSheet {

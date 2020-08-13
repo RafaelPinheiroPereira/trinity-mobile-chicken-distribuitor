@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.realm.ClientePedido;
 import com.br.tmchickendistributor.ui.adapter.ExpandableRecyclerAdapter;
@@ -20,6 +20,7 @@ import com.br.tmchickendistributor.ui.mvp.pedido.IPedidoMVP;
 import com.br.tmchickendistributor.ui.mvp.pedido.Presenter;
 import com.br.tmchickendistributor.util.AlertDialogOrderCancel;
 import com.br.tmchickendistributor.util.BottomSheet;
+import com.br.tmchickendristributor.R;
 import java.util.List;
 
 public class PedidoActivity extends AppCompatActivity implements IPedidoMVP.IView {

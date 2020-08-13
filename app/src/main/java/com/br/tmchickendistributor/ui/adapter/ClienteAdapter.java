@@ -12,9 +12,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.ui.listener.RecyclerViewOnClickListenerHack;
+import com.br.tmchickendristributor.R;
 import java.util.ArrayList;
 import java.util.List;
 

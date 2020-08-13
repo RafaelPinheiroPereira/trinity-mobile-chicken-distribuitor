@@ -9,8 +9,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import androidx.core.content.FileProvider;
 
-import com.br.tmchickendistributor.BuildConfig;
-
+import com.br.tmchickendristributor.BuildConfig;
 import java.io.File;
 import java.io.IOException;
 

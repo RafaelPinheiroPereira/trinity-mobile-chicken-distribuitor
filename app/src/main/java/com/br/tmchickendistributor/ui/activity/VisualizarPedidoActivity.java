@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
 import com.br.tmchickendistributor.ui.adapter.ItensPedidoVisualizarAdapter;
 import com.br.tmchickendistributor.ui.mvp.visualizar.IViewOrderMVP;
@@ -26,6 +26,7 @@ import com.br.tmchickendistributor.ui.mvp.visualizar.IViewOrderMVP.IView;
 import com.br.tmchickendistributor.ui.mvp.visualizar.Presenter;
 import com.br.tmchickendistributor.util.CameraUtil;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
+import com.br.tmchickendristributor.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.api.client.extensions.android.http.AndroidHttp;

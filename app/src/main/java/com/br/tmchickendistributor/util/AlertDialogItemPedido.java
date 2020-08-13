@@ -13,9 +13,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Unidade;
 import com.br.tmchickendistributor.ui.mvp.venda.IVendaMVP;
+import com.br.tmchickendristributor.R;
 import java.math.BigDecimal;
 import java.util.List;
 

@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
 import com.br.tmchickendistributor.ui.adapter.ContaAdapter;
@@ -35,6 +35,7 @@ import com.br.tmchickendistributor.util.ControleSessao;
 import com.br.tmchickendistributor.util.CurrencyEditText;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 import com.br.tmchickendistributor.util.FormatacaoMoeda;
+import com.br.tmchickendristributor.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.api.client.extensions.android.http.AndroidHttp;

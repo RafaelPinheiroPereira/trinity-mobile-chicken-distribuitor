@@ -8,7 +8,8 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
-import com.br.tmchickendistributor.R;
+
+import com.br.tmchickendristributor.R;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Currency;

@@ -11,10 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.ui.mvp.recebimento.IRecebimentoMVP;
 import com.br.tmchickendistributor.util.DateUtils;
 import com.br.tmchickendistributor.util.FormatacaoMoeda;
+import com.br.tmchickendristributor.R;
 import java.util.Date;
 
 public class RecebimentoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

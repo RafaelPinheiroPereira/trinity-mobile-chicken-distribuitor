@@ -41,7 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.ItemPedido;
 import com.br.tmchickendistributor.data.model.ItemPedidoID;
@@ -61,6 +61,7 @@ import com.br.tmchickendistributor.util.ControleSessao;
 import com.br.tmchickendistributor.util.CurrencyEditText;
 import com.br.tmchickendistributor.util.DateUtils;
 import com.br.tmchickendistributor.util.FormatacaoMoeda;
+import com.br.tmchickendristributor.R;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;

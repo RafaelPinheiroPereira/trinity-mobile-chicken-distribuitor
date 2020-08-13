@@ -7,8 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.ItemPedido;
+import com.br.tmchickendristributor.R;
 import java.text.NumberFormat;
 import java.util.List;
 

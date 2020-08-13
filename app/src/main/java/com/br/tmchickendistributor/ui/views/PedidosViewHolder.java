@@ -5,9 +5,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.ui.listener.ClickSubItemListener;
+import com.br.tmchickendristributor.R;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 

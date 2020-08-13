@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemSelected;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.ClienteGrupo;
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
@@ -37,6 +37,7 @@ import com.br.tmchickendistributor.ui.mvp.home.Presenter;
 import com.br.tmchickendistributor.util.AlertDialogClient;
 import com.br.tmchickendistributor.util.DateUtils;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
+import com.br.tmchickendristributor.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

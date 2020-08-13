@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.realm.ClientePedido;
 import com.br.tmchickendistributor.ui.listener.ClickSubItemListener;
@@ -12,6 +12,7 @@ import com.br.tmchickendistributor.ui.mvp.pedido.IPedidoMVP;
 import com.br.tmchickendistributor.ui.views.ClientePedidoViewHolder;
 import com.br.tmchickendistributor.ui.views.PedidosViewHolder;
 import com.br.tmchickendistributor.util.ParentListItem;
+import com.br.tmchickendristributor.R;
 import java.util.List;
 
 public class PedidosAdapter extends ExpandableRecyclerAdapter<ClientePedidoViewHolder, PedidosViewHolder>

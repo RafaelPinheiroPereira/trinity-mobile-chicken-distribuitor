@@ -5,7 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import androidx.appcompat.widget.Toolbar;
-import com.br.tmchickendistributor.R;
+
+import com.br.tmchickendristributor.R;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;

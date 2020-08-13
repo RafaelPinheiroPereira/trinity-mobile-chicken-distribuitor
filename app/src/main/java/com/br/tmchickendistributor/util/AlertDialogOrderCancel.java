@@ -10,10 +10,11 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.ui.mvp.pedido.IPedidoMVP;
 import com.br.tmchickendistributor.ui.mvp.pedido.IPedidoMVP.IPresenter;
+import com.br.tmchickendristributor.R;
 
 public class AlertDialogOrderCancel {
 

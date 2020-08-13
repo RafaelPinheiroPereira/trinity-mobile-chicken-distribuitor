@@ -20,12 +20,13 @@ import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.br.tmchickendistributor.R;
+
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
 import com.br.tmchickendistributor.ui.mvp.configuracao.IConfiguracaoMVP.IPresenter;
 import com.br.tmchickendistributor.ui.mvp.configuracao.IConfiguracaoMVP.IView;
 import com.br.tmchickendistributor.ui.mvp.configuracao.Presenter;
 import com.br.tmchickendistributor.util.Mask;
+import com.br.tmchickendristributor.R;
 import java.net.NetworkInterface;
 import java.util.Collections;
 import java.util.List;
@@ -67,9 +68,17 @@ public class ConfiguracaoActivity extends AppCompatActivity implements IView {
 
 
         if (mPresenter.statusSistema().equals("DISPOSITIVO_HABILITADO")) {
-            mPresenter
-                    .getContext()
-                    .startActivity(new Intent(mPresenter.getContext(), LoginActivity.class));
+
+            if(this.mPresenter.verificarLogin()){
+                mPresenter
+                        .getContext()
+                        .startActivity(new Intent(mPresenter.getContext(), LoginActivity.class));
+            }else{
+                mPresenter
+                        .getContext()
+                        .startActivity(new Intent(mPresenter.getContext(), HomeActivity.class));
+            }
+
         } else if (mPresenter.statusSistema().equals("EMPRESA_INATIVADA")) {
             Toast.makeText(
                             mPresenter.getContext(),
