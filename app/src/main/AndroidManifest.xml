@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.br.minasfrango">
+    package="com.br.tmchickendistributor">
     <!-- Permisoes de Internet -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- GPS -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -19,7 +19,7 @@
         android:required="true" />
 
     <application
-        android:name=".application.MyApplication"
+        android:name="com.br.tmchickendistributor.application.MyApplication"
         android:allowBackup="true"
         android:appComponentFactory="whateverString"
         android:icon="@mipmap/ic_launcher"
@@ -29,7 +29,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".ui.activity.DriverActivity"></activity>
+        <activity android:name="com.br.tmchickendistributor.ui.activity.DriverActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -46,7 +46,7 @@
         </provider>
 
         <activity
-            android:name=".ui.activity.ConfiguracaoActivity"
+            android:name="com.br.tmchickendistributor.ui.activity.ConfiguracaoActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,13 +55,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.ExclusaoActivity"
-            android:parentActivityName=".ui.activity.HomeActivity">
+            android:name="com.br.tmchickendistributor.ui.activity.ExclusaoActivity"
+            android:parentActivityName="com.br.tmchickendistributor.ui.activity.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activity.ExclusaoActivity" />
+                android:value="com.br.tmchickendistributor.ui.activity.ExclusaoActivity" />
         </activity>
-        <activity android:name=".ui.activity.HomeActivity">
+        <activity android:name="com.br.tmchickendistributor.ui.activity.HomeActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable_clientes" />
@@ -70,24 +70,24 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.DeviceListActivity" />
+        <activity android:name="com.br.tmchickendistributor.ui.activity.DeviceListActivity" />
         <activity
-            android:name=".ui.activity.PedidoActivity"
-            android:parentActivityName=".ui.activity.HomeActivity" />
+            android:name="com.br.tmchickendistributor.ui.activity.PedidoActivity"
+            android:parentActivityName="com.br.tmchickendistributor.ui.activity.HomeActivity" />
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.activity.PedidoActivity" />
+            android:value="com.br.tmchickendistributor.ui.activity.PedidoActivity" />
 
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name="com.br.tmchickendistributor.ui.activity.LoginActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"></activity>
         <activity
-            android:name=".ui.activity.VendasActivity"
-            android:parentActivityName=".ui.activity.HomeActivity">
+            android:name="com.br.tmchickendistributor.ui.activity.VendasActivity"
+            android:parentActivityName="com.br.tmchickendistributor.ui.activity.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activity.VendasActivity" />
+                android:value="com.br.tmchickendistributor.ui.activity.VendasActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable_vendas" />
@@ -97,19 +97,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.RecebimentoActivity"
+            android:name="com.br.tmchickendistributor.ui.activity.RecebimentoActivity"
             android:label="@string/title_activity_recebimento"
-            android:parentActivityName=".ui.activity.HomeActivity">
+            android:parentActivityName="com.br.tmchickendistributor.ui.activity.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activity.RecebimentoActivity" />
+                android:value="com.br.tmchickendistributor.ui.activity.RecebimentoActivity" />
         </activity>
         <activity
-            android:name=".ui.activity.VisualizarPedidoActivity"
-            android:parentActivityName=".ui.activity.PedidoActivity">
+            android:name="com.br.tmchickendistributor.ui.activity.VisualizarPedidoActivity"
+            android:parentActivityName="com.br.tmchickendistributor.ui.activity.PedidoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activity.VisualizarPedidoActivity" />
+                android:value="com.br.tmchickendistributor.ui.activity.VisualizarPedidoActivity" />
         </activity>
     </application>
 

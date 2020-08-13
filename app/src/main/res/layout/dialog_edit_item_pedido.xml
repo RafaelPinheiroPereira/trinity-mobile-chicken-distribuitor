@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content">
 
 
-                    <com.br.minasfrango.util.CurrencyEditText
+                    <com.br.tmchickendistributor.util.CurrencyEditText
 
                         android:id="@+id/edtQTDProductDialog"
                         android:layout_width="match_parent"
@@ -124,7 +124,7 @@
                         app:showSymbol="false">
 
 
-                    </com.br.minasfrango.util.CurrencyEditText>
+                    </com.br.tmchickendistributor.util.CurrencyEditText>
 
 
 
@@ -164,7 +164,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.br.minasfrango.util.CurrencyEditText
+                    <com.br.tmchickendistributor.util.CurrencyEditText
 
                         android:id="@+id/cetPriceDialog"
                         android:layout_width="match_parent"
@@ -185,7 +185,7 @@
                         app:showSymbol="false">
 
                         <requestFocus />
-                    </com.br.minasfrango.util.CurrencyEditText>
+                    </com.br.tmchickendistributor.util.CurrencyEditText>
                 </com.google.android.material.textfield.TextInputLayout>
 
 

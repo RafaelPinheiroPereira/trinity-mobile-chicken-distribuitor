@@ -157,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <com.br.minasfrango.util.CurrencyEditText
+                        <com.br.tmchickendistributor.util.CurrencyEditText
                             android:id="@+id/edtValueAmortize"
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                             app:showSymbol="false">
 
                             <requestFocus />
-                        </com.br.minasfrango.util.CurrencyEditText>
+                        </com.br.tmchickendistributor.util.CurrencyEditText>
                     </com.google.android.material.textfield.TextInputLayout>
 
 
