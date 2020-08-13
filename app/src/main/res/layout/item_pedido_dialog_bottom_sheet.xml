@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
+
+    <!-- NOTE: This list should be displayed in a list
+    instead of nested layouts -->
+    <LinearLayout
+        android:id="@+id/lnlViewSalesOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/card_margin"
+        android:paddingRight="@dimen/card_margin"
+        android:paddingTop="8dp">
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnlEditSalesOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/card_margin"
+        android:paddingRight="@dimen/card_margin"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="32dp"
+            android:src="@mipmap/ic_edit_black_48dp"
+            android:tint="@color/textColorPrimary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="EDITAR"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnlDeleteSalesOrder"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/card_margin"
+        android:paddingRight="@dimen/card_margin"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="32dp"
+            android:src="@mipmap/ic_delete_white_36dp"
+            android:tint="@color/textColorPrimary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="DELETAR"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

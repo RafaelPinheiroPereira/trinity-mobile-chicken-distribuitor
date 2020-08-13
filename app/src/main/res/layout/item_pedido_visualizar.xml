@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="-4dp"
+    android:layout_marginEnd="3dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginStart="3dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+
+
+
+            <TextView
+                android:id="@+id/descricao_text_view_item_visualizar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Descricao"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/qtd_text_view_item_visualizar"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="QTD."
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/unidade_txt_item_visualizar"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Unidade"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtQTDBicos"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="Bicos"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/txtLote"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="Lote"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/valor_unitario_txt_item_visualizar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="right|center_vertical"
+                android:padding="10dp"
+                android:text="R$ 12300,00"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/valor_total_txt_item_visualizar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="right|center_vertical"
+                android:padding="10dp"
+                android:text="R$ 12300,00"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+
+
+        </HorizontalScrollView>
+
+
+</androidx.cardview.widget.CardView>
+
+
+
+

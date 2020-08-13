@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:padding="8dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txtFanstasyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Nome Fantasia"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtSocialName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Razao Social"
+                android:textColor="@color/textColorPrimary"
+
+                android:textSize="14sp"
+                 />
+
+            <TextView
+                android:id="@+id/txtClientID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Codigo Cliente"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary"
+                 />
+
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:background="?android:attr/listDivider" />
+
+
+            <TextView
+                android:id="@+id/txtEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="Rua das Paparaubas, 14 - Renascença"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txtBairro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Bom Jesus"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="14sp"
+
+
+                />
+
+
+            <TextView
+                android:id="@+id/txtCEP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="650000"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary"
+
+                 />
+
+
+            <TextView
+                android:id="@+id/txtCidade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Cidade"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary"/>
+
+
+            <TextView
+                android:id="@+id/txtCodeLocal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Código Localidade"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary"
+                 />
+
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/txtPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="Telefone"
+                android:textSize="18sp"
+                android:textColor="@color/textColorPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Contato"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary" />
+
+
+            <TextView
+                android:id="@+id/txtReferencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Ponto de referência"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary"
+                 />
+
+
+
+            <TextView
+                android:id="@+id/txtCPFCNPJ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="CPF/CNPJ"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary" />
+
+
+            <TextView
+                android:id="@+id/txtRg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="RG"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary"/>
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:background="?android:attr/listDivider" />
+
+
+            <TextView
+                android:id="@+id/txtObs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="OBS:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/textColorPrimary"/>
+
+
+            <TextView
+                android:id="@+id/txtOpenNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="QTD Notas Abertas:"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary" />
+
+
+            <TextView
+                android:id="@+id/txt_vlr_medio_compra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="VLR. Médio Compras:"
+                android:textSize="14sp"
+                android:textColor="@color/textColorPrimary" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
