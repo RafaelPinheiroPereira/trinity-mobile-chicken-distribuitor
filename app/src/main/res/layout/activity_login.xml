@@ -12,7 +12,7 @@
         android:layout_height="150dp"
         android:layout_centerInParent="true"
         android:layout_margin="30dp"
-        android:src="@drawable/logo" />
+        android:src="@mipmap/ic_logo" />
 
     <LinearLayout
         android:id="@+id/lnLoginBox"

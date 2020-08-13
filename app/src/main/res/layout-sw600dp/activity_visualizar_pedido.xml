@@ -17,7 +17,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            app:title="Trinity Mobile - Minas Frango"
+            app:title="Trinity Mobile"
             android:layout_height="?attr/actionBarSize"
             app:subtitle="Pedidos"
             android:background="@color/colorPrimaryDark"

@@ -15,7 +15,7 @@
         android:id="@+id/toolbar"
         android:elevation="0dp"
         android:layout_height="56dp"
-            app:title="Trinity Mobile - Minas Frango"
+            app:title="Trinity Mobile"
             app:subtitle="Pedidos"
         android:layout_width="match_parent"
             android:background="@color/colorPrimaryDark"

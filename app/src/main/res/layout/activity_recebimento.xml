@@ -17,7 +17,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            app:title="Trinity Mobile"
             android:background="@color/colorPrimaryDark"
+            app:subtitle="Recebimentos"
             android:elevation="0dp"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />

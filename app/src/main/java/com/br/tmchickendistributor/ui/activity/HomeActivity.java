@@ -459,7 +459,7 @@ public class HomeActivity extends AppCompatActivity
     private void initViews() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(HomeActivity.this);
         rvCliente.setLayoutManager(layoutManager);
-        toolbar.setTitle("Trinity Mobile - Minas Frango");
+        toolbar.setTitle("Trinity Mobile");
         setSupportActionBar(toolbar);
     }
 
