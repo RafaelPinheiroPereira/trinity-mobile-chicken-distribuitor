@@ -104,7 +104,7 @@ public class ImpressoraUtil {
 
         final AssetManager assetManager = this.activity.getAssets();
         final Bitmap bitmap =
-                BitmapFactory.decodeStream(assetManager.open("logo.png"), null, options);
+                BitmapFactory.decodeStream(assetManager.open("logo_trinity_mobile.png"), null, options);
         final int width = bitmap.getWidth();
         final int height = bitmap.getHeight();
         final int[] argb = new int[width * height];
@@ -229,10 +229,7 @@ public class ImpressoraUtil {
     private StringBuffer configurarLayoutImpressaoPedido(
             final Pedido pedido, final Cliente cliente) {
         StringBuffer textBuffer = new StringBuffer();
-        textBuffer.append("{s}AV.PRINCESA LEOPOLDINA,220,TIJUPA QUEIMADO{br}");
-        textBuffer.append("{s}CEP:65110000 SAO JOSE DE RIBAMAR, MA{br}");
-        textBuffer.append("{s}CNPJ:41627969000174 I.E:121292070{br}");
-        textBuffer.append("{s}FONE:(98)988962910{br}{br}");
+
         textBuffer.append("{center}{b}COMPROVANTE DE VENDAS {br}");
         textBuffer.append("{br}{reset}");
         textBuffer.append(
@@ -322,10 +319,7 @@ public class ImpressoraUtil {
         }
 
         StringBuffer textBuffer = new StringBuffer();
-        textBuffer.append("{s}AV.PRINCESA LEOPOLDINA,220,TIJUPA QUEIMADO{br}");
-        textBuffer.append("{s}CEP:65110000 SAO JOSE DE RIBAMAR, MA{br}");
-        textBuffer.append("{s}CNPJ:41627969000174 I.E:121292070{br}");
-        textBuffer.append("{s}FONE:(98)988962910{br}{br}");
+
         textBuffer.append("{reset}{center}{b}COMPROVANTE DE PAGAMENTOS {br}");
         textBuffer.append("{reset}");
         textBuffer.append(
