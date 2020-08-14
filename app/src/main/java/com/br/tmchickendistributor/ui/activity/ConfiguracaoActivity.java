@@ -144,7 +144,7 @@ public class ConfiguracaoActivity extends AppCompatActivity implements IView {
         setSupportActionBar(mToolbar);
         cnpjMask = Mask.insert("##.###.###/####-##", edtCNPJ);
         edtCNPJ.addTextChangedListener(cnpjMask);
-        edtCNPJ.setText("41.627.969/0001-74");
+
     }
 
     public void concederPermissoes() {
