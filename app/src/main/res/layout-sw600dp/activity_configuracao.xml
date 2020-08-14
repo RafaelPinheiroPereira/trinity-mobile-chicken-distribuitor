@@ -38,10 +38,12 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:src="@mipmap/ic_logo"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:src="@mipmap/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal"
            />
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

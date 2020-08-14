@@ -15,21 +15,21 @@ public class ArquivoUtils {
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             filesDirPagamentos =
                     new File(
-                            Environment.getExternalStorageDirectory() + "/Minas_Frangos/",
+                            Environment.getExternalStorageDirectory() + "/Trinity_Mobile/",
                             ConstantsUtil.CAMINHO_IMAGEM_RECEBIMENTOS);
             filesDirVendas =
                     new File(
-                            Environment.getExternalStorageDirectory() + "/Minas_Frangos/",
+                            Environment.getExternalStorageDirectory() + "/Trinity_Mobile/",
                             ConstantsUtil.CAMINHO_IMAGEM_VENDAS);
         } else {
             filesDirPagamentos =
                     new File(
                             activity.getExternalFilesDir(null),
-                            "/Minas_Frangos/" + ConstantsUtil.CAMINHO_IMAGEM_RECEBIMENTOS);
+                            "/Trinity_Mobile/" + ConstantsUtil.CAMINHO_IMAGEM_RECEBIMENTOS);
             filesDirVendas =
                     new File(
                             activity.getExternalFilesDir(null),
-                            "/Minas_Frangos/" + ConstantsUtil.CAMINHO_IMAGEM_VENDAS);
+                            "/Trinity_Mobile/" + ConstantsUtil.CAMINHO_IMAGEM_VENDAS);
         }
 
         if (!filesDirVendas.exists()) filesDirVendas.mkdirs();

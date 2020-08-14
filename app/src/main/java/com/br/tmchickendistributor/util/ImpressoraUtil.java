@@ -104,7 +104,7 @@ public class ImpressoraUtil {
 
         final AssetManager assetManager = this.activity.getAssets();
         final Bitmap bitmap =
-                BitmapFactory.decodeStream(assetManager.open("logo_trinity_mobile.png"), null, options);
+                BitmapFactory.decodeStream(assetManager.open("logo.png"), null, options);
         final int width = bitmap.getWidth();
         final int height = bitmap.getHeight();
         final int[] argb = new int[width * height];

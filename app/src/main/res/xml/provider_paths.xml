@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-   <external-path name="comprovantes-vendas" path="Trinity Mobile/Vendas/"/>
-   <external-path name="comprovantes-recebimento" path="Trinity Mobile/Pagamentos/"/>
+   <external-path name="comprovantes-vendas" path="Trinity_Mobile/Vendas/"/>
+   <external-path name="comprovantes-recebimento" path="Trinity_Mobile/Pagamentos/"/>
 
 </paths>

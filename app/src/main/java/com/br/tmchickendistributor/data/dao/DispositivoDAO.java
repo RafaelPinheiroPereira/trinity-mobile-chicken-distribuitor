@@ -14,7 +14,7 @@ public class DispositivoDAO extends  GenericsDAO<DispositivoORM> {
 
     public Dispositivo pesquisarAparelhoRegistrado(final long idEmpresa, final String mac) {
 
-        RealmResults<DispositivoORM> realmResults = where().equalTo("idEmpresa",idEmpresa).equalTo("mac",mac).findAll();
+        RealmResults<DispositivoORM> realmResults = where().equalTo("idEmpresa",idEmpresa).equalTo("mac",mac.toUpperCase()).findAll();
         if(realmResults!=null && realmResults.size()>0){
             return  new Dispositivo(realmResults.first());
         }else{return null;}
