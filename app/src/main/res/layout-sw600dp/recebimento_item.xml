@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="-4dp"
     android:layout_marginLeft="2dp"
     android:layout_marginStart="3dp"
@@ -11,102 +11,16 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
 
-        >
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <CheckBox
-
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:visibility="invisible" />
-
-        <TextView
-
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
-            android:padding="5dp"
-            android:text="ORDEM"
-
-            android:textSize="20sp"
-
-            />
-
-        <TextView
-
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="COD."
-
-            android:textSize="20sp"
-
-            />
-
-        <TextView
-
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
-            android:padding="5dp"
-            android:text="VENDA"
-
-            android:textSize="20sp"
-
-            />
-
-        <TextView
-
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="VENC."
-
-            android:textSize="20sp"
-
-            />
-
-        <TextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="right"
-            android:padding="5dp"
-            android:text="QTD"
-            android:textSize="20sp"
-            />
-
-
-    </LinearLayout>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
 
@@ -118,76 +32,69 @@
 
         <TextView
             android:id="@+id/txtOrderSelect"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
+
             android:padding="5dp"
             android:text="ordem"
             android:textColor="@android:color/primary_text_light"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
         <TextView
             android:id="@+id/txtRecebimentoIDVenda"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ID"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
+
             android:padding="5dp"
             android:textColor="@android:color/primary_text_light"
-            android:textSize="20sp"
+            android:textSize="14sp"
 
             />
 
         <TextView
             android:id="@+id/txtSalesDate"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="DATA VENDA"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
+
             android:padding="5dp"
-            android:layout_marginLeft="10dp"
+
             android:textColor="@android:color/primary_text_light"
-            android:textSize="20sp"
+            android:textSize="14sp"
 
             />
         <TextView
             android:id="@+id/txtDateVencimento"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="DATA VENCIMENTO"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
+
             android:padding="5dp"
             android:textColor="@android:color/primary_text_light"
-            android:textSize="20sp"
+            android:textSize="14sp"
 
             />
 
         <TextView
             android:id="@+id/txtQDT"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="right"
+
+
             android:padding="5dp"
             android:text="QTD"
 
             android:textColor="@android:color/primary_text_light"
-            android:textSize="20sp"
+            android:textSize="14sp"
             />
-    </LinearLayout>
 
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="5dp"
-        android:gravity="right"
-        android:layout_marginLeft="50dp"
-        android:layout_gravity="right"
+
         android:orientation="horizontal">
 
         <TextView
@@ -195,11 +102,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+
             android:text="TOTAL VENDA"
             android:textColor="@android:color/primary_text_light"
-            android:textSize="24sp" />
+            android:textSize="14sp" />
         <TextView
 
             android:layout_width="wrap_content"
@@ -207,17 +113,16 @@
             android:text="-"
             android:textColor="@android:color/primary_text_light"
             android:padding="5dp"
-            android:textSize="24sp"
+            android:textSize="14sp"
             />
         <TextView
             android:id="@+id/txtAmortizationValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:layout_gravity="center_vertical"
             android:text="Valor Amortizado"
             android:textColor="@android:color/primary_text_light"
-            android:textSize="24sp"
+            android:textSize="14sp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -225,7 +130,7 @@
             android:text="="
             android:textColor="@android:color/primary_text_light"
             android:paddingRight="5dp"
-            android:textSize="24sp"
+            android:textSize="14sp"
             />
 
         <TextView
@@ -233,15 +138,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Saldo"
-            android:layout_gravity="center_vertical"
-            android:gravity="right"
+
             android:padding="5dp"
-            android:textSize="20sp"
+            android:textSize="14sp"
             android:textColor="@android:color/primary_text_light" />
 
     </LinearLayout>
 
+
 </LinearLayout>
-    </HorizontalScrollView>
+
 
 </androidx.cardview.widget.CardView>

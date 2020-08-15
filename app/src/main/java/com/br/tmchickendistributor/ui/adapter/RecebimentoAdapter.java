@@ -92,11 +92,11 @@ public class RecebimentoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
             ((MyViewHolder) viewHolder)
-                    .txtRecebimentoIDVenda.setText(
+                    .txtRecebimentoIDVenda.setText("CÓDIGO\n"+
                     String.valueOf(mPresenter.getRecebimentos().get(position ).getIdVenda()));
 
             ((MyViewHolder) viewHolder)
-                    .txtSalesDate.setText(
+                    .txtSalesDate.setText("DATA VENDA\n"+
                     DateUtils.formatarDateddMMyyyyParaString(
                                     mPresenter
                                             .getRecebimentos()
@@ -107,12 +107,12 @@ public class RecebimentoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     mPresenter
                             .getRecebimentos()
                             .get(position )
-                            .getDataVencimento()!=null?
+                            .getDataVencimento()!=null?"VENCIMENTO\n"+
                     DateUtils.formatarDateddMMyyyyParaString(
                                     mPresenter
                                             .getRecebimentos()
                                             .get(position )
-                                            .getDataVencimento()): DateUtils.formatarDateddMMyyyyParaString(new Date()));
+                                            .getDataVencimento()):"VENCIMENTO\n"+ DateUtils.formatarDateddMMyyyyParaString(new Date()));
 
             ((MyViewHolder) viewHolder)
                     .txtSalesValue.setText(
@@ -147,14 +147,14 @@ public class RecebimentoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                     .getValorAmortizado())));
 
             ((MyViewHolder) viewHolder)
-                    .txtOrderSelect.setText(
+                    .txtOrderSelect.setText("ORDEM\n"+
                     String.valueOf(
                             mPresenter
                                     .getRecebimentos()
                                     .get(position )
                                     .getOrderSelected()));
             ((MyViewHolder) viewHolder)
-                    .txtQDT.setText((position+1) + "/" + mPresenter.getRecebimentos().size());
+                    .txtQDT.setText("QTD.\n"+(position+1) + "/" + mPresenter.getRecebimentos().size());
             ((MyViewHolder) viewHolder)
                     .chbRecebimento.setChecked(
                     mPresenter.getRecebimentos().get(position ).isCheck());
