@@ -24,12 +24,19 @@ public class Nucleo implements Serializable {
 
     private Date dataFim;
 
+    private String nomeEmpresa;
+    private String telefone;
+    private String endereco;
+
     public Nucleo(NucleoORM nucleoORM){
         this.id=nucleoORM.getId();
         this.nome=nucleoORM.getNome();
         this.cnpj=nucleoORM.getCnpj();
         this.dataInicio=nucleoORM.getDataInicio();
         this.dataInicio=nucleoORM.getDataFim();
+        this.nomeEmpresa=nucleoORM.getNomeEmpresa();
+        this.telefone=nucleoORM.getTelefone();
+        this.endereco=nucleoORM.getEndereco();
     }
 
     public Nucleo(final int id, final String nome) {

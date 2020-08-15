@@ -4,6 +4,7 @@ import android.content.Context;
 import com.br.tmchickendistributor.data.model.BlocoRecibo;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Conta;
+import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Recebimento;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 import java.math.BigDecimal;
@@ -116,6 +117,7 @@ public interface IRecebimentoMVP {
         BlocoRecibo getBlocoRecibo();
 
         void setBlocoRecibo(BlocoRecibo blocoRecibo);
+        Empresa pesquisarEmpresaRegistrada();
     }
 
     interface IModel {
@@ -149,6 +151,7 @@ public interface IRecebimentoMVP {
         boolean ehMenorOuIgualAoCreditoOValorDoDebito();
 
         List<Recebimento> pesquisarRecebimentoPorCliente() ;
+        Empresa pesquisarEmpresaRegistrada();
 
     }
 

@@ -7,6 +7,7 @@ import android.os.Build.VERSION_CODES;
 import com.br.tmchickendistributor.data.model.BlocoRecibo;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Conta;
+import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Recebimento;
 import com.br.tmchickendistributor.ui.mvp.recebimento.IRecebimentoMVP.IView;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
@@ -242,7 +243,7 @@ public class Presenter implements IRecebimentoMVP.IPresenter {
 
     @Override
     public void imprimirComprovante() {
-        this.mImpressoraUtil.imprimirComprovanteRecebimento(getRecebimentos(), getCliente());
+        this.mImpressoraUtil.imprimirComprovanteRecebimento(getRecebimentos(), getCliente(),this.pesquisarEmpresaRegistrada());
 
     }
 
@@ -326,5 +327,10 @@ public class Presenter implements IRecebimentoMVP.IPresenter {
     @Override
     public void setBlocoRecibo(final BlocoRecibo blocoRecibo) {
         mBlocoRecibo = blocoRecibo;
+    }
+
+    @Override
+    public Empresa pesquisarEmpresaRegistrada() {
+        return this.mModel.pesquisarEmpresaRegistrada();
     }
 }

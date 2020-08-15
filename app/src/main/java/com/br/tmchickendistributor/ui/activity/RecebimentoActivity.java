@@ -408,4 +408,9 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
         rcvRecebimento.setLayoutManager(layoutManager);
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

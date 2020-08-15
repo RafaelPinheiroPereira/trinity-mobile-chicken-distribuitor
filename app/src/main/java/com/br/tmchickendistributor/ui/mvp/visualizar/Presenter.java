@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import com.br.tmchickendistributor.data.model.Cliente;
+import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.ui.mvp.visualizar.IViewOrderMVP.IView;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
@@ -118,7 +119,7 @@ public class Presenter implements IViewOrderMVP.IPresenter {
 
     @Override
     public void imprimirComprovante() {
-        this.mImpressoraUtil.imprimirComprovantePedido(getPedido(), getCliente());
+        this.mImpressoraUtil.imprimirComprovantePedido(getPedido(), getCliente(),this.pesquisarEmpresaRegistrada());
     }
 
     @Override
@@ -129,5 +130,9 @@ public class Presenter implements IViewOrderMVP.IPresenter {
     @Override
     public void verificarCredenciaisGoogleDrive() {
         this.mView.verificarCredenciaisGoogleDrive();
+    }
+    @Override
+    public Empresa pesquisarEmpresaRegistrada() {
+        return this.mModel.pesquisarEmpresaRegistrada();
     }
 }

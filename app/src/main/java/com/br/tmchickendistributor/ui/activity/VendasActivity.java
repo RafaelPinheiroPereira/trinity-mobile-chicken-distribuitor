@@ -173,6 +173,9 @@ public class VendasActivity extends AppCompatActivity implements IView {
         }
 
         setAdaptadores();
+
+
+
         try {
             if (VERSION.SDK_INT >= VERSION_CODES.N) {
                 if (Optional.ofNullable(mPresenter.getPedido()).isPresent()) {
@@ -842,5 +845,10 @@ public class VendasActivity extends AppCompatActivity implements IView {
         txtRazaoSocial.setText(mPresenter.getCliente().getRazaoSocial());
         txtCidade.setText(mPresenter.getCliente().getCidade());
         txtEndereco.setText(mPresenter.getCliente().getEndereco());
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

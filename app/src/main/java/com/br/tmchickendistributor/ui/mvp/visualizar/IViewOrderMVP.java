@@ -3,6 +3,7 @@ package com.br.tmchickendistributor.ui.mvp.visualizar;
 import android.content.Context;
 import android.os.Bundle;
 import com.br.tmchickendistributor.data.model.Cliente;
+import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 
@@ -46,6 +47,7 @@ public interface IViewOrderMVP {
         void exibirBotaoFotografar();
 
         void verificarCredenciaisGoogleDrive();
+        Empresa pesquisarEmpresaRegistrada();
     }
 
     interface IModel {
@@ -55,6 +57,7 @@ public interface IViewOrderMVP {
         Cliente pesquisarClientePorID(long codigoCliente);
 
         Pedido pesquisarVendaPorId(Long id);
+        Empresa pesquisarEmpresaRegistrada();
     }
 
     interface IView {

@@ -4,14 +4,17 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import com.br.tmchickendistributor.data.dao.BlocoPedidoDAO;
 import com.br.tmchickendistributor.data.dao.ContaDAO;
+import com.br.tmchickendistributor.data.dao.EmpresaDAO;
 import com.br.tmchickendistributor.data.dao.FuncionarioDAO;
 import com.br.tmchickendistributor.data.dao.RecebimentoDAO;
 import com.br.tmchickendistributor.data.model.BlocoRecibo;
 import com.br.tmchickendistributor.data.model.Conta;
+import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Funcionario;
 import com.br.tmchickendistributor.data.model.Recebimento;
 import com.br.tmchickendistributor.data.realm.BlocoReciboORM;
 import com.br.tmchickendistributor.data.realm.ContaORM;
+import com.br.tmchickendistributor.data.realm.EmpresaORM;
 import com.br.tmchickendistributor.data.realm.FuncionarioORM;
 import com.br.tmchickendistributor.data.realm.RecebimentoORM;
 import com.br.tmchickendistributor.util.ConstantsUtil;
@@ -37,6 +40,8 @@ public class Model implements IRecebimentoMVP.IModel {
     FuncionarioDAO mFuncionarioDAO = FuncionarioDAO.getInstace(FuncionarioORM.class);
 
     BlocoPedidoDAO mBlocoPedidoDAO = BlocoPedidoDAO.getInstace(BlocoReciboORM.class);
+
+    EmpresaDAO mEmpresaDAO = EmpresaDAO.getInstace(EmpresaORM.class);
 
 
 
@@ -396,5 +401,10 @@ public class Model implements IRecebimentoMVP.IModel {
     private boolean creditValueIsLessThanSalesValueOfItem(final Recebimento item) {
         return mPresenter.getCredito().compareTo(new BigDecimal(item.getValorVenda()))
                 == ConstantsUtil.SMALLER;
+    }
+
+    @Override
+    public Empresa pesquisarEmpresaRegistrada() {
+        return mEmpresaDAO.pesquisarEmpresaRegistradaNoDispositivo();
     }
 }

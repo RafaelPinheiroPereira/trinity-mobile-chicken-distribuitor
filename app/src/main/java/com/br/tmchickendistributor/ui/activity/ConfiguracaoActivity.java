@@ -64,7 +64,7 @@ public class ConfiguracaoActivity extends AppCompatActivity implements IView {
         mPresenter.setMac(getMacAddr());
 
         mPresenter.criarPastasDasImagens();
-        
+
         if (mPresenter.statusSistema().equals("DISPOSITIVO_HABILITADO")) {
 
             if(this.mPresenter.verificarLogin()){

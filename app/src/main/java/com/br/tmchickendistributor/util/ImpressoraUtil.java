@@ -12,6 +12,7 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 
 import com.br.tmchickendistributor.data.model.Cliente;
+import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.ItemPedido;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.model.Recebimento;
@@ -82,13 +83,15 @@ public class ImpressoraUtil {
         fecharConexaoBluetooth();
     }
 
-    public void imprimirComprovantePedido(final Pedido pedido, Cliente cliente) {
+    public void imprimirComprovantePedido(final Pedido pedido, Cliente cliente, Empresa empresa) {
 
         runTask(
                 (dialog, printer) -> {
                     imprimirLogo(printer);
 
-                    StringBuffer textBuffer = configurarLayoutImpressaoPedido(pedido, cliente);
+                    StringBuffer textBuffer = configurarLayoutImpressaoPedido(pedido, cliente,empresa);
+
+
 
                     printer.reset();
                     printer.printTaggedText(textBuffer.toString());
@@ -118,12 +121,12 @@ public class ImpressoraUtil {
     }
 
     public void imprimirComprovanteRecebimento(
-            final List<Recebimento> recebimentos, final Cliente cliente) {
+            final List<Recebimento> recebimentos, final Cliente cliente, Empresa empresa) {
         runTask(
                 (dialog, printer) -> {
                     imprimirLogo(printer);
                     StringBuffer textBuffer =
-                            configurarLayoutImpressaoRecebimento(recebimentos, cliente);
+                            configurarLayoutImpressaoRecebimento(recebimentos, cliente,empresa);
 
                     printer.reset();
                     printer.printTaggedText(textBuffer.toString());
@@ -227,9 +230,12 @@ public class ImpressoraUtil {
     }
 
     private StringBuffer configurarLayoutImpressaoPedido(
-            final Pedido pedido, final Cliente cliente) {
+            final Pedido pedido, final Cliente cliente,Empresa empresa) {
         StringBuffer textBuffer = new StringBuffer();
-
+        textBuffer.append("{s}"+empresa.getNucleos().get(0).getNomeEmpresa()+"{br}");
+        textBuffer.append("{s}"+empresa.getNucleos().get(0).getEndereco()+"{br}");
+        textBuffer.append("{s}CNPJ:"+empresa.getNucleos().get(0).getCnpj()+"{br}");
+        textBuffer.append("{s}FONE:"+empresa.getNucleos().get(0).getTelefone()+"{br}{br}");
         textBuffer.append("{center}{b}COMPROVANTE DE VENDAS {br}");
         textBuffer.append("{br}{reset}");
         textBuffer.append(
@@ -284,7 +290,7 @@ public class ImpressoraUtil {
     }
 
     private StringBuffer configurarLayoutImpressaoRecebimento(
-            final List<Recebimento> recebimentos, final Cliente cliente) {
+            final List<Recebimento> recebimentos, final Cliente cliente, Empresa empresa) {
 
         // Calcular valor total amortizado
         Double valorTotalAmortizado = 0.0;
@@ -319,7 +325,10 @@ public class ImpressoraUtil {
         }
 
         StringBuffer textBuffer = new StringBuffer();
-
+        textBuffer.append("{s}"+empresa.getNucleos().get(0).getNomeEmpresa()+"{br}");
+        textBuffer.append("{s}"+empresa.getNucleos().get(0).getEndereco()+"{br}");
+        textBuffer.append("{s}CNPJ:"+empresa.getNucleos().get(0).getCnpj()+"{br}");
+        textBuffer.append("{s}FONE:"+empresa.getNucleos().get(0).getTelefone()+"{br}{br}");
         textBuffer.append("{reset}{center}{b}COMPROVANTE DE PAGAMENTOS {br}");
         textBuffer.append("{reset}");
         textBuffer.append(

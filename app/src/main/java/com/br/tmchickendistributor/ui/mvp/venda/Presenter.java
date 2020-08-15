@@ -65,6 +65,8 @@ public class Presenter implements IVendaMVP.IPresenter {
 
     private Funcionario mFuncionario;
 
+
+
     public Presenter(final IView view) {
         mView = view;
         mModel = new Model(this);
@@ -298,7 +300,7 @@ public class Presenter implements IVendaMVP.IPresenter {
     @Override
     public void imprimirComprovante() {
 
-        this.mImpressoraUtil.imprimirComprovantePedido(getPedido(), getCliente());
+        this.mImpressoraUtil.imprimirComprovantePedido(getPedido(), getCliente(),this.pesquisarEmpresaRegistrada());
     }
 
     @Override

@@ -26,6 +26,9 @@ public class NucleoORM  extends RealmObject implements Serializable {
     private Date dataInicio;
 
     private Date dataFim;
+    private String nomeEmpresa;
+    private String telefone;
+    private String endereco;
 
     public NucleoORM(Nucleo nucleo){
         this.id=nucleo.getId();
@@ -33,5 +36,8 @@ public class NucleoORM  extends RealmObject implements Serializable {
         this.cnpj=nucleo.getCnpj();
         this.dataInicio=nucleo.getDataInicio();
         this.dataInicio=nucleo.getDataFim();
+        this.nomeEmpresa=nucleo.getNomeEmpresa();
+        this.telefone=nucleo.getTelefone();
+        this.endereco=nucleo.getEndereco();
     }
 }
