@@ -373,7 +373,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
     public void btnConfirmSaleOnClicked(View view) {
 
         if ((mPresenter.getItens().size() > 0)
-                && (!new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty())
+               // && (!new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty())
         ) {
             // Realiza Update do PedidoORM
             if (mPresenter.getPedido() != null) {

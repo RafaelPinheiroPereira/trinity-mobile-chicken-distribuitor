@@ -302,7 +302,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
     public void salvarRecebimento() {
 
       if(!mPresenter.getConta().getId().equals("F"))  {
-          if (!new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty()) {
+         // if (!new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty()) {
 
               long idBlocoRecibo= mPresenter.configurarSequenceDoRecebimento();
               if (idBlocoRecibo > 0) {
@@ -315,12 +315,12 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
                           "Dados do recibo não atualizados com o servidor.\nContate o suporte do sistema");
 
               }
-              mPresenter.esperarPorConexao();
-          } else {
-              AbstractActivity.showToast(
-                      mPresenter.getContext(),
-                      "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
-          }
+            //  mPresenter.esperarPorConexao();
+          //} else {
+            //  AbstractActivity.showToast(
+                   //   mPresenter.getContext(),
+                   //   "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
+        //  }
       }
       else{
           AbstractActivity.showToast(

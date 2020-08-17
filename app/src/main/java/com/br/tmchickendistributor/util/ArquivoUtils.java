@@ -46,7 +46,7 @@ public class ArquivoUtils {
         File pastaPai = null;
         pastaPai =
                 new File(
-                        Environment.getExternalStorageDirectory() + "/Minas_Frangos/",
+                        Environment.getExternalStorageDirectory() + "/Trinity_Mobile/",
                         nomeDiretorio);
         return pastaPai.listFiles();
     }

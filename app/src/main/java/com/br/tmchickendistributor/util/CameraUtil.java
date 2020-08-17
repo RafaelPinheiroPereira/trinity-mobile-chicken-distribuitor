@@ -55,7 +55,7 @@ public class CameraUtil {
         File filesDir;
         // Make sure it's available
         if (Environment.MEDIA_MOUNTED.equals(state)) {
-            filesDir = new File(Environment.getExternalStorageDirectory()+ "/Minas_Frangos/",diretorio);
+            filesDir = new File(Environment.getExternalStorageDirectory()+ "/Trinity_Mobile/",diretorio);
         } else {
             filesDir = new File(this.mActivity.getExternalFilesDir(null),"Example Images");
         }

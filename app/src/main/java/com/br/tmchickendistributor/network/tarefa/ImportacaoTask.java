@@ -206,6 +206,7 @@ public class ImportacaoTask extends AsyncTask<Void, Void, Boolean> {
         realm.beginTransaction();
         if (VERSION.SDK_INT >= VERSION_CODES.N) {
             produtos.forEach(produto -> realm.copyToRealmOrUpdate(new ProdutoORM(produto)));
+
         } else {
             for (Produto produto : produtos) {
                 realm.copyToRealmOrUpdate(new ProdutoORM(produto));
