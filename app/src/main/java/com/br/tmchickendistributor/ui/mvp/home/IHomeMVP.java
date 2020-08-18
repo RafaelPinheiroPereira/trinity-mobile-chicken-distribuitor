@@ -25,6 +25,8 @@ public interface IHomeMVP {
 
         List<BlocoRecibo> consultarRecibosNaoMigrados();
 
+        void desativarNucleo();
+
         Funcionario pesquisarUsuarioDaSesao();
 
         void retirarFuncionarioDaSessao();
@@ -138,6 +140,8 @@ public interface IHomeMVP {
         void atualizarPedidoParaMigrado(Pedido pedido);
 
         Pedido consultarPedidoPorNomeDaFoto(String name);
+
+        void desativarNucleo();
 
         void inativarFuncionarioDaSessao();
 

@@ -10,6 +10,7 @@ import com.br.tmchickendistributor.data.dao.ClienteDAO;
 import com.br.tmchickendistributor.data.dao.ClienteGrupoDAO;
 import com.br.tmchickendistributor.data.dao.EmpresaDAO;
 import com.br.tmchickendistributor.data.dao.FuncionarioDAO;
+import com.br.tmchickendistributor.data.dao.NucleoDAO;
 import com.br.tmchickendistributor.data.dao.PedidoDAO;
 import com.br.tmchickendistributor.data.dao.RecebimentoDAO;
 import com.br.tmchickendistributor.data.model.BlocoRecibo;
@@ -17,6 +18,7 @@ import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.ClienteGrupo;
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Funcionario;
+import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.model.Recebimento;
 import com.br.tmchickendistributor.data.realm.BlocoReciboORM;
@@ -24,6 +26,7 @@ import com.br.tmchickendistributor.data.realm.ClienteGrupoORM;
 import com.br.tmchickendistributor.data.realm.ClienteORM;
 import com.br.tmchickendistributor.data.realm.EmpresaORM;
 import com.br.tmchickendistributor.data.realm.FuncionarioORM;
+import com.br.tmchickendistributor.data.realm.NucleoORM;
 import com.br.tmchickendistributor.data.realm.PedidoORM;
 import com.br.tmchickendistributor.data.realm.RecebimentoORM;
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
@@ -53,6 +56,8 @@ public class Model implements IModel {
 
     EmpresaDAO mEmpresaDAO = EmpresaDAO.getInstace(EmpresaORM.class);
     FuncionarioDAO mFuncionarioDAO = FuncionarioDAO.getInstace(FuncionarioORM.class);
+
+    NucleoDAO nucleoDAO= NucleoDAO.getInstace(NucleoORM.class);
 
 
 
@@ -88,6 +93,13 @@ public class Model implements IModel {
     public Pedido consultarPedidoPorNomeDaFoto(final String name) {
 
         return  this.mOrderDAO.consultarPedidoPorNomeDaFoto(name);
+    }
+
+    @Override
+    public void desativarNucleo() {
+        Nucleo nucleoAlterado=this.nucleoDAO.pesquisarNucleoAtivo();
+        nucleoAlterado.setAtivo(false);
+        this.nucleoDAO.alterar(new NucleoORM(nucleoAlterado));
     }
 
     @Override

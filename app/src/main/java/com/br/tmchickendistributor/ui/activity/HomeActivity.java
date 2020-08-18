@@ -359,38 +359,36 @@ public class HomeActivity extends AppCompatActivity
         String positiveText = "Sim";
         builder.setPositiveButton(
                 positiveText,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // positive button logic
+                (dialog, which)->{
+                    // positive button logic
 
-                      //  presenter.logout();
+                  //  presenter.logout();
 
-                        GoogleSignInClient mGoogleSignInClient =
-                                GoogleSignIn.getClient(
-                                        HomeActivity.this,
-                                        new GoogleSignInOptions.Builder(
-                                                        GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                                .requestEmail()
-                                                .build());
-                        mGoogleSignInClient
-                                .signOut()
-                                .addOnCompleteListener(
-                                        new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull final Task<Void> task) {
-                                                AbstractActivity.showToast(
-                                                        presenter.getContext(),
-                                                        "Logout do Google Drive realizado com sucesso.");
-                                            }
-                                        });
+                    GoogleSignInClient mGoogleSignInClient =
+                            GoogleSignIn.getClient(
+                                    HomeActivity.this,
+                                    new GoogleSignInOptions.Builder(
+                                                    GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                            .requestEmail()
+                                            .build());
+                    mGoogleSignInClient
+                            .signOut()
+                            .addOnCompleteListener(
+                                    new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull final Task<Void> task) {
+                                            AbstractActivity.showToast(
+                                                    presenter.getContext(),
+                                                    "Logout do Google Drive realizado com sucesso.");
+                                        }
+                                    });
 
-                         presenter.retirarFuncionarioDaSessao();
-                         dialog.dismiss();
-                         finish();
+                     presenter.retirarFuncionarioDaSessao();
+                     presenter.desativarNucleo();
+                     dialog.dismiss();
+                     finish();
 
-                        return;
-                    }
+                    return;
                 });
 
         String negativeText = "Não";

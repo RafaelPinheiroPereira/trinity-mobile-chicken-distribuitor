@@ -344,6 +344,11 @@ public class Presenter implements IHomeMVP.IPresenter {
     }
 
     @Override
+    public void desativarNucleo() {
+        this.model.desativarNucleo();
+    }
+
+    @Override
     public Funcionario pesquisarUsuarioDaSesao() {
         return this.model.pesquisarFuncionarioDaSessao();
     }
