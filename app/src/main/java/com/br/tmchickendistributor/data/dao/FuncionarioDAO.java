@@ -19,4 +19,12 @@ public class FuncionarioDAO extends GenericsDAO<FuncionarioORM> {
             return new Funcionario();
         }
     }
+    public Funcionario pesquisarFuncionarioAtivo(){
+        FuncionarioORM realmResults= where().equalTo("ativo",true).findFirst();
+        if(realmResults!=null){
+            return new Funcionario(realmResults);
+        }else{
+            return new Funcionario();
+        }
+    }
 }

@@ -73,7 +73,7 @@ public interface IHomeMVP {
 
         void setDrawer(final Bundle savedInstanceState);
 
-        String getNomeUsuario();
+
 
         void importar();
 
@@ -139,7 +139,7 @@ public interface IHomeMVP {
 
         Pedido consultarPedidoPorNomeDaFoto(String name);
 
-        void deletarFuncionarioDaSessao();
+        void inativarFuncionarioDaSessao();
 
         List<ClienteGrupo> obterTodasRedes();
 

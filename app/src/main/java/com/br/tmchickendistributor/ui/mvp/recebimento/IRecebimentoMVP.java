@@ -5,6 +5,8 @@ import com.br.tmchickendistributor.data.model.BlocoRecibo;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Conta;
 import com.br.tmchickendistributor.data.model.Empresa;
+import com.br.tmchickendistributor.data.model.Funcionario;
+import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Recebimento;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 import java.math.BigDecimal;
@@ -118,6 +120,10 @@ public interface IRecebimentoMVP {
 
         void setBlocoRecibo(BlocoRecibo blocoRecibo);
         Empresa pesquisarEmpresaRegistrada();
+
+        Funcionario getFuncionario();
+
+        Nucleo getNucleo();
     }
 
     interface IModel {
@@ -130,6 +136,11 @@ public interface IRecebimentoMVP {
         long configurarSequenceDoRecebimento();
 
         boolean crediValueIsGranThenZero();
+
+        Funcionario getFuncionario();
+
+        Nucleo getNucleo();
+
         List<Conta> pesquisarContaPorId();
 
 

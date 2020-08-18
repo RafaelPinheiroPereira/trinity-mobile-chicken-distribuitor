@@ -224,10 +224,6 @@ public class Presenter implements IHomeMVP.IPresenter {
         this.view.fecharDrawer();
     }
 
-    @Override
-    public String getNomeUsuario() {
-        return this.mControleSessao.getUserName();
-    }
 
     @Override
     public long getUserId() {
@@ -305,7 +301,7 @@ public class Presenter implements IHomeMVP.IPresenter {
     public boolean verificarLogin() {
         this.mControleSessao = new ControleSessao(getContext());
         this.setControleSessao(this.mControleSessao);
-        return mControleSessao.checkLogin();
+        return mControleSessao.estaLogado();
     }
 
     @Override
@@ -354,7 +350,7 @@ public class Presenter implements IHomeMVP.IPresenter {
 
     @Override
     public void retirarFuncionarioDaSessao() {
-        this.model.deletarFuncionarioDaSessao();
+        this.model.inativarFuncionarioDaSessao();
     }
 
     @Override

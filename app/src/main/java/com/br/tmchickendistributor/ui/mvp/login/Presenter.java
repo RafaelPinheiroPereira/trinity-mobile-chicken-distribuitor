@@ -39,6 +39,11 @@ public class Presenter implements ILoginMVP.IPresenter {
     }
 
     @Override
+    public void atualizarNucleo(final Nucleo nucleo) {
+        this.mIModel.atualizarNucleo(nucleo);
+    }
+
+    @Override
     public Call<Funcionario> autenticarLogin(final long id, final String senha, long idEmpresa) {
         return getServicoLogin().autenticar(id, senha, idEmpresa);
     }

@@ -4,13 +4,16 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import com.br.tmchickendistributor.data.dao.DispositivoDAO;
 import com.br.tmchickendistributor.data.dao.EmpresaDAO;
+import com.br.tmchickendistributor.data.dao.FuncionarioDAO;
 import com.br.tmchickendistributor.data.dao.NucleoDAO;
 import com.br.tmchickendistributor.data.model.Configuracao;
 import com.br.tmchickendistributor.data.model.Dispositivo;
 import com.br.tmchickendistributor.data.model.Empresa;
+import com.br.tmchickendistributor.data.model.Funcionario;
 import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.realm.DispositivoORM;
 import com.br.tmchickendistributor.data.realm.EmpresaORM;
+import com.br.tmchickendistributor.data.realm.FuncionarioORM;
 import com.br.tmchickendistributor.data.realm.NucleoORM;
 import com.br.tmchickendistributor.ui.mvp.configuracao.IConfiguracaoMVP.IModel;
 import io.realm.Realm;
@@ -21,9 +24,16 @@ public class Model implements IModel {
     EmpresaDAO mEmpresaDAO = EmpresaDAO.getInstace(EmpresaORM.class);
     NucleoDAO mNucleoDAO = NucleoDAO.getInstace(NucleoORM.class);
     DispositivoDAO mDispositivoDAO = DispositivoDAO.getInstace(DispositivoORM.class);
+    FuncionarioDAO funcionarioDAO=FuncionarioDAO.getInstace(FuncionarioORM.class);
 
     public Model(final Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public boolean estaAtivo() {
+        Funcionario funcionarioConsultado= funcionarioDAO.pesquisarFuncionarioAtivo();
+        return funcionarioConsultado.isAtivo();
     }
 
     @Override
@@ -37,7 +47,8 @@ public class Model implements IModel {
                 if(empresa.getAtivo().equals("inativo")){
                     return "EMPRESA_INATIVADA";
                 }else{
-                    Dispositivo dispositivo=mDispositivoDAO.pesquisarAparelhoRegistrado(empresa.getId(),mPresenter.getMac());
+                    Dispositivo dispositivo=mDispositivoDAO.pesquisarAparelhoRegistrado(empresa.getId(),
+                            mPresenter.getMac().toUpperCase());
                     if(dispositivo!=null){
                         if(dispositivo.getAtivo().equals("inativo")){
                             return  "DISPOSITIVO_INATIVADO";

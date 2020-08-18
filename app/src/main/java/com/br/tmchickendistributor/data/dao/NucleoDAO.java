@@ -1,6 +1,8 @@
 package com.br.tmchickendistributor.data.dao;
 
+import com.br.tmchickendistributor.data.model.Funcionario;
 import com.br.tmchickendistributor.data.model.Nucleo;
+import com.br.tmchickendistributor.data.realm.FuncionarioORM;
 import com.br.tmchickendistributor.data.realm.NucleoORM;
 import io.realm.RealmResults;
 import java.util.ArrayList;
@@ -27,5 +29,14 @@ public class NucleoDAO extends GenericsDAO<NucleoORM> {
             return  nucleos;
 
         }else{return new ArrayList<>();}
+    }
+
+    public Nucleo pesquisarNucleoAtivo(){
+        NucleoORM realmResults= where().equalTo("ativo",true).findFirst();
+        if(realmResults!=null){
+            return new Nucleo(realmResults);
+        }else{
+            return new Nucleo();
+        }
     }
 }

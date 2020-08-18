@@ -29,6 +29,7 @@ public class NucleoORM  extends RealmObject implements Serializable {
     private String nomeEmpresa;
     private String telefone;
     private String endereco;
+    private boolean ativo=false;
 
     public NucleoORM(Nucleo nucleo){
         this.id=nucleo.getId();
@@ -39,5 +40,6 @@ public class NucleoORM  extends RealmObject implements Serializable {
         this.nomeEmpresa=nucleo.getNomeEmpresa();
         this.telefone=nucleo.getTelefone();
         this.endereco=nucleo.getEndereco();
+        this.ativo=nucleo.isAtivo();
     }
 }

@@ -12,7 +12,7 @@ public interface ILoginMVP {
 
     interface IPresenter {
 
-
+        void atualizarNucleo(Nucleo nucleo);
 
         Call<Funcionario> autenticarLogin(long idUser, String password,long idEmpresa);
 
@@ -52,6 +52,8 @@ public interface ILoginMVP {
         void solicitarLoginGoogleDrive();
     }
     interface  IModel{
+
+        void atualizarNucleo(Nucleo nucleo);
 
         Empresa pesquisarEmpresaRegistrada();
 

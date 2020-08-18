@@ -16,13 +16,21 @@ import java.util.List;
 public class Model implements IModel {
     private Presenter mPresenter;
 
-    private FuncionarioDAO mFuncionarioDAO = FuncionarioDAO.getInstace(FuncionarioORM.class);
     private NucleoDAO mNucleoDAO = NucleoDAO.getInstace(NucleoORM.class);
     private EmpresaDAO mEmpresaDAO= EmpresaDAO.getInstace(EmpresaORM.class);
 
 
     public Model(final Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void atualizarNucleo(final Nucleo nucleo) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(new NucleoORM(nucleo));
+        realm.commitTransaction();
+
     }
 
     @Override

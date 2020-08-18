@@ -97,9 +97,8 @@ public class HomeActivity extends AppCompatActivity
         ButterKnife.bind(this);
         // Verifica se o user esta logado
         presenter = new Presenter(this);
-        if (presenter.verificarLogin()) {
-            finish();
-        }
+        presenter.setFuncionario(presenter.pesquisarUsuarioDaSesao());
+
         initViews();
         presenter.setDrawer(savedInstanceState);
     }
@@ -213,7 +212,7 @@ public class HomeActivity extends AppCompatActivity
                     presenter.navigateToReceiptsActivity(mClientAdapter.getItem(position));
                 } else {
                     AbstractActivity.showToast(
-                            presenter.getContext(), "ClienteORM sem notas em aberto!");
+                            presenter.getContext(), "Cliente sem notas em aberto!");
                 }
                 break;
             case R.id.imgInfo:
@@ -281,7 +280,7 @@ public class HomeActivity extends AppCompatActivity
         navigateDrawer = new NavigateDrawer(this);
         result =
                 navigateDrawer.builder(
-                        this, toolbar, savedInstanceState, presenter.getNomeUsuario());
+                        this, toolbar, savedInstanceState, presenter.getFuncionario().getNome());
 
         result.setOnDrawerItemClickListener(
                 new Drawer.OnDrawerItemClickListener() {
@@ -365,7 +364,7 @@ public class HomeActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialog, int which) {
                         // positive button logic
 
-                        presenter.logout();
+                      //  presenter.logout();
 
                         GoogleSignInClient mGoogleSignInClient =
                                 GoogleSignIn.getClient(
@@ -386,9 +385,9 @@ public class HomeActivity extends AppCompatActivity
                                             }
                                         });
 
-                        presenter.retirarFuncionarioDaSessao();
-                        dialog.dismiss();
-                        // edtConfirmaEmail.setText("");
+                         presenter.retirarFuncionarioDaSessao();
+                         dialog.dismiss();
+                         finish();
 
                         return;
                     }

@@ -14,6 +14,7 @@ import android.os.Build.VERSION_CODES;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.ItemPedido;
+import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.model.Recebimento;
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
@@ -121,12 +122,12 @@ public class ImpressoraUtil {
     }
 
     public void imprimirComprovanteRecebimento(
-            final List<Recebimento> recebimentos, final Cliente cliente, Empresa empresa) {
+            final List<Recebimento> recebimentos, final Cliente cliente, Nucleo nucleo) {
         runTask(
                 (dialog, printer) -> {
                     imprimirLogo(printer);
                     StringBuffer textBuffer =
-                            configurarLayoutImpressaoRecebimento(recebimentos, cliente,empresa);
+                            configurarLayoutImpressaoRecebimento(recebimentos, cliente,nucleo);
 
                     printer.reset();
                     printer.printTaggedText(textBuffer.toString());
@@ -290,7 +291,7 @@ public class ImpressoraUtil {
     }
 
     private StringBuffer configurarLayoutImpressaoRecebimento(
-            final List<Recebimento> recebimentos, final Cliente cliente, Empresa empresa) {
+            final List<Recebimento> recebimentos, final Cliente cliente, Nucleo nucleo) {
 
         // Calcular valor total amortizado
         Double valorTotalAmortizado = 0.0;
@@ -325,10 +326,10 @@ public class ImpressoraUtil {
         }
 
         StringBuffer textBuffer = new StringBuffer();
-        textBuffer.append("{s}"+empresa.getNucleos().get(0).getNomeEmpresa()+"{br}");
-        textBuffer.append("{s}"+empresa.getNucleos().get(0).getEndereco()+"{br}");
-        textBuffer.append("{s}CNPJ:"+empresa.getNucleos().get(0).getCnpj()+"{br}");
-        textBuffer.append("{s}FONE:"+empresa.getNucleos().get(0).getTelefone()+"{br}{br}");
+        textBuffer.append("{s}"+nucleo.getNomeEmpresa()+"{br}");
+        textBuffer.append("{s}"+nucleo.getEndereco()+"{br}");
+        textBuffer.append("{s}CNPJ:"+nucleo.getCnpj()+"{br}");
+        textBuffer.append("{s}FONE:"+nucleo.getTelefone()+"{br}{br}");
         textBuffer.append("{reset}{center}{b}COMPROVANTE DE PAGAMENTOS {br}");
         textBuffer.append("{reset}");
         textBuffer.append(

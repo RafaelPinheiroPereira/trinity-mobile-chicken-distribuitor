@@ -64,18 +64,20 @@ public class ConfiguracaoActivity extends AppCompatActivity implements IView {
         mPresenter.setMac(getMacAddr());
 
         mPresenter.criarPastasDasImagens();
+        edtCNPJ.setText("08.856.465/0001-50");
 
 
         if (mPresenter.statusSistema().equals("DISPOSITIVO_HABILITADO")) {
 
-            if(this.mPresenter.verificarLogin()){
-                mPresenter
-                        .getContext()
-                        .startActivity(new Intent(mPresenter.getContext(), LoginActivity.class));
-            }else{
+            if(this.mPresenter.estaLogado()){
                 mPresenter
                         .getContext()
                         .startActivity(new Intent(mPresenter.getContext(), HomeActivity.class));
+            }else{
+
+                mPresenter
+                        .getContext()
+                        .startActivity(new Intent(mPresenter.getContext(), LoginActivity.class));
             }
 
         } else if (mPresenter.statusSistema().equals("EMPRESA_INATIVADA")) {

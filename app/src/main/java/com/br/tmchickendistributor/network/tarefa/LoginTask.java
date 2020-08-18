@@ -83,13 +83,15 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
             case HttpConstant.OK:
                 Funcionario funcionario = response.body();
                 funcionario.setSenha( mPresenter.getSenha());
-
+                funcionario.setAtivo(true);
+                mPresenter.getNucleo().setAtivo(true);
+                mPresenter.atualizarNucleo(mPresenter.getNucleo());
                 mPresenter.salvarFuncionario(funcionario);
-                if (funcionario.getMaxIdRecibo() > 0) {
-                    String codigoReciboFormatado =
-                            String.valueOf(funcionario.getMaxIdRecibo()).substring(2);
-                    funcionario.setMaxIdRecibo(Long.parseLong(codigoReciboFormatado));
-                }
+//                if (funcionario.getMaxIdRecibo() > 0) {
+//                    String codigoReciboFormatado =
+//                            String.valueOf(funcionario.getMaxIdRecibo()).substring(2);
+//                    funcionario.setMaxIdRecibo(Long.parseLong(codigoReciboFormatado));
+//                }
                 mPresenter.criarSessao(
                         mPresenter.getIdUsuario(),
                         mPresenter.getSenha(),

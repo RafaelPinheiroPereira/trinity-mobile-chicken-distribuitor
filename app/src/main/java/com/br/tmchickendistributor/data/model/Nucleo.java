@@ -28,6 +28,8 @@ public class Nucleo implements Serializable {
     private String telefone;
     private String endereco;
 
+    private boolean ativo=false;
+
     public Nucleo(NucleoORM nucleoORM){
         this.id=nucleoORM.getId();
         this.nome=nucleoORM.getNome();
@@ -37,6 +39,7 @@ public class Nucleo implements Serializable {
         this.nomeEmpresa=nucleoORM.getNomeEmpresa();
         this.telefone=nucleoORM.getTelefone();
         this.endereco=nucleoORM.getEndereco();
+        this.ativo=nucleoORM.isAtivo();
     }
 
     public Nucleo(final int id, final String nome) {

@@ -91,10 +91,10 @@ public class Model implements IModel {
     }
 
     @Override
-    public void deletarFuncionarioDaSessao() {
-        FuncionarioORM funcionarioORM = this.mFuncionarioDAO.where().equalTo("id",mPresenter.getFuncionario().getId()).findFirst();
-        Funcionario funcionarioDeletado = new Funcionario(funcionarioORM);
-        this.mFuncionarioDAO.deletar(new FuncionarioORM(funcionarioDeletado));
+    public void inativarFuncionarioDaSessao() {
+        Funcionario funcionarioAlterado =this.mFuncionarioDAO.pesquisarFuncionarioAtivo();
+        funcionarioAlterado.setAtivo(false);
+        this.mFuncionarioDAO.alterar(new FuncionarioORM(funcionarioAlterado));
     }
 
     @RequiresApi(api = VERSION_CODES.N)
@@ -138,7 +138,7 @@ public class Model implements IModel {
     @Override
     public Funcionario pesquisarFuncionarioDaSessao() {
 
-        FuncionarioORM funcionarioORM = mFuncionarioDAO.where().equalTo("id",mPresenter.getControleSessao().getIdUsuario()).findFirst();
+        FuncionarioORM funcionarioORM = mFuncionarioDAO.where().equalTo("ativo",true).findFirst();
         Funcionario funcionario = new Funcionario(funcionarioORM);
         return funcionario;
     }

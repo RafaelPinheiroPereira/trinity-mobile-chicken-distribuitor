@@ -32,7 +32,7 @@ public interface IConfiguracaoMVP {
 
         void setArquivoUtils(ArquivoUtils arquivoUtils);
 
-        boolean verificarLogin();
+        boolean estaLogado();
 
         public ControleSessao getControleSessao() ;
 
@@ -40,6 +40,8 @@ public interface IConfiguracaoMVP {
     }
 
     interface IModel {
+
+        boolean estaAtivo();
 
         String statusSistema();
 

@@ -38,6 +38,8 @@ public class Funcionario implements Serializable {
 
     private Date dataUltimaSincronizacao;
 
+    private boolean ativo=false;
+
 
 
     public Funcionario(FuncionarioORM funcionarioORM) {
@@ -53,6 +55,7 @@ public class Funcionario implements Serializable {
         this.idPastaVendas = funcionarioORM.getIdPastaVendas();
         this.alteraPreco=funcionarioORM.getAlteraPreco();
         this.dataUltimaSincronizacao=funcionarioORM.getDataUltimaSincronizacao();
+        this.ativo=funcionarioORM.isAtivo();
 
     }
 }

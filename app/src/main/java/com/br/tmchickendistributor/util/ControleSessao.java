@@ -45,25 +45,15 @@ public class ControleSessao {
      * Check login method will check user login status If false it will redirect user to login page
      * Else do anything
      */
-    public boolean checkLogin() {
+    public boolean estaLogado() {
         // Check login status
         if (!this.usuarioConectado()) {
 
-            // user is not logged in redirect him to Login Activity
-            Intent i = new Intent(contexto, LoginActivity.class);
+           return false;
 
-            // Closing all the Activities from stack
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-            // Add new Flag to start new Activity
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            // Staring Login Activity
-            contexto.startActivity(i);
-
-            return true;
         }
-        return false;
+        return true;
     }
 
     public void criarSessao(long matricula, String senha, String nome, long idNucleo, long idVendaMaxima,

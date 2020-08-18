@@ -96,10 +96,9 @@ public class Presenter implements IPresenter {
     }
 
     @Override
-    public boolean verificarLogin() {
-        this.mControleSessao = new ControleSessao(getContext());
-        this.setControleSessao(this.mControleSessao);
-        return mControleSessao.checkLogin();
+    public boolean estaLogado() {
+
+        return this.mIModel.estaAtivo();
     }
 
     @Override

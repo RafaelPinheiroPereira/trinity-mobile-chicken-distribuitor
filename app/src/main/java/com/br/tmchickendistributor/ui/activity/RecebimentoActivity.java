@@ -117,11 +117,10 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
         mPresenter = new Presenter(this);
 
         mPresenter.getParametros();
+
         mPresenter.configurarViewComDadosDoCliente();
 
         mPresenter.verificarCredenciaisGoogleDrive();
-
-
 
         mPresenter.getRecebimentos().addAll(mPresenter.obterRecebimentoPorCliente());
 
@@ -130,8 +129,12 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
         txtValorTotalDevido.setText(
                 FormatacaoMoeda.converterParaDolar(
                         mPresenter.getValorTotalDevido().doubleValue()));
+
         adapter = new RecebimentoAdapter(mPresenter);
+
         rcvRecebimento.setAdapter(adapter);
+
+
 
         try {
             adaptadorConta =
@@ -304,7 +307,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
     public void salvarRecebimento() {
 
       if(!mPresenter.getConta().getId().equals("F"))  {
-        // if (!new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty()) {
+         if (!new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty()) {
 
               long idBlocoRecibo= mPresenter.configurarSequenceDoRecebimento();
               if (idBlocoRecibo > 0) {
@@ -314,7 +317,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
                   AbstractActivity.showToast(
                           mPresenter.getContext(),
                           "Recebimento realizado com sucesso!.\n");
-                  NavUtils.navigateUpFromSameTask(this);
+                //  NavUtils.navigateUpFromSameTask(this);
               }else{
 
                   AbstractActivity.showToast(
@@ -322,12 +325,12 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
                           "Dados do recibo não atualizados com o servidor.\nContate o suporte do sistema");
 
               }
-           //  mPresenter.esperarPorConexao();
-//         } else {
-//              AbstractActivity.showToast(
-//                   mPresenter.getContext(),
-//                      "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
-//         }
+             mPresenter.esperarPorConexao();
+         } else {
+             AbstractActivity.showToast(
+                  mPresenter.getContext(),
+                      "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
+         }
       }
       else{
           AbstractActivity.showToast(
