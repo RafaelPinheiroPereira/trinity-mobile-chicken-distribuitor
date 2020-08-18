@@ -25,7 +25,7 @@ public class Cliente implements Serializable {
 
     private long id;
 
-    private Localidade localidade;
+   // private Localidade localidade;
 
     private String nome;
 
@@ -46,7 +46,7 @@ public class Cliente implements Serializable {
         this.id = clienteORM.getId();
         this.nome = clienteORM.getNome();
         this.razaoSocial = clienteORM.getRazaoSocial();
-        this.localidade = new Localidade(clienteORM.getMLocalidadeORM());
+      //  this.localidade = new Localidade(clienteORM.getMLocalidadeORM());
         this.cep = clienteORM.getCep();
         this.cpf = clienteORM.getCpf();
         this.bairro = clienteORM.getBairro();

@@ -37,7 +37,7 @@ public class UnidadeDAO extends GenericsDAO<UnidadeORM> {
                         .and()
                         .equalTo("unidadePadrao", "S")
                         .findFirst();
-        return new Unidade(unity);
+        return unity!=null ?new Unidade(unity):null;
     }
 
 

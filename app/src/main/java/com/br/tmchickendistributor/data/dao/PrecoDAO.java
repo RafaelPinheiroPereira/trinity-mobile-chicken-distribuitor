@@ -4,6 +4,7 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import com.br.tmchickendistributor.data.model.Preco;
 import com.br.tmchickendistributor.data.model.Produto;
+import com.br.tmchickendistributor.data.model.Unidade;
 import com.br.tmchickendistributor.data.realm.PrecoORM;
 import io.realm.RealmResults;
 import java.util.ArrayList;
@@ -25,12 +26,12 @@ public class PrecoDAO extends GenericsDAO<PrecoORM> {
     }
 
 
-    public Preco carregaPrecoProduto(Produto produto) {
+    public Preco carregaPrecoProduto(Produto produto, Unidade unidade) {
         Preco preco = new Preco();
         preco.setValor(0.0);
 
         RealmResults<PrecoORM> result = where().equalTo("chavesPrecoORM.idProduto", produto.getId())
-                .equalTo("chavesPrecoORM.unidadeProduto", produto.getUnidade()).findAll();
+                .equalTo("chavesPrecoORM.unidadeProduto", unidade.getId().split("-")[0]).findAll();
 
         if (result != null && result.size() > 0) {
             for (PrecoORM aux : result) {

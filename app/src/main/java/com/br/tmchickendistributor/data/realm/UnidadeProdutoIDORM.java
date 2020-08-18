@@ -15,7 +15,9 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class UnidadeProdutoIDORM extends RealmObject implements Serializable {
 
+
     @PrimaryKey
+    private String id;
     private long idProduto;
 
     private String idUnidade;
@@ -23,5 +25,6 @@ public class UnidadeProdutoIDORM extends RealmObject implements Serializable {
     public UnidadeProdutoIDORM(UnidadeProdutoID unidadeProdutoID) {
         this.idProduto = unidadeProdutoID.getIdProduto();
         this.idUnidade = unidadeProdutoID.getIdUnidade();
+        this.id=unidadeProdutoID.getIdUnidade()+"-"+ unidadeProdutoID.getIdProduto();
     }
 }

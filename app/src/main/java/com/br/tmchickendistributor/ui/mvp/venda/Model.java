@@ -88,7 +88,7 @@ public class Model implements IVendaMVP.IModel {
 
     @Override
     public Preco carregarPrecoPorProduto() {
-        return this.mPrecoDAO.carregaPrecoProduto(mPresenter.getProdutoSelecionado());
+        return this.mPrecoDAO.carregaPrecoProduto(mPresenter.getProdutoSelecionado(),mPresenter.getUnidadeSelecionada());
     }
 
     @Override
@@ -256,7 +256,7 @@ public class Model implements IVendaMVP.IModel {
     }
 
     @Override
-    public Unidade pesquisarUnidadePorProduto() {
+    public Unidade pesquisarUnidadePadraoDoProduto() {
         return this.unidadeDAO.findUnityPattenByProduct(mPresenter.getProdutoSelecionado());
     }
 

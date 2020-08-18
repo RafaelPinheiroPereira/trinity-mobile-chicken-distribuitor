@@ -253,8 +253,8 @@ public class Presenter implements IVendaMVP.IPresenter {
     }
 
     @Override
-    public Unidade carregarUnidadesPorProduto() {
-        return this.mModel.pesquisarUnidadePorProduto();
+    public Unidade carregarUnidadePadraoDoProduto() {
+        return this.mModel.pesquisarUnidadePadraoDoProduto();
     }
 
     @Override
@@ -434,10 +434,7 @@ public class Presenter implements IVendaMVP.IPresenter {
         this.mView.setSpinnerProductSelected();
     }
 
-    @Override
-    public void setSpinnerUnidadePadraoProdutoSelecionado() {
-        this.mView.inicializarSpinnerUnidadesComUnidadePadraoDoProduto();
-    }
+
 
     @Override
     public void setTotalProductValue(final BigDecimal totalProductValue) {

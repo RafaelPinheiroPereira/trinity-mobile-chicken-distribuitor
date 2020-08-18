@@ -358,7 +358,19 @@ public class VendasActivity extends AppCompatActivity implements IView {
     @Override
     public void atualizarViewsDoProdutoSelecionado() {
         mPresenter.setSpinnerProdutoSelecionado();
-        mPresenter.setSpinnerUnidadePadraoProdutoSelecionado();
+
+        Unidade unidade=mPresenter.carregarUnidadePadraoDoProduto();
+
+        if(unidade!=null){
+            mPresenter.setUnidadeSelecionada(unidade);
+
+        }else{
+
+            mPresenter.setUnidadeSelecionada( mPresenter.carregarUnidades().get(0));
+        }
+        spnUnidades.setSelection(
+                adaptadorUnidades.getPosition(mPresenter.getUnidadeSelecionada().getId().split("-")[0]));
+
         mPresenter.setQuantidadeProdutos(new BigDecimal("1"));
         mPresenter.setPreco(mPresenter.pesquisarPrecoPorProduto());
 
@@ -407,13 +419,16 @@ public class VendasActivity extends AppCompatActivity implements IView {
                                             "Erro Formatacao Data Pedido: " + e.getMessage()));
                 }
             }
-
-            mPresenter.esperarPorConexao();
-
-        } else if (new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty()) {
             AbstractActivity.showToast(
                     mPresenter.getContext(),
-                    "DispositivoImpressora não conectado!\nHabilite no Menu : Configurar Impressora.");
+                    "Pedido realizado com sucesso!.\n");
+            NavUtils.navigateUpFromSameTask(this);
+         //   mPresenter.esperarPorConexao();
+
+//        } else if (new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty()) {
+//            AbstractActivity.showToast(
+//                    mPresenter.getContext(),
+//                    "DispositivoImpressora não conectado!\nHabilite no Menu : Configurar Impressora.");
         } else {
             AbstractActivity.showToast(
                     mPresenter.getContext(), " No mímimo um item deve ser adicionado!");
@@ -518,13 +533,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
         this.mPresenter.exibirBotaoFotografar();
     }
 
-    @Override
-    public void inicializarSpinnerUnidadesComUnidadePadraoDoProduto() {
-        Unidade unidadePadrao = mPresenter.carregarUnidadesPorProduto();
-        spnUnidades.setSelection(
-                adaptadorUnidades.getPosition(unidadePadrao.getId().split("-")[0]));
-        mPresenter.setUnidadeSelecionada(unidadePadrao);
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

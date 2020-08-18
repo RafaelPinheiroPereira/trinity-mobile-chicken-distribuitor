@@ -16,6 +16,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -120,7 +121,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
 
         mPresenter.verificarCredenciaisGoogleDrive();
 
-        swtcAmortiza.setChecked(false);
+
 
         mPresenter.getRecebimentos().addAll(mPresenter.obterRecebimentoPorCliente());
 
@@ -149,6 +150,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
         spnConta.setSelection(POSICAO_INICIAL);
 
         cetValorAmortizar.setText("00,00");
+        swtcAmortiza.setChecked(true);
 
         cetValorAmortizar.addTextChangedListener(
                 new TextWatcher() {
@@ -302,12 +304,17 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
     public void salvarRecebimento() {
 
       if(!mPresenter.getConta().getId().equals("F"))  {
-         // if (!new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty()) {
+        // if (!new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty()) {
 
               long idBlocoRecibo= mPresenter.configurarSequenceDoRecebimento();
               if (idBlocoRecibo > 0) {
                   mPresenter.salvarAmortizacao(idBlocoRecibo);
                   mPresenter.atualizarRecycleView();
+
+                  AbstractActivity.showToast(
+                          mPresenter.getContext(),
+                          "Recebimento realizado com sucesso!.\n");
+                  NavUtils.navigateUpFromSameTask(this);
               }else{
 
                   AbstractActivity.showToast(
@@ -315,12 +322,12 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
                           "Dados do recibo não atualizados com o servidor.\nContate o suporte do sistema");
 
               }
-            //  mPresenter.esperarPorConexao();
-          //} else {
-            //  AbstractActivity.showToast(
-                   //   mPresenter.getContext(),
-                   //   "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
-        //  }
+           //  mPresenter.esperarPorConexao();
+//         } else {
+//              AbstractActivity.showToast(
+//                   mPresenter.getContext(),
+//                      "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
+//         }
       }
       else{
           AbstractActivity.showToast(
@@ -337,7 +344,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
         // Se o valor devido eh maior ou igual ao credito
         if (mPresenter.valorTotalDevidoEhMenorOuIgualAoCredito()) {
 
-            if (b) {
+            if (b ) {
                 mPresenter.getRecebimentos().clear();
                 mPresenter.getRecebimentos().addAll(mPresenter.obterRecebimentoPorCliente());
                 mPresenter.atualizarRecycleView();

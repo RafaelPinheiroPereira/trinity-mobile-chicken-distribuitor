@@ -106,7 +106,7 @@ public interface IVendaMVP {
 
         ArrayList<String> carregarUnidadesEmString(List<Unidade> unidades);
 
-        Unidade carregarUnidadesPorProduto();
+        Unidade carregarUnidadePadraoDoProduto();
 
 
 
@@ -157,7 +157,7 @@ public interface IVendaMVP {
 
         void setSpinnerProdutoSelecionado();
 
-        void setSpinnerUnidadePadraoProdutoSelecionado();
+
 
         void setTotalProductValue(BigDecimal totalProductValue);
 
@@ -211,7 +211,7 @@ public interface IVendaMVP {
 
         void getParametros();
 
-        void inicializarSpinnerUnidadesComUnidadePadraoDoProduto();
+
 
         boolean validarCamposAntesDeAdicionarItem();
 
@@ -264,7 +264,7 @@ public interface IVendaMVP {
 
         void atualizarIdMaximoDeVenda(long idFuncionario,long idVendaMaxima);
 
-        Unidade pesquisarUnidadePorProduto();
+        Unidade pesquisarUnidadePadraoDoProduto();
 
         Pedido pesquisarVendaPorId(Long id);
 

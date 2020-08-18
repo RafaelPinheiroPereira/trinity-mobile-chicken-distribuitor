@@ -13,18 +13,19 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class Localidade implements Serializable {
 
-    private long id;
+
 
     private String nome;
+    LocalidadeID pkLocalidade;
+    private String id;
 
 
 
-    private long idEmpresa;
 
     public Localidade(LocalidadeORM localidadeORM) {
-        this.id = localidadeORM.getId();
-       
+
+        this.id=localidadeORM.getId();
         this.nome = localidadeORM.getNome();
-        this.idEmpresa=localidadeORM.getIdEmpresa();
+
     }
 }

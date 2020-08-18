@@ -19,7 +19,7 @@ public class Produto implements Serializable {
 
     private double quantidade;
 
-    private String unidade;
+
 
     private long idEmpresa;
     private long idNucleo;
@@ -27,7 +27,7 @@ public class Produto implements Serializable {
     public Produto(ProdutoORM produtoORM) {
         this.id = produtoORM.getId();
         this.nome = produtoORM.getNome();
-        this.unidade = produtoORM.getUnidade();
+
         this.quantidade = produtoORM.getQuantidade();
         this.idEmpresa=produtoORM.getIdEmpresa();
         this.idNucleo=produtoORM.getIdNucleo();

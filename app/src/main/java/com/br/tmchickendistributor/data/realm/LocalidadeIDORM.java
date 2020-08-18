@@ -1,6 +1,5 @@
 package com.br.tmchickendistributor.data.realm;
 
-import com.br.tmchickendistributor.data.model.Localidade;
 import com.br.tmchickendistributor.data.model.LocalidadeID;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -11,22 +10,20 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class LocalidadeORM extends RealmObject implements Serializable {
-
+public class LocalidadeIDORM extends RealmObject implements Serializable {
     @PrimaryKey
-    private String id;
-    private String nome;
+    String id;
+    long idEmpresa;
+    long idLocalidade;
 
+    public LocalidadeIDORM(LocalidadeID localidadeID) {
 
-
-
-    public LocalidadeORM(Localidade localidade) {
-        this.id=localidade.getId();
-        this.nome = localidade.getNome();
-
+        this.id=  localidadeID.getIdEmpresa() + "-" + localidadeID.getIdLocalidade();
+        this.idEmpresa=localidadeID.getIdEmpresa();
+        this.idLocalidade=localidadeID.getIdLocalidade();
 
     }
 }
