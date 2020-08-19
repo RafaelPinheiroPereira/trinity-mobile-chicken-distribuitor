@@ -6,8 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.br.tmchickendistributor.data.model.DispositivoImpressora;
+import com.br.tmchickendistributor.data.model.DispositivoEscaneado;
 import com.br.tmchickendistributor.ui.mvp.impressora.IImpressoraMVP.IPresenter;
 import com.br.tmchickendristributor.R;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class DispositivoAdapter extends BaseAdapter {
 
-    private List<DispositivoImpressora> mDispositivoImpressoras = new ArrayList<>();
+    private List<DispositivoEscaneado> mDispositivoEscaneados = new ArrayList<>();
 
     private IPresenter mPresenter;
 
@@ -25,16 +24,16 @@ public class DispositivoAdapter extends BaseAdapter {
     }
 
     public void add(String nome, String enderecoBluetooth, int icone) {
-        DispositivoImpressora impressora = new DispositivoImpressora(enderecoBluetooth, icone, nome);
-        mDispositivoImpressoras.add(impressora);
+        DispositivoEscaneado impressora = new DispositivoEscaneado(enderecoBluetooth, icone, nome);
+        mDispositivoEscaneados.add(impressora);
     }
 
     public void clear() {
-        mDispositivoImpressoras.clear();
+        mDispositivoEscaneados.clear();
     }
 
-    public DispositivoImpressora find(String address) {
-        for (DispositivoImpressora d : mDispositivoImpressoras) {
+    public DispositivoEscaneado find(String address) {
+        for (DispositivoEscaneado d : mDispositivoEscaneados) {
             if (address.equals(d.getEnderecoBluetooth())) {
                 return d;
             }
@@ -45,12 +44,12 @@ public class DispositivoAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mDispositivoImpressoras.size();
+        return mDispositivoEscaneados.size();
     }
 
     @Override
     public Object getItem(int location) {
-        return mDispositivoImpressoras.get(location);
+        return mDispositivoEscaneados.get(location);
     }
 
     @Override
@@ -68,7 +67,7 @@ public class DispositivoAdapter extends BaseAdapter {
         }
 
         // Populate the layout with new data
-        DispositivoImpressora impressora = (DispositivoImpressora) getItem(position);
+        DispositivoEscaneado impressora = (DispositivoEscaneado) getItem(position);
         ((ImageView) v.findViewById(R.id.icon)).setImageResource(impressora.getIcone());
         ((TextView) v.findViewById(R.id.name)).setText(impressora.getNome());
         ((TextView) v.findViewById(R.id.address)).setText(impressora.getEnderecoBluetooth());

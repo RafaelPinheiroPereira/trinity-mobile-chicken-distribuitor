@@ -14,6 +14,7 @@ import com.br.tmchickendistributor.data.model.ClienteGrupo;
 import com.br.tmchickendistributor.data.model.Exportacao;
 import com.br.tmchickendistributor.data.model.Funcionario;
 import com.br.tmchickendistributor.data.model.ListaPedido;
+import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.model.Recebimento;
 import com.br.tmchickendistributor.network.tarefa.ExportacaoTask;
@@ -23,7 +24,6 @@ import com.br.tmchickendistributor.ui.activity.RecebimentoActivity;
 import com.br.tmchickendistributor.ui.activity.VendasActivity;
 import com.br.tmchickendistributor.ui.mvp.home.IHomeMVP.IModel;
 import com.br.tmchickendistributor.ui.mvp.home.IHomeMVP.IView;
-import com.br.tmchickendistributor.util.ControleSessao;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,7 +34,7 @@ import java.util.List;
 
 public class Presenter implements IHomeMVP.IPresenter {
 
-    ControleSessao mControleSessao;
+
 
     private List<Cliente> clients = new ArrayList<>();
 
@@ -58,6 +58,8 @@ public class Presenter implements IHomeMVP.IPresenter {
     private String idPastarecebimento;
 
     private Funcionario mFuncionario;
+
+    private Nucleo nucleo;
 
 
 
@@ -225,10 +227,7 @@ public class Presenter implements IHomeMVP.IPresenter {
     }
 
 
-    @Override
-    public long getUserId() {
-        return this.mControleSessao.getIdUsuario();
-    }
+
 
     @Override
     public List<Recebimento> pesquisarRecebimentoPorCliente(final Cliente cliente) {
@@ -260,17 +259,9 @@ public class Presenter implements IHomeMVP.IPresenter {
         new ImportacaoTask( this).execute();
     }
 
-    @Override
-    public void logout() {
 
-        this.mControleSessao.logout();
 
-    }
 
-    @Override
-    public void salvarRecebimento(final Recebimento recebimento) {
-        this.model.salvarRecebimento(recebimento);
-    }
 
     @Override
     public void obterClientesAposImportarDados() {
@@ -285,24 +276,18 @@ public class Presenter implements IHomeMVP.IPresenter {
     }
 
     @Override
-    public void verificarCredenciaisGoogleDrive() {
-        this.view.verificarCredenciaisGoogleDrive();
-    }
-    @Override
-    public ControleSessao getControleSessao() {
-        return mControleSessao;
-    }
-    @Override
-    public void setControleSessao(final ControleSessao controleSessao) {
-        mControleSessao = controleSessao;
+    public void setNucleo(final Nucleo nucleo) {
+        this.nucleo=nucleo;
     }
 
     @Override
-    public boolean verificarLogin() {
-        this.mControleSessao = new ControleSessao(getContext());
-        this.setControleSessao(this.mControleSessao);
-        return mControleSessao.estaLogado();
+    public void verificarCredenciaisGoogleDrive() {
+        this.view.verificarCredenciaisGoogleDrive();
     }
+
+
+
+
 
     @Override
     public DriveServiceHelper getDriveServiceHelper() {
@@ -349,6 +334,16 @@ public class Presenter implements IHomeMVP.IPresenter {
     }
 
     @Override
+    public Nucleo getNucleo() {
+        return this.nucleo;
+    }
+
+    @Override
+    public Nucleo pesquisarNucleoAtivo() {
+        return this.model.pesquisarNucleoAtivo();
+    }
+
+    @Override
     public Funcionario pesquisarUsuarioDaSesao() {
         return this.model.pesquisarFuncionarioDaSessao();
     }
@@ -376,10 +371,7 @@ public class Presenter implements IHomeMVP.IPresenter {
         this.fotosRecibos = fotosRecibos;
     }
 
-    @Override
-    public void excluirRecebimentos() {
-        this.model.excluirRecebimentos();
-    }
+
 
 
 }

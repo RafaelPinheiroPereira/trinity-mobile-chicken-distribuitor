@@ -25,7 +25,6 @@ import com.br.tmchickendistributor.data.realm.UnidadeORM;
 import com.br.tmchickendistributor.network.RetrofitConfig;
 import com.br.tmchickendistributor.network.servico.ImportacaoService;
 import com.br.tmchickendistributor.ui.mvp.home.IHomeMVP;
-import com.br.tmchickendistributor.util.ControleSessao;
 import io.realm.Realm;
 import java.io.IOException;
 import java.util.List;
@@ -37,12 +36,9 @@ public class ImportacaoTask extends AsyncTask<Void, Void, Boolean> {
 
   IHomeMVP.IPresenter mHomePresenter;
 
-  ControleSessao mControleSessao;
-
   public ImportacaoTask(IHomeMVP.IPresenter homePresenter) {
 
     this.mHomePresenter = homePresenter;
-    this.mControleSessao = new ControleSessao(mHomePresenter.getContext());
   }
 
   public boolean importarDados() {
@@ -240,11 +236,14 @@ public class ImportacaoTask extends AsyncTask<Void, Void, Boolean> {
     if (VERSION.SDK_INT >= VERSION_CODES.N) {
       unidades.forEach(
           unidade -> {
-            UnidadeProdutoID unidadeProdutoID = new UnidadeProdutoID(unidade.getChavesUnidade().getIdUnidade()
-                    + "-"
-                    + unidade.getChavesUnidade().getIdProduto(),unidade.getChavesUnidade().getIdProduto(),unidade.getChavesUnidade().getIdUnidade());
-            unidade.setChavesUnidade(
-                    unidadeProdutoID);
+            UnidadeProdutoID unidadeProdutoID =
+                new UnidadeProdutoID(
+                    unidade.getChavesUnidade().getIdUnidade()
+                        + "-"
+                        + unidade.getChavesUnidade().getIdProduto(),
+                    unidade.getChavesUnidade().getIdProduto(),
+                    unidade.getChavesUnidade().getIdUnidade());
+            unidade.setChavesUnidade(unidadeProdutoID);
             unidade.setId(
                 unidade.getChavesUnidade().getIdUnidade()
                     + "-"
@@ -253,15 +252,18 @@ public class ImportacaoTask extends AsyncTask<Void, Void, Boolean> {
           });
     } else {
       for (Unidade unidade : unidades) {
-        UnidadeProdutoID unidadeProdutoID = new UnidadeProdutoID(unidade.getChavesUnidade().getIdUnidade()
-                + "-"
-                + unidade.getChavesUnidade().getIdProduto(),unidade.getChavesUnidade().getIdProduto(),unidade.getChavesUnidade().getIdUnidade());
-        unidade.setChavesUnidade(
-                unidadeProdutoID);
-        unidade.setId(
+        UnidadeProdutoID unidadeProdutoID =
+            new UnidadeProdutoID(
                 unidade.getChavesUnidade().getIdUnidade()
-                        + "-"
-                        + unidade.getChavesUnidade().getIdProduto());
+                    + "-"
+                    + unidade.getChavesUnidade().getIdProduto(),
+                unidade.getChavesUnidade().getIdProduto(),
+                unidade.getChavesUnidade().getIdUnidade());
+        unidade.setChavesUnidade(unidadeProdutoID);
+        unidade.setId(
+            unidade.getChavesUnidade().getIdUnidade()
+                + "-"
+                + unidade.getChavesUnidade().getIdProduto());
         realm.copyToRealmOrUpdate(new UnidadeORM(unidade));
       }
     }
@@ -276,7 +278,7 @@ public class ImportacaoTask extends AsyncTask<Void, Void, Boolean> {
         importacaoService.realizarImportacao(
             mHomePresenter.getFuncionario().getId(),
             mHomePresenter.getFuncionario().getIdEmpresa(),
-            mControleSessao.getIdNucleo());
+            mHomePresenter.getNucleo().getId());
     try {
       Response<Importacao> importacaoResponse = importacaoCall.execute();
       if (importacaoResponse.isSuccessful()) {

@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Empresa;
+import com.br.tmchickendistributor.data.model.Funcionario;
+import com.br.tmchickendistributor.data.model.Impressora;
+import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.ui.mvp.visualizar.IViewOrderMVP.IView;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
@@ -37,6 +40,16 @@ public class Presenter implements IViewOrderMVP.IPresenter {
     @Override
     public void atualizarPedido(final Pedido pedido) {
         this.mModel.atualizarPedido(pedido);
+    }
+
+    @Override
+    public Impressora getImpressora() {
+        return this.mModel.pesquisarImpressoraAtiva();
+    }
+
+    @Override
+    public Nucleo getNucleo() {
+        return this.mModel.pesquisarNucleoAtivo();
     }
 
     @Override
@@ -93,7 +106,7 @@ public class Presenter implements IViewOrderMVP.IPresenter {
      */
     @Override
     public void esperarPorConexao() {
-        if (this.mImpressoraUtil.esperarPorConexao()) {
+        if (this.mImpressoraUtil.esperarPorConexao(this.getImpressora())) {
             this.mView.exibirBotaoGerarRecibo();
         }
     }
@@ -119,7 +132,7 @@ public class Presenter implements IViewOrderMVP.IPresenter {
 
     @Override
     public void imprimirComprovante() {
-        this.mImpressoraUtil.imprimirComprovantePedido(getPedido(), getCliente(),this.pesquisarEmpresaRegistrada());
+        this.mImpressoraUtil.imprimirComprovantePedido(getPedido(), getCliente(),this.getNucleo(),this.getFuncionario());
     }
 
     @Override
@@ -134,5 +147,10 @@ public class Presenter implements IViewOrderMVP.IPresenter {
     @Override
     public Empresa pesquisarEmpresaRegistrada() {
         return this.mModel.pesquisarEmpresaRegistrada();
+    }
+
+    @Override
+    public Funcionario getFuncionario(){
+        return this.mModel.pesquiarFuncionarioAtivo();
     }
 }

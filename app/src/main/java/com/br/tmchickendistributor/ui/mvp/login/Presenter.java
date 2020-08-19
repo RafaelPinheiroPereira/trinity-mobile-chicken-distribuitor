@@ -8,13 +8,12 @@ import com.br.tmchickendistributor.network.RetrofitConfig;
 import com.br.tmchickendistributor.network.servico.AutenticacaoService;
 import com.br.tmchickendistributor.network.tarefa.LoginTask;
 import com.br.tmchickendistributor.ui.mvp.login.ILoginMVP.IModel;
-import com.br.tmchickendistributor.util.ControleSessao;
 import java.util.List;
 import retrofit2.Call;
 
 public class Presenter implements ILoginMVP.IPresenter {
 
-    ControleSessao mControleSessao;
+
 
     private LoginTask mLoginTask;
 
@@ -39,7 +38,7 @@ public class Presenter implements ILoginMVP.IPresenter {
     }
 
     @Override
-    public void atualizarNucleo(final Nucleo nucleo) {
+    public void ativarNucleo(final Nucleo nucleo) {
         this.mIModel.atualizarNucleo(nucleo);
     }
 
@@ -53,12 +52,7 @@ public class Presenter implements ILoginMVP.IPresenter {
         return this.mIModel.pesquisarTodosNucleos();
     }
 
-    @Override
-    public void criarSessao(final long id, final String senha, final String nome, long idNucleo, long maxIdVenda,
-            final long maxIdRecibo) {
-        this.mControleSessao = new ControleSessao(getContexto());
-        mControleSessao.criarSessao(id, senha, nome, idNucleo,maxIdVenda,maxIdRecibo);
-    }
+
 
     @Override
     public Empresa pesquisarEmpresaRegistrada() {

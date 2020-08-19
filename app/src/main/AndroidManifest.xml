@@ -73,7 +73,12 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name="com.br.tmchickendistributor.ui.activity.DeviceListActivity" />
+        <activity android:name="com.br.tmchickendistributor.ui.activity.DeviceListActivity"
+            android:parentActivityName="com.br.tmchickendistributor.ui.activity.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.br.tmchickendistributor.ui.activity.DeviceListActivity"/>
+        </activity>
         <activity
             android:name="com.br.tmchickendistributor.ui.activity.PedidoActivity"
             android:parentActivityName="com.br.tmchickendistributor.ui.activity.HomeActivity" />

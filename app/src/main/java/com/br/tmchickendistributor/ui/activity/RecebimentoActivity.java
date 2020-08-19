@@ -30,7 +30,6 @@ import com.br.tmchickendistributor.ui.adapter.RecebimentoAdapter;
 import com.br.tmchickendistributor.ui.mvp.recebimento.IRecebimentoMVP;
 import com.br.tmchickendistributor.ui.mvp.recebimento.Presenter;
 import com.br.tmchickendistributor.util.CameraUtil;
-import com.br.tmchickendistributor.util.ControleSessao;
 import com.br.tmchickendistributor.util.CurrencyEditText;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 import com.br.tmchickendistributor.util.FormatacaoMoeda;
@@ -278,7 +277,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
   public void salvarRecebimento() {
 
     if (!mPresenter.getConta().getId().equals("F")) {
-      if (!new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty()) {
+      if (mPresenter.getImpresssora().isAtivo()) {
 
         long idBlocoRecibo = mPresenter.configurarSequenceDoRecebimento();
         if (idBlocoRecibo > 0) {

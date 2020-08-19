@@ -1,7 +1,7 @@
 package com.br.tmchickendistributor.ui.mvp.impressora;
 
 import android.content.Context;
-import com.br.tmchickendistributor.util.ControleSessao;
+import com.br.tmchickendistributor.data.model.Impressora;
 
 public class Presenter implements IImpressoraMVP.IPresenter {
 
@@ -9,7 +9,7 @@ public class Presenter implements IImpressoraMVP.IPresenter {
 
     private IImpressoraMVP.IView view;
 
-    private ControleSessao mControleSessao;
+
 
     public Presenter(final IImpressoraMVP.IView view) {
         this.view = view;
@@ -17,7 +17,32 @@ public class Presenter implements IImpressoraMVP.IPresenter {
     }
 
     @Override
+    public void atualizarImpressora(final Impressora impressora) {
+        this.model.atualizarImpressora(impressora);
+    }
+
+    @Override
+    public boolean existeImpressoraAtiva() {
+        return this.model.existeImpressoraAtiva();
+    }
+
+    @Override
     public Context getContext() {
         return (Context) this.view;
+    }
+
+    @Override
+    public void inserirImpresora(final Impressora impressora) {
+          this.model.inserirImpresora(impressora);
+    }
+
+    @Override
+    public Impressora pequisarImpressoraAtiva() {
+        return this.model.pequisarImpressoraAtiva();
+    }
+
+    @Override
+    public Impressora pesquisarImpressora(final String address) {
+        return this.model.pesquisarImpressoraPorEndereco(address);
     }
 }

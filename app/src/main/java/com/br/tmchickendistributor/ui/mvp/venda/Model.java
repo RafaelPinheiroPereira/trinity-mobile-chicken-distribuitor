@@ -5,8 +5,10 @@ import android.os.Build.VERSION_CODES;
 import com.br.tmchickendistributor.data.dao.ClienteDAO;
 import com.br.tmchickendistributor.data.dao.EmpresaDAO;
 import com.br.tmchickendistributor.data.dao.FuncionarioDAO;
+import com.br.tmchickendistributor.data.dao.ImpressoraDAO;
 import com.br.tmchickendistributor.data.dao.ItemPedidoDAO;
 import com.br.tmchickendistributor.data.dao.ItemPedidoIDDAO;
+import com.br.tmchickendistributor.data.dao.NucleoDAO;
 import com.br.tmchickendistributor.data.dao.PedidoDAO;
 import com.br.tmchickendistributor.data.dao.PrecoDAO;
 import com.br.tmchickendistributor.data.dao.PrecoIDDAO;
@@ -15,8 +17,10 @@ import com.br.tmchickendistributor.data.dao.UnidadeDAO;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Funcionario;
+import com.br.tmchickendistributor.data.model.Impressora;
 import com.br.tmchickendistributor.data.model.ItemPedido;
 import com.br.tmchickendistributor.data.model.ItemPedidoID;
+import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.model.Preco;
 import com.br.tmchickendistributor.data.model.Produto;
@@ -24,14 +28,15 @@ import com.br.tmchickendistributor.data.model.Unidade;
 import com.br.tmchickendistributor.data.realm.ClienteORM;
 import com.br.tmchickendistributor.data.realm.EmpresaORM;
 import com.br.tmchickendistributor.data.realm.FuncionarioORM;
+import com.br.tmchickendistributor.data.realm.ImpressoraORM;
 import com.br.tmchickendistributor.data.realm.ItemPedidoIDORM;
 import com.br.tmchickendistributor.data.realm.ItemPedidoORM;
+import com.br.tmchickendistributor.data.realm.NucleoORM;
 import com.br.tmchickendistributor.data.realm.PedidoORM;
 import com.br.tmchickendistributor.data.realm.PrecoIDORM;
 import com.br.tmchickendistributor.data.realm.PrecoORM;
 import com.br.tmchickendistributor.data.realm.ProdutoORM;
 import com.br.tmchickendistributor.data.realm.UnidadeORM;
-import com.br.tmchickendistributor.util.ControleSessao;
 import io.realm.Sort;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +66,10 @@ public class Model implements IVendaMVP.IModel {
     UnidadeDAO unidadeDAO = UnidadeDAO.getInstace(UnidadeORM.class);
 
     FuncionarioDAO mFuncionarioDAO = FuncionarioDAO.getInstace(FuncionarioORM.class);
+
+    ImpressoraDAO impressoraDAO= ImpressoraDAO.getInstance(ImpressoraORM.class);
+
+    NucleoDAO nucleoDAO = NucleoDAO.getInstace(NucleoORM.class);
 
 
 
@@ -122,15 +131,9 @@ public class Model implements IVendaMVP.IModel {
     }
 
     @Override
-    public long configurarSequenceDoPedido(ControleSessao controleSessao) {
-        FuncionarioORM funcionarioORM = mFuncionarioDAO.where().equalTo("id",controleSessao.getIdUsuario()).findFirst();
-        Funcionario funcionarioPesquisado= new Funcionario(funcionarioORM);
+    public long configurarSequenceDoPedido() {
 
-
-        if(controleSessao.getIVendaMaxima()>0 &&funcionarioPesquisado.getMaxIdVenda()==0){
-            funcionarioPesquisado.setMaxIdVenda(controleSessao.getIVendaMaxima());
-        }
-
+        Funcionario funcionarioPesquisado= mFuncionarioDAO.pesquisarFuncionarioAtivo();
 
         PedidoORM pedidoORM = mPedidoDAO.where().findFirst();
         /**Já houve pedido salvo no tablet*/
@@ -165,11 +168,7 @@ public class Model implements IVendaMVP.IModel {
       return -1;
     }
 
-    @Override
-    public Funcionario consultarFuncionarioDaSessao(final long idUsuario) {
-        return mFuncionarioDAO.pesquisarPorId(idUsuario);
 
-    }
 
     @Override
     public ArrayList<String> carregarProdutoPorNome(final List<Produto> produtos) {
@@ -233,7 +232,20 @@ public class Model implements IVendaMVP.IModel {
         return mEmpresaDAO.pesquisarEmpresaRegistradaNoDispositivo();
     }
 
+    @Override
+    public Funcionario pesquisarFuncionarioAtivo() {
+        return mFuncionarioDAO.pesquisarFuncionarioAtivo();
+    }
 
+    @Override
+    public Impressora pesquisarImpressoraAtiva() {
+        return impressoraDAO.pesquisarImpressoraAtiva();
+    }
+
+    @Override
+    public Nucleo pesquisarNucleoAtivo() {
+        return this.nucleoDAO.pesquisarNucleoAtivo();
+    }
 
     @Override
     public Produto pesquisarProdutoPorId(final long id) {
@@ -274,10 +286,8 @@ public class Model implements IVendaMVP.IModel {
     }
 
     @Override
-    public void atualizarIdMaximoDeVenda(final long idFuncionario, final long idVendaMaxima) {
-       FuncionarioORM  funcionarioORM=this.mFuncionarioDAO.findById(idFuncionario);
-        Funcionario funcionarioPesquisado =
-                new Funcionario(funcionarioORM);
+    public void atualizarIdMaximoDeVenda( final long idVendaMaxima) {
+        Funcionario funcionarioPesquisado =this.mFuncionarioDAO.pesquisarFuncionarioAtivo();
         funcionarioPesquisado.setMaxIdVenda(idVendaMaxima);
         this.mFuncionarioDAO.alterar(new FuncionarioORM(funcionarioPesquisado));
     }

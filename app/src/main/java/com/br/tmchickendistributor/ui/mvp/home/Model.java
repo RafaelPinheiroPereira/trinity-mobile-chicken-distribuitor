@@ -156,6 +156,11 @@ public class Model implements IModel {
     }
 
     @Override
+    public Nucleo pesquisarNucleoAtivo() {
+        return this.nucleoDAO.pesquisarNucleoAtivo();
+    }
+
+    @Override
     public List<Pedido> pesquisarPedidosNaoMigrados() {
        return this.mPedidoDAO.getPedidosNaoMigrados();
     }

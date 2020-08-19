@@ -9,6 +9,7 @@ import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Conta;
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Funcionario;
+import com.br.tmchickendistributor.data.model.Impressora;
 import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Recebimento;
 import com.br.tmchickendistributor.ui.mvp.recebimento.IRecebimentoMVP.IView;
@@ -113,7 +114,7 @@ public class Presenter implements IRecebimentoMVP.IPresenter {
   /** Metodos relacionados a impressao */
   @Override
   public void esperarPorConexao() {
-    if (this.mImpressoraUtil.esperarPorConexao()) {
+    if (this.mImpressoraUtil.esperarPorConexao(this.getImpresssora())) {
       this.view.exibirBotaoComprovante();
     } else {
       fecharConexaoAtiva();
@@ -231,7 +232,7 @@ public class Presenter implements IRecebimentoMVP.IPresenter {
   @Override
   public void imprimirComprovante() {
     this.mImpressoraUtil.imprimirComprovanteRecebimento(
-        getRecebimentos(), getCliente(), this.getNucleo());
+        getRecebimentos(), getCliente(), this.getNucleo(),this.getFuncionario());
   }
 
   @Override
@@ -283,6 +284,11 @@ public class Presenter implements IRecebimentoMVP.IPresenter {
   @Override
   public void alterarBlocoRecibo(final BlocoRecibo blocoRecibo) {
     this.mModel.alterarBlocoRecibo(blocoRecibo);
+  }
+
+  @Override
+  public Impressora getImpresssora() {
+    return this.mModel.pesquisaImpressoraAtiva();
   }
 
   @Override

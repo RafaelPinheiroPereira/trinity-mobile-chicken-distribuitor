@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemSelected;
-
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.ClienteGrupo;
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
@@ -98,6 +97,7 @@ public class HomeActivity extends AppCompatActivity
         // Verifica se o user esta logado
         presenter = new Presenter(this);
         presenter.setFuncionario(presenter.pesquisarUsuarioDaSesao());
+        presenter.setNucleo(presenter.pesquisarNucleoAtivo());
 
         initViews();
         presenter.setDrawer(savedInstanceState);

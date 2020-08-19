@@ -8,14 +8,15 @@ import androidx.appcompat.app.AlertDialog;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Funcionario;
+import com.br.tmchickendistributor.data.model.Impressora;
 import com.br.tmchickendistributor.data.model.ItemPedido;
+import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.model.Preco;
 import com.br.tmchickendistributor.data.model.Produto;
 import com.br.tmchickendistributor.data.model.Unidade;
 import com.br.tmchickendistributor.data.realm.PedidoORM;
 import com.br.tmchickendistributor.ui.mvp.venda.IVendaMVP.IView;
-import com.br.tmchickendistributor.util.ControleSessao;
 import com.br.tmchickendistributor.util.DateUtils;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 import com.br.tmchickendistributor.util.ImpressoraUtil;
@@ -45,7 +46,7 @@ public class Presenter implements IVendaMVP.IPresenter {
 
     BigDecimal quantidadeProdutos;
 
-    String tipoRecebimento;
+
 
     BigDecimal totalDaVenda;
 
@@ -63,7 +64,7 @@ public class Presenter implements IVendaMVP.IPresenter {
 
     private DriveServiceHelper mDriveServiceHelper;
 
-    private Funcionario mFuncionario;
+
 
 
 
@@ -99,8 +100,8 @@ public class Presenter implements IVendaMVP.IPresenter {
     }
 
     @Override
-    public long configurarSequenceDoPedido(final ControleSessao controleSessao) {
-        return this.mModel.configurarSequenceDoPedido(controleSessao);
+    public long configurarSequenceDoPedido() {
+        return this.mModel.configurarSequenceDoPedido();
     }
 
     @Override
@@ -130,7 +131,7 @@ public class Presenter implements IVendaMVP.IPresenter {
 
     @Override
     public void esperarPorConexao() {
-        if (this.mImpressoraUtil.esperarPorConexao()) {
+        if (this.mImpressoraUtil.esperarPorConexao(this.getImpressora())) {
             this.mView.exibirBotaoImprimir();
         }
     }
@@ -300,7 +301,7 @@ public class Presenter implements IVendaMVP.IPresenter {
     @Override
     public void imprimirComprovante() {
 
-        this.mImpressoraUtil.imprimirComprovantePedido(getPedido(), getCliente(),this.pesquisarEmpresaRegistrada());
+        this.mImpressoraUtil.imprimirComprovantePedido(getPedido(), getCliente(),this.getNucleo(),this.getFuncionario());
     }
 
     @Override
@@ -396,13 +397,13 @@ public class Presenter implements IVendaMVP.IPresenter {
             }
         }
 
-        ControleSessao controleSessao = new ControleSessao(getContext());
+
         pedido.setIdEmpresa(this.mModel.pesquisarEmpresaRegistrada().getId());
-        pedido.setCodigoFuncionario(controleSessao.getIdUsuario());
+        pedido.setCodigoFuncionario(this.getFuncionario().getId());
 
         pedido.setCodigoCliente(getCliente().getId());
         pedido.setValorTotal(calcularTotalDaVenda());
-        pedido.setIdNucleo(controleSessao.getIdNucleo());
+        pedido.setIdNucleo(this.getNucleo().getId());
 
         pedido.setIdVenda(sequencePedido);
         PedidoORM pedidoORM = new PedidoORM(pedido);
@@ -426,7 +427,7 @@ public class Presenter implements IVendaMVP.IPresenter {
 
         this.mModel.copyOrUpdateSaleOrder(pedido);
 
-        this.mModel.atualizarIdMaximoDeVenda(controleSessao.getIdUsuario(), sequencePedido);
+        this.mModel.atualizarIdMaximoDeVenda( sequencePedido);
     }
 
     @Override
@@ -467,22 +468,24 @@ public class Presenter implements IVendaMVP.IPresenter {
     }
 
     @Override
+    public Impressora getImpressora() {
+        return this.mModel.pesquisarImpressoraAtiva();
+    }
+
+    @Override
+    public Nucleo getNucleo() {
+        return this.mModel.pesquisarNucleoAtivo();
+    }
+
+    @Override
     public void salvarNomeFoto(final Pedido pedido) {
         this.mModel.salvarPedido(new PedidoORM(pedido));
     }
 
     @Override
     public Funcionario getFuncionario() {
-        return mFuncionario;
+        return this.mModel.pesquisarFuncionarioAtivo();
     }
 
-    @Override
-    public Funcionario getFuncionarioDaSessao() {
-        return this.mModel.consultarFuncionarioDaSessao(new ControleSessao(this.getContext()).getIdUsuario());
-    }
 
-    @Override
-    public void setFuncionario(final Funcionario funcionario) {
-        mFuncionario = funcionario;
-    }
 }

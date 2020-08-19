@@ -12,14 +12,13 @@ public interface ILoginMVP {
 
     interface IPresenter {
 
-        void atualizarNucleo(Nucleo nucleo);
+        void ativarNucleo(Nucleo nucleo);
 
         Call<Funcionario> autenticarLogin(long idUser, String password,long idEmpresa);
 
         List<Nucleo> carregarTodosOsNucleos();
 
-        void criarSessao(long idUser, String password, String nameEmployee, long idNucleo, long maxIdVenda,
-                final long maxIdRecibo);
+
 
         Empresa pesquisarEmpresaRegistrada();
 

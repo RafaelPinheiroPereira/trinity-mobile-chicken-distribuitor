@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Empresa;
+import com.br.tmchickendistributor.data.model.Funcionario;
+import com.br.tmchickendistributor.data.model.Impressora;
+import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 
@@ -12,6 +15,10 @@ public interface IViewOrderMVP {
     interface IPresenter {
 
         void atualizarPedido(Pedido pedido);
+
+        Impressora getImpressora();
+
+        Nucleo getNucleo();
 
         Pedido getParametrosDaVenda(final Bundle extras);
 
@@ -48,13 +55,21 @@ public interface IViewOrderMVP {
 
         void verificarCredenciaisGoogleDrive();
         Empresa pesquisarEmpresaRegistrada();
+
+        Funcionario getFuncionario();
     }
 
     interface IModel {
 
         void atualizarPedido(Pedido pedido);
 
+        Funcionario pesquiarFuncionarioAtivo();
+
         Cliente pesquisarClientePorID(long codigoCliente);
+
+        Impressora pesquisarImpressoraAtiva();
+
+        Nucleo pesquisarNucleoAtivo();
 
         Pedido pesquisarVendaPorId(Long id);
         Empresa pesquisarEmpresaRegistrada();

@@ -32,12 +32,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp">
 
@@ -70,9 +70,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvItensViewOrder"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:padding="5dp"></androidx.recyclerview.widget.RecyclerView>
+                android:padding="5dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -97,7 +97,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -243,7 +243,7 @@
                     android:layout_marginRight="10dp"
                     android:text=" Imprimir"
                     android:textColor="#fff"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:backgroundTint="@color/primary_dark"
                     app:icon="@mipmap/ic_print"
                     app:iconGravity="textStart" />
@@ -259,7 +259,7 @@
                     android:textColor="#fff"
                     android:visibility="gone"
                     app:backgroundTint="@color/primary_dark"
-                    app:icon="@mipmap/ic_photo_camera_black_48dp"
+                    app:icon="@mipmap/ic_add_a_photo_black_24dp"
                     app:iconGravity="textStart"
                     app:iconTint="@color/white" />
 

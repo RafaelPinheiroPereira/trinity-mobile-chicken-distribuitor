@@ -6,22 +6,24 @@ import com.br.tmchickendistributor.data.dao.BlocoPedidoDAO;
 import com.br.tmchickendistributor.data.dao.ContaDAO;
 import com.br.tmchickendistributor.data.dao.EmpresaDAO;
 import com.br.tmchickendistributor.data.dao.FuncionarioDAO;
+import com.br.tmchickendistributor.data.dao.ImpressoraDAO;
 import com.br.tmchickendistributor.data.dao.NucleoDAO;
 import com.br.tmchickendistributor.data.dao.RecebimentoDAO;
 import com.br.tmchickendistributor.data.model.BlocoRecibo;
 import com.br.tmchickendistributor.data.model.Conta;
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Funcionario;
+import com.br.tmchickendistributor.data.model.Impressora;
 import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Recebimento;
 import com.br.tmchickendistributor.data.realm.BlocoReciboORM;
 import com.br.tmchickendistributor.data.realm.ContaORM;
 import com.br.tmchickendistributor.data.realm.EmpresaORM;
 import com.br.tmchickendistributor.data.realm.FuncionarioORM;
+import com.br.tmchickendistributor.data.realm.ImpressoraORM;
 import com.br.tmchickendistributor.data.realm.NucleoORM;
 import com.br.tmchickendistributor.data.realm.RecebimentoORM;
 import com.br.tmchickendistributor.util.ConstantsUtil;
-import com.br.tmchickendistributor.util.ControleSessao;
 import com.br.tmchickendistributor.util.DateUtils;
 import io.realm.Sort;
 import java.math.BigDecimal;
@@ -51,6 +53,7 @@ public class Model implements IRecebimentoMVP.IModel {
   RecebimentoDAO recebimentoDAO = RecebimentoDAO.getInstace(RecebimentoORM.class);
 
   NucleoDAO nucleoDAO= NucleoDAO.getInstace(NucleoORM.class);
+  ImpressoraDAO impressoraDAO= ImpressoraDAO.getInstance(ImpressoraORM.class);
 
   public Model(final IRecebimentoMVP.IPresenter presenter) {
     mPresenter = presenter;
@@ -181,6 +184,11 @@ public class Model implements IRecebimentoMVP.IModel {
   @Override
   public Nucleo getNucleo() {
     return this.nucleoDAO.pesquisarNucleoAtivo();
+  }
+
+  @Override
+  public Impressora pesquisaImpressoraAtiva() {
+    return this.impressoraDAO.pesquisarImpressoraAtiva();
   }
 
   @Override

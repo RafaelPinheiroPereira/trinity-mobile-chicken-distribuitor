@@ -7,11 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DispositivoImpressora {
+public class DispositivoEscaneado {
 
     private String enderecoBluetooth;
+
 
     private int icone;
 
     private String nome;
+
+
 }

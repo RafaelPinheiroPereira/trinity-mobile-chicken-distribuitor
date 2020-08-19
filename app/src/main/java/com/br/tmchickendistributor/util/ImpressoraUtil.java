@@ -10,9 +10,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-
 import com.br.tmchickendistributor.data.model.Cliente;
-import com.br.tmchickendistributor.data.model.Empresa;
+import com.br.tmchickendistributor.data.model.Funcionario;
+import com.br.tmchickendistributor.data.model.Impressora;
 import com.br.tmchickendistributor.data.model.ItemPedido;
 import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
@@ -41,7 +41,7 @@ public class ImpressoraUtil {
 
     Activity activity;
 
-    ControleSessao mControleSessao;
+
 
     private BluetoothSocket mBtSocket;
 
@@ -53,19 +53,20 @@ public class ImpressoraUtil {
 
     public ImpressoraUtil(final Activity activity) {
         this.activity = activity;
-        mControleSessao = new ControleSessao(this.activity);
+
     }
 
-    public synchronized boolean esperarPorConexao() {
+    public synchronized boolean esperarPorConexao(Impressora impressora) {
 
         status(null);
         fecharConexaoAtiva();
-        String adress = mControleSessao.getEnderecoBluetooth();
+
+
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter.isEnabled()) {
             // Checa conexao
-            if (BluetoothAdapter.checkBluetoothAddress(adress)) {
-                estabelecerConexaoBluetooth(adress);
+            if (BluetoothAdapter.checkBluetoothAddress(impressora.getEndereco())) {
+                estabelecerConexaoBluetooth(impressora);
                 return true;
             } else {
                 AbstractActivity.showToast(
@@ -84,20 +85,24 @@ public class ImpressoraUtil {
         fecharConexaoBluetooth();
     }
 
-    public void imprimirComprovantePedido(final Pedido pedido, Cliente cliente, Empresa empresa) {
+    public void imprimirComprovantePedido(final Pedido pedido, Cliente cliente, Nucleo nucleo,Funcionario funcionario) {
 
         runTask(
                 (dialog, printer) -> {
-                    imprimirLogo(printer);
+                    if(printer!=null){
+                        imprimirLogo(printer);
 
-                    StringBuffer textBuffer = configurarLayoutImpressaoPedido(pedido, cliente,empresa);
+                        StringBuffer textBuffer = configurarLayoutImpressaoPedido(pedido, cliente,nucleo,funcionario);
 
+                        printer.reset();
+                        printer.printTaggedText(textBuffer.toString());
+                        printer.feedPaper(110);
+                        printer.flush();
+                    }else{
+                        //Tentar estabelecer conexao com impressora
 
+                    }
 
-                    printer.reset();
-                    printer.printTaggedText(textBuffer.toString());
-                    printer.feedPaper(110);
-                    printer.flush();
                 },
                 R.string.acessar);
     }
@@ -115,6 +120,7 @@ public class ImpressoraUtil {
         bitmap.getPixels(argb, 0, width, 0, 0, width, height);
         bitmap.recycle();
 
+
         printer.reset();
         printer.printCompressedImage(argb, width, height, Printer.ALIGN_CENTER, true);
         printer.feedPaper(110);
@@ -122,12 +128,13 @@ public class ImpressoraUtil {
     }
 
     public void imprimirComprovanteRecebimento(
-            final List<Recebimento> recebimentos, final Cliente cliente, Nucleo nucleo) {
+            final List<Recebimento> recebimentos, final Cliente cliente, Nucleo nucleo,
+            Funcionario funcionario) {
         runTask(
                 (dialog, printer) -> {
                     imprimirLogo(printer);
                     StringBuffer textBuffer =
-                            configurarLayoutImpressaoRecebimento(recebimentos, cliente,nucleo);
+                            configurarLayoutImpressaoRecebimento(recebimentos, cliente,nucleo,funcionario);
 
                     printer.reset();
                     printer.printTaggedText(textBuffer.toString());
@@ -137,7 +144,7 @@ public class ImpressoraUtil {
                 R.string.acessar);
     }
 
-    public void iniciarImpressao(InputStream inputStream, OutputStream outputStream)
+    public void iniciarImpressao(InputStream inputStream, OutputStream outputStream,Impressora impressora)
             throws IOException {
 
         // Here you can enable various debug information
@@ -206,7 +213,7 @@ public class ImpressoraUtil {
                     abstractActivity.runOnUiThread(
                             () -> {
                                 if (!activity.isFinishing()) {
-                                    esperarPorConexao();
+                                    esperarPorConexao(impressora);
                                 }
                             });
                 });
@@ -231,18 +238,18 @@ public class ImpressoraUtil {
     }
 
     private StringBuffer configurarLayoutImpressaoPedido(
-            final Pedido pedido, final Cliente cliente,Empresa empresa) {
+            final Pedido pedido, final Cliente cliente,Nucleo nucleo, Funcionario funcionario) {
         StringBuffer textBuffer = new StringBuffer();
-        textBuffer.append("{s}"+empresa.getNucleos().get(0).getNomeEmpresa()+"{br}");
-        textBuffer.append("{s}"+empresa.getNucleos().get(0).getEndereco()+"{br}");
-        textBuffer.append("{s}CNPJ:"+empresa.getNucleos().get(0).getCnpj()+"{br}");
-        textBuffer.append("{s}FONE:"+empresa.getNucleos().get(0).getTelefone()+"{br}{br}");
+        textBuffer.append("{s}"+nucleo.getNomeEmpresa()+"{br}");
+        textBuffer.append("{s}"+nucleo.getEndereco()+"{br}");
+        textBuffer.append("{s}CNPJ:"+nucleo.getCnpj()+"{br}");
+        textBuffer.append("{s}FONE:"+nucleo.getTelefone()+"{br}{br}");
         textBuffer.append("{center}{b}COMPROVANTE DE VENDAS {br}");
         textBuffer.append("{br}{reset}");
         textBuffer.append(
                 "{b}VENDA: "
 
-                        + String.format("%02d", this.mControleSessao.getIdNucleo())
+                        + String.format("%02d", nucleo.getId())
                         + String.format("%03d", pedido.getCodigoFuncionario())
 
                         + String.format( "%05d",pedido.getIdVenda())
@@ -282,7 +289,7 @@ public class ImpressoraUtil {
             }
             textBuffer.append("{b}PESO: " + String.format("%.2f",pesoTotal) + " KG" + "{br}");
         }
-        textBuffer.append("VENDEDOR: " + new ControleSessao(this.activity).getUserName());
+        textBuffer.append("VENDEDOR: ".concat(funcionario.getNome()));
         textBuffer.append("{br}");
         textBuffer.append("{reset}{left}{w}{h}________________");
         textBuffer.append("{br}");
@@ -291,7 +298,7 @@ public class ImpressoraUtil {
     }
 
     private StringBuffer configurarLayoutImpressaoRecebimento(
-            final List<Recebimento> recebimentos, final Cliente cliente, Nucleo nucleo) {
+            final List<Recebimento> recebimentos, final Cliente cliente, Nucleo nucleo,Funcionario funcionario) {
 
         // Calcular valor total amortizado
         Double valorTotalAmortizado = 0.0;
@@ -341,7 +348,7 @@ public class ImpressoraUtil {
         textBuffer.append(
                 "{b}VALOR: " + String.format("%.2f",valorTotalAmortizado) + "{br}");
         textBuffer.append("{b}DATA/HORA: " + strDataRecebimento + "{br}");
-        textBuffer.append("VENDEDOR: " + new ControleSessao(this.activity).getUserName());
+        textBuffer.append("VENDEDOR: ".concat(funcionario.getNome()));
         textBuffer.append("{br}");
         textBuffer.append("{reset}{left}{w}{h}________________");
         textBuffer.append("{br}");
@@ -349,7 +356,7 @@ public class ImpressoraUtil {
         return textBuffer;
     }
 
-    private void estabelecerConexaoBluetooth(final String address) {
+    private void estabelecerConexaoBluetooth(final Impressora impressora) {
         final ProgressDialog dialog = new ProgressDialog(this.activity);
         dialog.setTitle("Por favor , aguarde a conexão...");
         dialog.setMessage("Conectando o dispositivo");
@@ -364,7 +371,7 @@ public class ImpressoraUtil {
                             btAdapter.cancelDiscovery();
                             try {
                                 UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-                                BluetoothDevice btDevice = btAdapter.getRemoteDevice(address);
+                                BluetoothDevice btDevice = btAdapter.getRemoteDevice(impressora.getEndereco());
 
                                 InputStream in = null;
                                 OutputStream out = null;
@@ -391,13 +398,13 @@ public class ImpressoraUtil {
                                 }
 
                                 try {
-                                    iniciarImpressao(in, out);
+                                    iniciarImpressao(in, out,impressora);
 
                                 } catch (IOException e) {
                                     abstractActivity.errorMSG(
                                             this.activity,
                                             "FAILED to initiallize: " + e.getMessage());
-                                    esperarPorConexao();
+                                    esperarPorConexao(impressora);
                                     return;
                                 }
                             } finally {

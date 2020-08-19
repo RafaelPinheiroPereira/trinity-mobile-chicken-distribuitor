@@ -41,7 +41,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
-
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.ItemPedido;
 import com.br.tmchickendistributor.data.model.ItemPedidoID;
@@ -57,7 +56,6 @@ import com.br.tmchickendistributor.ui.mvp.venda.Presenter;
 import com.br.tmchickendistributor.util.AlertDialogItemPedido;
 import com.br.tmchickendistributor.util.CameraUtil;
 import com.br.tmchickendistributor.util.ConstantsUtil;
-import com.br.tmchickendistributor.util.ControleSessao;
 import com.br.tmchickendistributor.util.CurrencyEditText;
 import com.br.tmchickendistributor.util.DateUtils;
 import com.br.tmchickendistributor.util.FormatacaoMoeda;
@@ -164,7 +162,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
 
         mPresenter = new Presenter(this);
         mPresenter.getParametros();
-        mPresenter.setFuncionario(mPresenter.getFuncionarioDaSessao());
+
 
         if(mPresenter.getFuncionario().getAlteraPreco().equals(ConstantsUtil.TEM_PERMISSAO_PARA_ALTERAR_PRECO)){
             cetPrecoUnitario.setEnabled(true);
@@ -385,7 +383,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
     public void btnConfirmSaleOnClicked(View view) {
 
         if ((mPresenter.getItens().size() > 0)
-               // && (!new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty())
+                && (mPresenter.getImpressora().isAtivo())
         ) {
             // Realiza Update do PedidoORM
             if (mPresenter.getPedido() != null) {
@@ -400,8 +398,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
                 // Salva o PedidoORM
                 try {
                     long sequencePedido =
-                            mPresenter.configurarSequenceDoPedido(
-                                    new ControleSessao(mPresenter.getContext()));
+                            mPresenter.configurarSequenceDoPedido( );
 
                     if (sequencePedido > 0) {
                         mPresenter.salvarVenda(sequencePedido);
@@ -419,16 +416,16 @@ public class VendasActivity extends AppCompatActivity implements IView {
                                             "Erro Formatacao Data Pedido: " + e.getMessage()));
                 }
             }
-            AbstractActivity.showToast(
-                    mPresenter.getContext(),
-                    "Pedido realizado com sucesso!.\n");
-            NavUtils.navigateUpFromSameTask(this);
-         //   mPresenter.esperarPorConexao();
+          //  AbstractActivity.showToast(
+            //        mPresenter.getContext(),
+              //      "Pedido realizado com sucesso!.\n");
+            //NavUtils.navigateUpFromSameTask(this);
+           mPresenter.esperarPorConexao();
 
-//        } else if (new ControleSessao(mPresenter.getContext()).getEnderecoBluetooth().isEmpty()) {
-//            AbstractActivity.showToast(
-//                    mPresenter.getContext(),
-//                    "DispositivoImpressora não conectado!\nHabilite no Menu : Configurar Impressora.");
+       } else if (!mPresenter.getImpressora().isAtivo()) {
+           AbstractActivity.showToast(
+                    mPresenter.getContext(),
+                    "Impressora não conectado!\nHabilite no Menu : Configurar Impressora.");
         } else {
             AbstractActivity.showToast(
                     mPresenter.getContext(), " No mímimo um item deve ser adicionado!");
@@ -683,7 +680,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
                 DateUtils.formatarDateParaddMMyyyyhhmm(new Date(System.currentTimeMillis())));
         // Nao sei o significado
         itemPedidoID.setVendaMae("N");
-        itemPedidoID.setNucleoCodigo(new ControleSessao(mPresenter.getContext()).getIdNucleo());
+        itemPedidoID.setNucleoCodigo(this.mPresenter.getNucleo().getId());
         itemPedidoID.setTipoVenda("?");
         return itemPedidoID;
     }
@@ -850,10 +847,10 @@ public class VendasActivity extends AppCompatActivity implements IView {
         spnLote.setAdapter(adaptadorLotes);
         spnLote.setSelection(POSICAO_INICIAL);
 
-        txtClienteID.setText(String.format("%05d", mPresenter.getCliente().getId()));
-        txtRazaoSocial.setText(mPresenter.getCliente().getRazaoSocial());
-        txtCidade.setText(mPresenter.getCliente().getCidade());
-        txtEndereco.setText(mPresenter.getCliente().getEndereco());
+        txtClienteID.setText("CÓD.: ".concat(String.format("%05d", mPresenter.getCliente().getId())));
+        txtRazaoSocial.setText(" FANTASIA: ".concat(mPresenter.getCliente().getNome()));
+        txtCidade.setText("CIDADE: ".concat(mPresenter.getCliente().getCidade()));
+        txtEndereco.setText(" ENDEREÇO:".concat(mPresenter.getCliente().getEndereco()));
     }
 
     @Override

@@ -7,9 +7,9 @@ import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.ClienteGrupo;
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Funcionario;
+import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.model.Recebimento;
-import com.br.tmchickendistributor.util.ControleSessao;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 import java.util.List;
 
@@ -26,6 +26,10 @@ public interface IHomeMVP {
         List<BlocoRecibo> consultarRecibosNaoMigrados();
 
         void desativarNucleo();
+
+        Nucleo getNucleo();
+
+        Nucleo pesquisarNucleoAtivo();
 
         Funcionario pesquisarUsuarioDaSesao();
 
@@ -63,11 +67,6 @@ public interface IHomeMVP {
 
         void fecharDrawer();
 
-        long getUserId();
-
-        void logout();
-
-        void salvarRecebimento(Recebimento recebimento);
 
         DriveServiceHelper getDriveServiceHelper();
 
@@ -89,13 +88,15 @@ public interface IHomeMVP {
 
         void obterRotasAposImportarDados();
 
+        void setNucleo(Nucleo pesquisarNucleoAtivo);
+
         void verificarCredenciaisGoogleDrive();
 
-        ControleSessao getControleSessao();
 
-        void setControleSessao(ControleSessao controleSessao);
 
-        boolean verificarLogin();
+
+
+
 
         List<Pedido> getFotosPedidos();
 
@@ -105,7 +106,7 @@ public interface IHomeMVP {
 
         void setFotosRecibos(List<BlocoRecibo> fotosRecibos);
 
-        void excluirRecebimentos();
+
     }
 
     interface IView {
@@ -160,6 +161,8 @@ public interface IHomeMVP {
         Empresa pesquisarEmpresaRegistrada();
 
         Funcionario pesquisarFuncionarioDaSessao();
+
+        Nucleo pesquisarNucleoAtivo();
 
         List<Pedido> pesquisarPedidosNaoMigrados();
 
