@@ -240,9 +240,9 @@ public class ImpressoraUtil {
     private StringBuffer configurarLayoutImpressaoPedido(
             final Pedido pedido, final Cliente cliente,Nucleo nucleo, Funcionario funcionario) {
         StringBuffer textBuffer = new StringBuffer();
-        textBuffer.append("{s}"+nucleo.getNomeEmpresa()+"{br}");
-        textBuffer.append("{s}"+nucleo.getEndereco()+"{br}");
-        textBuffer.append("{s}CNPJ:"+nucleo.getCnpj()+"{br}");
+        textBuffer.append("{s}"+nucleo.getNomeEmpresa().toUpperCase()+"{br}");
+        textBuffer.append("{s}"+nucleo.getEndereco().toUpperCase()+"{br}");
+        textBuffer.append("{s}CNPJ:"+nucleo.getCnpj().toUpperCase()+"{br}");
         textBuffer.append("{s}FONE:"+nucleo.getTelefone()+"{br}{br}");
         textBuffer.append("{center}{b}COMPROVANTE DE VENDAS {br}");
         textBuffer.append("{br}{reset}");
@@ -430,8 +430,8 @@ public class ImpressoraUtil {
 
     private void runTask(final IPrinterRunnable r, final int msgResId) {
         final ProgressDialog dialog = new ProgressDialog(this.activity);
-        dialog.setTitle("teste");
-        dialog.setMessage("msg");
+        dialog.setTitle("Impressão");
+        dialog.setMessage("Por favor aguarde,imprimindo...");
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
