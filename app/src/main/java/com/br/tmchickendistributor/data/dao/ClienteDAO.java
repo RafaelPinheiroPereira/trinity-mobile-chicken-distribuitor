@@ -61,7 +61,7 @@ public class ClienteDAO extends GenericsDAO<ClienteORM> {
         List<Cliente> clientes = new ArrayList<>();
         RealmResults<ClienteORM> results =
                 where().equalTo("codigoClienteGrupo", clienteGrupo.getId())
-                        .sort("nome", Sort.DESCENDING)
+                        .sort("nome", Sort.ASCENDING)
                         .findAll();
         if (VERSION.SDK_INT >= VERSION_CODES.N) {
             results.forEach(item->clientes.add(new Cliente(item)));
