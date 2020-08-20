@@ -16,6 +16,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -277,7 +278,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
   public void salvarRecebimento() {
 
     if (!mPresenter.getConta().getId().equals("F")) {
-      if (mPresenter.getImpresssora().isAtivo()) {
+      //if (mPresenter.getImpresssora().isAtivo()) {
 
         long idBlocoRecibo = mPresenter.configurarSequenceDoRecebimento();
         if (idBlocoRecibo > 0) {
@@ -286,19 +287,19 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
 
           AbstractActivity.showToast(
               mPresenter.getContext(), "Recebimento realizado com sucesso!.\n");
-          //  NavUtils.navigateUpFromSameTask(this);
+           NavUtils.navigateUpFromSameTask(this);
         } else {
 
           AbstractActivity.showToast(
               mPresenter.getContext(),
               "Dados do recibo não atualizados com o servidor.\nContate o suporte do sistema");
         }
-        mPresenter.esperarPorConexao();
-      } else {
-        AbstractActivity.showToast(
-            mPresenter.getContext(),
-            "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
-      }
+       // mPresenter.esperarPorConexao();
+    //  } else {
+      //  AbstractActivity.showToast(
+        //    mPresenter.getContext(),
+          //  "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
+      //}
     } else {
       AbstractActivity.showToast(
           mPresenter.getContext(), "Por favor, selecione um tipo de recebimento.\n");
