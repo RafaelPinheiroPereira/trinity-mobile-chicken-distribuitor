@@ -282,9 +282,10 @@ public class Model implements IRecebimentoMVP.IModel {
 
   @Override
   public boolean ehMenorOuIgualAoCreditoOValorDoDebito() {
-    return ((mPresenter.getCredito().compareTo(mPresenter.getValorTotalDevido())
+    BigDecimal totalDevidoArredondado=mPresenter.getValorTotalDevido().setScale(2, BigDecimal.ROUND_UP);
+    return ((mPresenter.getCredito().compareTo(totalDevidoArredondado)
             == ConstantsUtil.SMALLER)
-        || (mPresenter.getCredito().compareTo(mPresenter.getValorTotalDevido())
+        || (mPresenter.getCredito().compareTo(totalDevidoArredondado)
             == ConstantsUtil.EQUAL));
   }
 

@@ -20,7 +20,6 @@ import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
 import com.br.tmchickendistributor.ui.mvp.configuracao.IConfiguracaoMVP.IPresenter;
 import com.br.tmchickendistributor.ui.mvp.configuracao.IConfiguracaoMVP.IView;
@@ -64,7 +63,7 @@ public class ConfiguracaoActivity extends AppCompatActivity implements IView {
         mPresenter.setMac(getMacAddr());
 
         mPresenter.criarPastasDasImagens();
-        edtCNPJ.setText("08.856.465/0001-50");
+        edtCNPJ.setText("27.385.693/0001-34");
 
 
         if (mPresenter.statusSistema().equals("DISPOSITIVO_HABILITADO")) {
