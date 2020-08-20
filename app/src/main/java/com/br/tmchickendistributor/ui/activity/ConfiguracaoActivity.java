@@ -32,171 +32,160 @@ import java.util.List;
 
 public class ConfiguracaoActivity extends AppCompatActivity implements IView {
 
-    @BindView(R.id.edtCNPJ)
-    EditText edtCNPJ;
+  @BindView(R.id.edtCNPJ)
+  EditText edtCNPJ;
 
-    @BindView(R.id.btnConfigurar)
-    Button btnConfigurar;
+  @BindView(R.id.btnConfigurar)
+  Button btnConfigurar;
 
+  @BindView(R.id.toolbar)
+  Toolbar mToolbar;
 
+  IPresenter mPresenter;
+  private TextWatcher cnpjMask;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_configuracao);
+    ButterKnife.bind(this);
+    inicializarViews();
+    concederPermissoes();
+  }
 
-    IPresenter mPresenter;
-    private TextWatcher cnpjMask;
+  @Override
+  protected void onStart() {
+    super.onStart();
+    // Init
+    mPresenter = new Presenter(this);
+    mPresenter.setMac(getMacAddr());
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configuracao);
-        ButterKnife.bind(this);
-        inicializarViews();
-        concederPermissoes();
+    mPresenter.criarPastasDasImagens();
+   // edtCNPJ.setText("27.385.693/0001-34");
+
+    if (mPresenter.statusSistema().equals("DISPOSITIVO_HABILITADO")) {
+
+      if (this.mPresenter.estaLogado()) {
+        mPresenter
+            .getContext()
+            .startActivity(new Intent(mPresenter.getContext(), HomeActivity.class));
+      } else {
+
+        mPresenter
+            .getContext()
+            .startActivity(new Intent(mPresenter.getContext(), LoginActivity.class));
+      }
+
+    } else if (mPresenter.statusSistema().equals("EMPRESA_INATIVADA")) {
+      Toast.makeText(
+              mPresenter.getContext(),
+              "EMPRESA INATIVADA , POR FAVOR ENTRE EM CONTATO COM O SUPORTE DO SISTEMA!",
+              Toast.LENGTH_LONG)
+          .show();
+    } else if (mPresenter.statusSistema().equals("DISPOSITIVO_INATIVADO")) {
+      Toast.makeText(
+              mPresenter.getContext(),
+              "DISPOSITIVO INATIVADO , POR FAVOR ENTRE EM CONTATO COM O SUPORTE DO SISTEMA!",
+              Toast.LENGTH_LONG)
+          .show();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Init
-        mPresenter = new Presenter(this);
-        mPresenter.setMac(getMacAddr());
+    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+    StrictMode.setThreadPolicy(policy);
+  }
 
-        mPresenter.criarPastasDasImagens();
-        edtCNPJ.setText("27.385.693/0001-34");
+  @OnClick(R.id.btnConfigurar)
+  public void btnSubmitClicked(View view) {
 
+    if (estaVazioOCNPJ()) {
 
-        if (mPresenter.statusSistema().equals("DISPOSITIVO_HABILITADO")) {
+      edtCNPJ.setError("CNPJ é obrigatório!");
 
-            if(this.mPresenter.estaLogado()){
-                mPresenter
-                        .getContext()
-                        .startActivity(new Intent(mPresenter.getContext(), HomeActivity.class));
-            }else{
+    } else {
 
-                mPresenter
-                        .getContext()
-                        .startActivity(new Intent(mPresenter.getContext(), LoginActivity.class));
-            }
+      mPresenter.setCnpj(edtCNPJ.getText().toString());
+      mPresenter.realizarConfiguracao();
+    }
+  }
 
-        } else if (mPresenter.statusSistema().equals("EMPRESA_INATIVADA")) {
-            Toast.makeText(
-                            mPresenter.getContext(),
-                            "EMPRESA INATIVADA , POR FAVOR ENTRE EM CONTATO COM O SUPORTE DO SISTEMA!",
-                            Toast.LENGTH_LONG)
-                    .show();
-        } else if (mPresenter.statusSistema().equals("DISPOSITIVO_INATIVADO")) {
-            Toast.makeText(
-                            mPresenter.getContext(),
-                            "DISPOSITIVO INATIVADO , POR FAVOR ENTRE EM CONTATO COM O SUPORTE DO SISTEMA!",
-                            Toast.LENGTH_LONG)
-                    .show();
+  public static String getMacAddr() {
+    try {
+      List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+      for (NetworkInterface nif : all) {
+        if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+        byte[] macBytes = nif.getHardwareAddress();
+        if (macBytes == null) {
+          return "";
         }
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        StringBuilder res1 = new StringBuilder();
+        for (byte b : macBytes) {
+          res1.append(Integer.toHexString(b & 0xFF) + ":");
+        }
+
+        if (res1.length() > 0) {
+          res1.deleteCharAt(res1.length() - 1);
+        }
+        return res1.toString();
+      }
+    } catch (Exception ex) {
+      // handle exception
     }
+    return "";
+  }
 
+  public void inicializarViews() {
+    setSupportActionBar(mToolbar);
+    cnpjMask = Mask.insert("##.###.###/####-##", edtCNPJ);
+    edtCNPJ.addTextChangedListener(cnpjMask);
+  }
 
-
-    @OnClick(R.id.btnConfigurar)
-    public void btnSubmitClicked(View view) {
-
-        if (estaVazioOCNPJ()) {
-
-            edtCNPJ.setError("CNPJ é obrigatório!");
-
+  public void concederPermissoes() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+              != PackageManager.PERMISSION_GRANTED
+          || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+              != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+            ConfiguracaoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+          // Caso o usuário tenha negado a permissão anteriormente, e não tenha marcado o
+          // check
+          // "nunca mais mostre este alerta"
+          // Podemos mostrar um alerta explicando para o usuário porque a permissão é
+          // importante.
         } else {
-
-            mPresenter.setCnpj(edtCNPJ.getText().toString());
-            mPresenter.realizarConfiguracao();
+          // Solicita a permissao
+          ActivityCompat.requestPermissions(
+              ConfiguracaoActivity.this, PERMISSIONS, REQUEST_STORAGE);
         }
+      }
+    } else {
+      // ver  o que fazer aqui
     }
+  }
 
-    public static String getMacAddr() {
-        try {
-            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
-            for (NetworkInterface nif : all) {
-                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+  @Override
+  public void onRequestPermissionsResult(
+      int requestCode, String[] permissions, int[] grantResults) {
 
-                byte[] macBytes = nif.getHardwareAddress();
-                if (macBytes == null) {
-                    return "";
-                }
+    if (requestCode == REQUEST_STORAGE) {
 
-                StringBuilder res1 = new StringBuilder();
-                for (byte b : macBytes) {
-                    res1.append(Integer.toHexString(b & 0xFF) + ":");
-                }
+      if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                if (res1.length() > 0) {
-                    res1.deleteCharAt(res1.length() - 1);
-                }
-                return res1.toString();
-            }
-        } catch (Exception ex) {
-            // handle exception
-        }
-        return "";
+        AbstractActivity.showToast(mPresenter.getContext(), "Permissões necessárias concedidas");
+
+        btnConfigurar.setEnabled(true);
+
+      } else {
+        btnConfigurar.setEnabled(false);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+      }
     }
+  }
 
-    public void inicializarViews() {
-        setSupportActionBar(mToolbar);
-        cnpjMask = Mask.insert("##.###.###/####-##", edtCNPJ);
-        edtCNPJ.addTextChangedListener(cnpjMask);
-
-    }
-
-    public void concederPermissoes() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED
-                    || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        ConfiguracaoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    // Caso o usuário tenha negado a permissão anteriormente, e não tenha marcado o
-                    // check
-                    // "nunca mais mostre este alerta"
-                    // Podemos mostrar um alerta explicando para o usuário porque a permissão é
-                    // importante.
-                } else {
-                    // Solicita a permissao
-                    ActivityCompat.requestPermissions(
-                            ConfiguracaoActivity.this, PERMISSIONS, REQUEST_STORAGE);
-                }
-            }
-        } else {
-            // ver  o que fazer aqui
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode, String[] permissions, int[] grantResults) {
-
-        if (requestCode == REQUEST_STORAGE) {
-
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                AbstractActivity.showToast(
-                        mPresenter.getContext(), "Permissões necessárias concedidas");
-
-                btnConfigurar.setEnabled(true);
-
-            } else {
-                btnConfigurar.setEnabled(false);
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            }
-        }
-    }
-
-    @Override
-    public boolean estaVazioOCNPJ() {
-        return edtCNPJ.getText().toString().isEmpty();
-    }
-
-
-
-
+  @Override
+  public boolean estaVazioOCNPJ() {
+    return edtCNPJ.getText().toString().isEmpty();
+  }
 }
