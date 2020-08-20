@@ -28,12 +28,13 @@ public class DateUtils {
         return FORMATADOR_dd_MM_YYYY_hh_mm.parse(strDate);
     }
 
-    public static java.util.Date formatarDateParaYYYYMMDDHHMMSS(java.util.Date dateToFormat)
+    public static String converterDateParaStringYYYYMMDDHHMM(java.util.Date dateToFormat)
             throws ParseException {
 
-        String strDate = FORMATADOR_YYYY_MM_DD_HH_MM_SS.format(dateToFormat);
+        String dataFormatada=FORMATADOR_dd_MM_YYYY_hh_mm.format(dateToFormat);
+        return dataFormatada;
 
-        return FORMATADOR_YYYY_MM_DD_HH_MM_SS.parse(strDate);
+
     }
 
     public static String formatarParaYYYYMMDDHHMMSS(java.util.Date dateToFormat)

@@ -53,7 +53,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity
         implements RecyclerViewOnClickListenerHack, IView {
@@ -114,13 +113,14 @@ public class HomeActivity extends AppCompatActivity
         presenter.setFuncionario(presenter.pesquisarUsuarioDaSesao());
 
         try {
-            Date  dataFormatada=DateUtils.formatarDateParaYYYYMMDDHHMMSS(presenter.getFuncionario().getDataUltimaSincronizacao());
-            presenter.getFuncionario().setDataUltimaSincronizacao(dataFormatada);
+            String dataUltimaSincronizacao=DateUtils.converterDateParaStringYYYYMMDDHHMM(presenter.getFuncionario().getDataUltimaSincronizacao());
+            txtDataUltimaSincronizacao.setText("SINC.: "+dataUltimaSincronizacao);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        txtDataUltimaSincronizacao.setText(DateUtils.formatarParaYYYYMMDDHHMMSS(presenter.getFuncionario().getDataUltimaSincronizacao()));
+
 
     }
 

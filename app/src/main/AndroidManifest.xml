@@ -92,6 +92,8 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"></activity>
         <activity
             android:name="com.br.tmchickendistributor.ui.activity.VendasActivity"
+            android:configChanges="keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:parentActivityName="com.br.tmchickendistributor.ui.activity.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -107,6 +109,8 @@
         <activity
             android:name="com.br.tmchickendistributor.ui.activity.RecebimentoActivity"
             android:label="@string/title_activity_recebimento"
+            android:configChanges="keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:parentActivityName="com.br.tmchickendistributor.ui.activity.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

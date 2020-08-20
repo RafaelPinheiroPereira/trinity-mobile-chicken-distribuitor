@@ -160,6 +160,7 @@
                             android:layout_gravity="center_vertical"
                             android:digits="0123456789."
                             android:hint="QTD."
+
                             android:enabled="true"
                             android:inputType="number|textMultiLine"
                             android:lines="1"
