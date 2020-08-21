@@ -383,7 +383,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
     public void btnConfirmSaleOnClicked(View view) {
 
         if ((mPresenter.getItens().size() > 0)
-             //   && (mPresenter.getImpressora().isAtivo())
+               && (mPresenter.getImpressora().isAtivo())
         ) {
             // Realiza Update do PedidoORM
             if (mPresenter.getPedido() != null) {
@@ -419,13 +419,13 @@ public class VendasActivity extends AppCompatActivity implements IView {
            AbstractActivity.showToast(
                    mPresenter.getContext(),
                   "Pedido realizado com sucesso!.\n");
-            NavUtils.navigateUpFromSameTask(this);
-           //mPresenter.esperarPorConexao();
 
-      // } else if (!mPresenter.getImpressora().isAtivo()) {
-        //   AbstractActivity.showToast(
-           //         mPresenter.getContext(),
-                 //   "Impressora não conectado!\nHabilite no Menu : Configurar Impressora.");
+           mPresenter.esperarPorConexao();
+
+       } else if (!mPresenter.getImpressora().isAtivo()) {
+           AbstractActivity.showToast(
+                    mPresenter.getContext(),
+                   "Impressora não conectado!\nHabilite no Menu : Configurar Impressora.");
         } else {
             AbstractActivity.showToast(
                     mPresenter.getContext(), " No mímimo um item deve ser adicionado!");
