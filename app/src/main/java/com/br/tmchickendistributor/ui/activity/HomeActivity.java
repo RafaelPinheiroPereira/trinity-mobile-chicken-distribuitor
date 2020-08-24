@@ -293,18 +293,26 @@ public class HomeActivity extends AppCompatActivity
                                         new Intent(presenter.getContext(), HomeActivity.class));
                                 break;
                             case 2:
-                                AbstractActivity.navigateToActivity(
-                                        presenter.getContext(),
-                                        new Intent(presenter.getContext(), PedidoActivity.class));
+                                presenter.importar();
+
                                 break;
                             case 3:
                                 break;
 
                             case 4:
-                                presenter.importar();
+
+                                AbstractActivity.navigateToActivity(
+                                        presenter.getContext(),
+                                        new Intent(presenter.getContext(), PedidoActivity.class));
                                 break;
                             case 5:
-                                presenter.exportar();
+
+                                AbstractActivity.navigateToActivity(
+                                        presenter.getContext(),
+                                        new Intent(
+                                                presenter.getContext(), DeviceListActivity.class));
+
+
                                 break;
 
                             case 6:
@@ -327,10 +335,7 @@ public class HomeActivity extends AppCompatActivity
                                 break;
 
                             case 7:
-                                AbstractActivity.navigateToActivity(
-                                        presenter.getContext(),
-                                        new Intent(
-                                                presenter.getContext(), DeviceListActivity.class));
+                                presenter.exportar();
                                 break;
 
                             case 8:

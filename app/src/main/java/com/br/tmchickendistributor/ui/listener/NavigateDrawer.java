@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.br.tmchickendristributor.R;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -27,23 +26,26 @@ public class NavigateDrawer implements IDrawer {
         drawer.addItem(
                 new PrimaryDrawerItem().withName("HomeActivity")
                         .withIcon(mActivity.getResources().getDrawable(R.mipmap.ic_home)));
-        drawer.addItem(
-                new PrimaryDrawerItem().withName("Pedidos")
-                        .withIcon(mActivity.getResources().getDrawable(R.mipmap.ic_cart)));
-        drawer.addItem(new PrimaryDrawerItem().withName("Clientes")
-                .withIcon(mActivity.getResources().getDrawable(R.drawable.ic_face_black_24dp)));
+
         drawer.addItem(
                 new PrimaryDrawerItem().withName("Importar Dados")
                         .withIcon(mActivity.getResources().getDrawable(R.drawable.ic_file_download_black_24dp)));
+        drawer.addItem(new PrimaryDrawerItem().withName("Clientes")
+                .withIcon(mActivity.getResources().getDrawable(R.drawable.ic_face_black_24dp)));
         drawer.addItem(
-                new PrimaryDrawerItem().withName("Exportar Dados")
-                        .withIcon(mActivity.getResources().getDrawable(R.drawable.ic_file_upload_black_24dp)));
+                new PrimaryDrawerItem().withName("Pedidos")
+                        .withIcon(mActivity.getResources().getDrawable(R.mipmap.ic_cart)));
+
+        drawer.addItem(
+                new PrimaryDrawerItem().withName("Configurar Impressora").withIcon(R.mipmap.ic_print_black_36dp));
+
         drawer.addItem(
                 new PrimaryDrawerItem().withName("Salvar Fotos Google Drive")
                         .withIcon(R.mipmap.insert_photo_black));
 
         drawer.addItem(
-                new PrimaryDrawerItem().withName("Configurar Impressora").withIcon(R.mipmap.ic_print_black_36dp));
+                new PrimaryDrawerItem().withName("Exportar Dados")
+                        .withIcon(mActivity.getResources().getDrawable(R.drawable.ic_file_upload_black_24dp)));
 
         drawer.addItem(
                 new PrimaryDrawerItem().withName("Excluir Dados")
