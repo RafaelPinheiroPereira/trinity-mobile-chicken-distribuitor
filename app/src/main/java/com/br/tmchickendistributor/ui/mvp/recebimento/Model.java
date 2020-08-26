@@ -2,7 +2,7 @@ package com.br.tmchickendistributor.ui.mvp.recebimento;
 
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import com.br.tmchickendistributor.data.dao.BlocoPedidoDAO;
+import com.br.tmchickendistributor.data.dao.BlocoReciboDAO;
 import com.br.tmchickendistributor.data.dao.ContaDAO;
 import com.br.tmchickendistributor.data.dao.EmpresaDAO;
 import com.br.tmchickendistributor.data.dao.FuncionarioDAO;
@@ -44,7 +44,7 @@ public class Model implements IRecebimentoMVP.IModel {
 
   FuncionarioDAO mFuncionarioDAO = FuncionarioDAO.getInstace(FuncionarioORM.class);
 
-  BlocoPedidoDAO mBlocoPedidoDAO = BlocoPedidoDAO.getInstace(BlocoReciboORM.class);
+  BlocoReciboDAO mBlocoReciboDAO = BlocoReciboDAO.getInstace(BlocoReciboORM.class);
 
   EmpresaDAO mEmpresaDAO = EmpresaDAO.getInstace(EmpresaORM.class);
 
@@ -97,11 +97,11 @@ public class Model implements IRecebimentoMVP.IModel {
 
     Funcionario funcionarioPesquisado = this.getFuncionario();
 
-    BlocoReciboORM blocoReciboORM = mBlocoPedidoDAO.where().findFirst();
+    BlocoReciboORM blocoReciboORM = mBlocoReciboDAO.where().findFirst();
     /** Já houve bloco pedido salvo no tablet */
     if (blocoReciboORM != null) {
       BlocoReciboORM blocoReciboORMRecente =
-          mBlocoPedidoDAO.where().sort("id", Sort.DESCENDING).findAll().first();
+          mBlocoReciboDAO.where().sort("id", Sort.DESCENDING).findAll().first();
       BlocoRecibo blocoReciboRecente = new BlocoRecibo(blocoReciboORMRecente);
 
       if (funcionarioPesquisado.getMaxIdRecibo() < blocoReciboRecente.getId()
@@ -138,7 +138,7 @@ public class Model implements IRecebimentoMVP.IModel {
 
   @Override
   public void alterarBlocoRecibo(final BlocoRecibo blocoRecibo) {
-    this.mBlocoPedidoDAO.alterar(new BlocoReciboORM(blocoRecibo));
+    this.mBlocoReciboDAO.alterar(new BlocoReciboORM(blocoRecibo));
   }
 
   @Override
@@ -296,7 +296,7 @@ public class Model implements IRecebimentoMVP.IModel {
     blocoRecibo.setId(idBlocoRecibo);
     blocoRecibo.setIdFormatado(String.format("%08d", idBlocoRecibo));
     BlocoReciboORM blocoReciboORM = new BlocoReciboORM(blocoRecibo);
-    mBlocoPedidoDAO.alterar(blocoReciboORM);
+    mBlocoReciboDAO.alterar(blocoReciboORM);
     mPresenter.setBlocoRecibo(blocoRecibo);
 
     if (VERSION.SDK_INT >= VERSION_CODES.N) {

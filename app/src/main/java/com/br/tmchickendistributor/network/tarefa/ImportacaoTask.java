@@ -292,6 +292,7 @@ public class ImportacaoTask extends AsyncTask<Void, Void, Boolean> {
         salvarRecebimentos(importacao.getRecebimentosDTO());
         salvarContas(importacao.getContas());
         salvarClientesGrupos(importacao.getClientesGrupos());
+        mHomePresenter.getFuncionario().setMaxIdRecibo(importacao.getFuncionario().getMaxIdRecibo());
         this.atualizarStatusSincronizacaoDoFuncionario();
       }
     } catch (IOException e) {

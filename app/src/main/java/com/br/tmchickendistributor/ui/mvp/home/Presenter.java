@@ -173,7 +173,7 @@ public class Presenter implements IHomeMVP.IPresenter {
     @Override
     public void exportar() {
         List<Pedido> pedidos = this.model.obterTodosPedidos();
-        List<Recebimento> recebimentos = this.model.obterTodosRecebimentos();
+        List<Recebimento> recebimentos = this.model.obterRecebimentosRealizados();
 
         ListaPedido listaPedido = new ListaPedido();
         listaPedido.setPedidos(pedidos);
@@ -334,8 +334,23 @@ public class Presenter implements IHomeMVP.IPresenter {
     }
 
     @Override
+    public void excluirBlocos() {
+        this.model.excluirBlocos();
+    }
+
+    @Override
+    public void excluirRecebimentos() {
+        this.model.excluirRecebimentos();
+    }
+
+    @Override
     public Nucleo getNucleo() {
         return this.nucleo;
+    }
+
+    @Override
+    public List<Recebimento> getRecebimentos() {
+        return this.model.pesquisarTodosRecebimentos();
     }
 
     @Override

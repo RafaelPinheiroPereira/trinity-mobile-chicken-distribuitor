@@ -19,6 +19,7 @@ public class Importacao {
     List<Recebimento> recebimentosDTO;
     List<Conta> contas;
     List<ClienteGrupo> clientesGrupos;
+    Funcionario funcionario;
 
 
 

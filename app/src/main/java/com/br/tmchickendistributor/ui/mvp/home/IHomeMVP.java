@@ -27,7 +27,13 @@ public interface IHomeMVP {
 
         void desativarNucleo();
 
+        void excluirBlocos();
+
+        void excluirRecebimentos();
+
         Nucleo getNucleo();
+
+        List<Recebimento> getRecebimentos();
 
         Nucleo pesquisarNucleoAtivo();
 
@@ -144,6 +150,8 @@ public interface IHomeMVP {
 
         void desativarNucleo();
 
+        void excluirBlocos();
+
         void inativarFuncionarioDaSessao();
 
         List<ClienteGrupo> obterTodasRedes();
@@ -152,7 +160,7 @@ public interface IHomeMVP {
 
         List<Pedido> obterTodosPedidos();
 
-        List<Recebimento> obterTodosRecebimentos();
+        List<Recebimento> obterRecebimentosRealizados();
 
         BlocoRecibo pesquisarBlocoReciboPorNomeDaFoto(String name);
 
@@ -169,6 +177,8 @@ public interface IHomeMVP {
         List<Recebimento> pesquisarRecebimentoPorCliente(Cliente cliente);
 
         List<BlocoRecibo> pesquisarRecibosNaoMigrados();
+
+        List<Recebimento> pesquisarTodosRecebimentos();
 
         void sincronizarFotos();
 

@@ -28,7 +28,7 @@ public class NavigateDrawer implements IDrawer {
                         .withIcon(mActivity.getResources().getDrawable(R.mipmap.ic_home)));
 
         drawer.addItem(
-                new PrimaryDrawerItem().withName("Importar Dados")
+                new PrimaryDrawerItem().withName("Importar dados do Trinity")
                         .withIcon(mActivity.getResources().getDrawable(R.drawable.ic_file_download_black_24dp)));
         drawer.addItem(new PrimaryDrawerItem().withName("Clientes")
                 .withIcon(mActivity.getResources().getDrawable(R.drawable.ic_face_black_24dp)));
@@ -44,7 +44,7 @@ public class NavigateDrawer implements IDrawer {
                         .withIcon(R.mipmap.insert_photo_black));
 
         drawer.addItem(
-                new PrimaryDrawerItem().withName("Exportar Dados")
+                new PrimaryDrawerItem().withName("Exportar dados p/ Trinity")
                         .withIcon(mActivity.getResources().getDrawable(R.drawable.ic_file_upload_black_24dp)));
 
         drawer.addItem(
