@@ -34,8 +34,8 @@ public class RetrofitConfig {
     this.retrofit =
         new Retrofit.Builder()
             // .baseUrl("http://10.0.2.2:8080/api/")
-            .baseUrl("http://192.168.25.2:8080/api/")
-            //.baseUrl("https://tm-api-chicken-distributor.herokuapp.com/api/")
+            //.baseUrl("http://192.168.25.2:8080/api/")
+            .baseUrl("https://tm-api-chicken-distributor.herokuapp.com/api/")
             /** AMBIENTE DE DESENVOLVIMENTO */
             .client(okHttpClient)
 
