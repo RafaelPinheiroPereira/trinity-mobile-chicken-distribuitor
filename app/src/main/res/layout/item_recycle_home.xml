@@ -98,7 +98,7 @@
                 android:layout_marginStart="48dp"
                 android:layout_height="wrap_content"
 
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="COBRAR"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
 
@@ -113,12 +113,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:textSize="14sp"
-                android:layout_marginStart="30dp"
+                android:textSize="12sp"
+                android:layout_marginStart="10dp"
                 android:text="VENDER"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                 android:textColor="@color/textColorPrimary"
-                app:icon="@mipmap/ic_sale_18"
+                app:icon="@mipmap/ic_money"
                 />
 
         </LinearLayout>
