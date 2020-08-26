@@ -117,5 +117,9 @@ dependencies {
     implementation 'com.github.rtoshiro.mflibrary:mflibrary:1.0.0'
 
 
+    // Material Dialog Library
+    implementation 'com.shreyaspatil:MaterialDialog:2.1'
+
+
 }
 apply plugin: 'realm-android'

@@ -97,12 +97,13 @@
                 android:layout_width="wrap_content"
                 android:layout_marginStart="48dp"
                 android:layout_height="wrap_content"
-                app:backgroundTint="@color/brand_red"
-                android:textSize="14sp"
-                android:text="COBRAR"
 
-                android:textColor="@color/white"
-                app:icon="@mipmap/icon_receber"
+                android:textSize="12sp"
+                android:text="COBRAR"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+
+                android:textColor="@color/textColorPrimary"
+                app:icon="@mipmap/ic_payment"
                 />
 
 
@@ -111,13 +112,13 @@
                 android:id="@+id/btnVender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:backgroundTint="@color/md_green_500"
-                android:textSize="14sp"
-                android:layout_marginStart="30dp"
-                android:text="VENDER"
 
-                android:textColor="@color/white"
-                app:icon="@mipmap/icon_vender"
+                android:textSize="12sp"
+                android:layout_marginStart="10dp"
+                android:text="VENDER"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                android:textColor="@color/textColorPrimary"
+                app:icon="@mipmap/ic_money"
                 />
 
         </LinearLayout>

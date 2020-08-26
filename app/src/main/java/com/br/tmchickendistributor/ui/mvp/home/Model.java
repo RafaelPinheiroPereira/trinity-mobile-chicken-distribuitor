@@ -5,7 +5,7 @@ import android.os.Build.VERSION_CODES;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import com.br.tmchickendistributor.data.dao.BlocoPedidoDAO;
+import com.br.tmchickendistributor.data.dao.BlocoReciboDAO;
 import com.br.tmchickendistributor.data.dao.ClienteDAO;
 import com.br.tmchickendistributor.data.dao.ClienteGrupoDAO;
 import com.br.tmchickendistributor.data.dao.EmpresaDAO;
@@ -49,7 +49,7 @@ public class Model implements IModel {
     PedidoDAO mOrderDAO = PedidoDAO.getInstace(PedidoORM.class);
 
     RecebimentoDAO mRecebimentoDAO = RecebimentoDAO.getInstace(RecebimentoORM.class);
-    BlocoPedidoDAO mBlocoPedidoDAO= BlocoPedidoDAO.getInstace(BlocoReciboORM.class);
+    BlocoReciboDAO mBlocoReciboDAO = BlocoReciboDAO.getInstace(BlocoReciboORM.class);
     PedidoDAO mPedidoDAO=PedidoDAO.getInstace(PedidoORM.class);
 
     ClienteGrupoDAO mClienteGrupoDAO = ClienteGrupoDAO.getInstace(ClienteGrupoORM.class);
@@ -58,6 +58,10 @@ public class Model implements IModel {
     FuncionarioDAO mFuncionarioDAO = FuncionarioDAO.getInstace(FuncionarioORM.class);
 
     NucleoDAO nucleoDAO= NucleoDAO.getInstace(NucleoORM.class);
+
+    BlocoReciboDAO blocoReciboDAO = BlocoReciboDAO.getInstace(BlocoReciboORM.class);
+
+
 
 
 
@@ -81,7 +85,7 @@ public class Model implements IModel {
 
     @Override
     public void atualizarBlocoReciboParaMigrado(final BlocoRecibo blocoRecibo) {
-        this.mBlocoPedidoDAO.alterar(new BlocoReciboORM(blocoRecibo));
+        this.mBlocoReciboDAO.alterar(new BlocoReciboORM(blocoRecibo));
     }
 
     @Override
@@ -100,6 +104,18 @@ public class Model implements IModel {
         Nucleo nucleoAlterado=this.nucleoDAO.pesquisarNucleoAtivo();
         nucleoAlterado.setAtivo(false);
         this.nucleoDAO.alterar(new NucleoORM(nucleoAlterado));
+    }
+
+    @Override
+    public void excluirBlocos() {
+
+        List<BlocoRecibo> blocosRecibos= this.blocoReciboDAO.pesquisarBlocos();
+        if(blocosRecibos!=null && blocosRecibos.size()>0){
+            for(BlocoRecibo blocoRecibo: blocosRecibos){
+                this.blocoReciboDAO.deletar(new BlocoReciboORM(blocoRecibo));
+            }
+        }
+
     }
 
     @Override
@@ -128,14 +144,14 @@ public class Model implements IModel {
     }
 
     @Override
-    public List<Recebimento> obterTodosRecebimentos() {
-        return this.mRecebimentoDAO.pesquisarTodosRecebimentos();
+    public List<Recebimento> obterRecebimentosRealizados() {
+        return this.mRecebimentoDAO.pesquisarRecebimentosRealizados();
     }
 
     @Override
     public BlocoRecibo pesquisarBlocoReciboPorNomeDaFoto(final String name) {
 
-        return this.mBlocoPedidoDAO.consultarBlocoReciboPorNome(name);
+        return this.mBlocoReciboDAO.consultarBlocoReciboPorNome(name);
     }
 
     public List<Cliente> pesquisarClientePorRede(final ClienteGrupo clienteGrupo) {
@@ -173,7 +189,12 @@ public class Model implements IModel {
 
     @Override
     public List<BlocoRecibo> pesquisarRecibosNaoMigrados() {
-        return this.mBlocoPedidoDAO.getRecibosNaoMigrados();
+        return this.mBlocoReciboDAO.getRecibosNaoMigrados();
+    }
+
+    @Override
+    public List<Recebimento> pesquisarTodosRecebimentos() {
+        return this.mRecebimentoDAO.pesquisarTodosRecebimentos();
     }
 
     @Override

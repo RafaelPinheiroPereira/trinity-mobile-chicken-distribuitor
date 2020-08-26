@@ -85,7 +85,7 @@ public class RecebimentoDAO extends GenericsDAO<RecebimentoORM> {
         return recebimentos;
     }
 
-    public List<Recebimento> pesquisarTodosRecebimentos() {
+    public List<Recebimento> pesquisarRecebimentosRealizados() {
 
         ArrayList<Recebimento> recebimentos = new ArrayList<>();
 
@@ -117,5 +117,26 @@ public class RecebimentoDAO extends GenericsDAO<RecebimentoORM> {
         else {
             return false;
         }
+    }
+
+    public List<Recebimento> pesquisarTodosRecebimentos() {
+
+        ArrayList<Recebimento> recebimentos = new ArrayList<>();
+
+        RealmResults<RecebimentoORM> results =
+                where().findAll();
+
+        if (results != null && results.size() > 0) {
+            if (VERSION.SDK_INT >= VERSION_CODES.N) {
+                results.forEach(item->recebimentos.add(new Recebimento(item)));
+            } else {
+                for (RecebimentoORM recebimentoORM : results) {
+                    recebimentos.add(new Recebimento(recebimentoORM));
+
+                }
+            }
+        }
+
+        return recebimentos;
     }
 }

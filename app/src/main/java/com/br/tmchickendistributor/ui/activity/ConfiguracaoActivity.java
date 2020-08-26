@@ -61,7 +61,9 @@ public class ConfiguracaoActivity extends AppCompatActivity implements IView {
     mPresenter.setMac(getMacAddr());
 
     mPresenter.criarPastasDasImagens();
+
     edtCNPJ.setText("27.385.693/0001-34");
+
 
     if (mPresenter.statusSistema().equals("DISPOSITIVO_HABILITADO")) {
 
