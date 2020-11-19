@@ -11,6 +11,10 @@ public class DateUtils {
 
     private static final SimpleDateFormat FORMATADOR_dd_MM_YYYY =
             new SimpleDateFormat("dd/MM/yyyy");
+
+    private static final SimpleDateFormat YYYY_MM_DD =
+            new SimpleDateFormat("yyyy/MM/dd");
+
     private static final SimpleDateFormat FORMATADOR_YYYY_MM_DD_HH_MM_SS =
             new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
 

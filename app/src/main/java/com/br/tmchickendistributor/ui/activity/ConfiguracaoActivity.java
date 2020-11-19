@@ -62,7 +62,7 @@ public class ConfiguracaoActivity extends AppCompatActivity implements IView {
 
     mPresenter.criarPastasDasImagens();
 
-    edtCNPJ.setText("27.385.693/0001-34");
+    edtCNPJ.setText("41.627.969/0001-74");
 
 
     if (mPresenter.statusSistema().equals("DISPOSITIVO_HABILITADO")) {
