@@ -310,6 +310,7 @@ public class Model implements IRecebimentoMVP.IModel {
                     item.setDataRecebimento(
                         DateUtils.formatarDateParaddMMyyyyhhmm(
                             new Date(System.currentTimeMillis())));
+
                   } catch (ParseException e) {
                     e.printStackTrace();
                   }
@@ -327,6 +328,7 @@ public class Model implements IRecebimentoMVP.IModel {
           try {
             recebimento.setDataRecebimento(
                 DateUtils.formatarDateParaddMMyyyyhhmm(new Date(System.currentTimeMillis())));
+
 
           } catch (ParseException e) {
             e.printStackTrace();

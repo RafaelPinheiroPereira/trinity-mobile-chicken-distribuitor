@@ -1,4 +1,2 @@
-# Trinity Mobile @chickenDistributor
-
-Versão do Trinity Mobile voltada para o mercado de distribuição de frangos.
-Força de vendas desenvolvida utilizando a linguagem Java para o sistema operacional Android.
+# digital-bank
+Technical challenge for a mobile developer position
