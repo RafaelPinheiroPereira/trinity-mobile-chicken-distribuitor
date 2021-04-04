@@ -1,5 +1,6 @@
 package com.br.tmchickendistributor.ui.mvp.home;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Build.VERSION_CODES;
 import android.util.Log;
@@ -201,8 +202,8 @@ public class Model implements IModel {
     public void sincronizarFotos() {
         ArquivoUtils mArquivoUtils = new ArquivoUtils();
 
-        File[] fotosVendas = mArquivoUtils.lerFotosDoDiretorio(ConstantsUtil.CAMINHO_IMAGEM_VENDAS);
-        File[] fotosRecebimentos = mArquivoUtils.lerFotosDoDiretorio(ConstantsUtil.CAMINHO_IMAGEM_RECEBIMENTOS);
+        File[] fotosVendas = mArquivoUtils.lerFotosDoDiretorio((Activity) mPresenter.getContext(),ConstantsUtil.CAMINHO_IMAGEM_VENDAS);
+        File[] fotosRecebimentos = mArquivoUtils.lerFotosDoDiretorio((Activity) mPresenter.getContext(),ConstantsUtil.CAMINHO_IMAGEM_RECEBIMENTOS);
 
         List<File> fotosVendasNaoMigradas= new ArrayList<>();
         List<File> fotosRecibosNaoMigrados= new ArrayList<>();

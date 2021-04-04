@@ -376,7 +376,7 @@ public class Presenter implements IVendaMVP.IPresenter {
     }
 
     @Override
-    public void salvarVenda(final long sequencePedido) throws ParseException {
+    public Pedido salvarVenda(final long sequencePedido) throws ParseException {
 
         Pedido pedido = new Pedido();
         pedido.setDataPedido(
@@ -427,7 +427,9 @@ public class Presenter implements IVendaMVP.IPresenter {
 
         this.mModel.copyOrUpdateSaleOrder(pedido);
 
+
         this.mModel.atualizarIdMaximoDeVenda( sequencePedido);
+        return pedido;
     }
 
     @Override

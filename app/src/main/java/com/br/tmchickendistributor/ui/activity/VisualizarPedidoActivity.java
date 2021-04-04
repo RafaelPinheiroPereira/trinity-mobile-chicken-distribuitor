@@ -101,7 +101,7 @@ public class VisualizarPedidoActivity extends AppCompatActivity implements IView
         mPresenter.verificarCredenciaisGoogleDrive();
         mPresenter.setDataView();
 
-       // mPresenter.esperarPorConexao();
+        mPresenter.esperarPorConexao();
     }
 
     @Override

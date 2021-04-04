@@ -51,13 +51,13 @@ public class CameraUtil {
     }
 
     private File criarArquivoDaImagem(String nomeFoto,String  diretorio)  {
-        String state = Environment.getExternalStorageState();
+
         File filesDir;
         // Make sure it's available
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
+        if (android.os.Build.VERSION.SDK_INT <= 28) {
             filesDir = new File(Environment.getExternalStorageDirectory()+ "/Trinity_Mobile/",diretorio);
         } else {
-            filesDir = new File(this.mActivity.getExternalFilesDir(null),"Example Images");
+            filesDir = new File(this.mActivity.getExternalMediaDirs()[0].getAbsolutePath() + File.separator+"Trinity_Mobile"+ File.separator +diretorio);
         }
 
         if(!filesDir.exists()) filesDir.mkdirs();

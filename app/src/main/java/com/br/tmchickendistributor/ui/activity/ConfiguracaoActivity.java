@@ -60,7 +60,7 @@ public class ConfiguracaoActivity extends AppCompatActivity implements IView {
     mPresenter = new Presenter(this);
     mPresenter.setMac(getMacAddr());
 
-    mPresenter.criarPastasDasImagens();
+
     edtCNPJ.setText("41.627.969/0001-74");
 
     if (mPresenter.statusSistema().equals("DISPOSITIVO_HABILITADO")) {
@@ -175,7 +175,9 @@ public class ConfiguracaoActivity extends AppCompatActivity implements IView {
 
         AbstractActivity.showToast(mPresenter.getContext(), "Permissões necessárias concedidas");
 
+        mPresenter.criarPastasDasImagens();
         btnConfigurar.setEnabled(true);
+
 
       } else {
         btnConfigurar.setEnabled(false);

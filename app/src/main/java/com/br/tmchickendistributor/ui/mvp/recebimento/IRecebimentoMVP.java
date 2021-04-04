@@ -57,7 +57,7 @@ public interface IRecebimentoMVP {
 
         void removerAmortizacao(int position);
 
-        void salvarAmortizacao(final long idBlocoRecibo);
+        BlocoRecibo salvarAmortizacao(final long idBlocoRecibo);
 
         void setCliente(Cliente cliente);
 
@@ -160,7 +160,7 @@ public interface IRecebimentoMVP {
 
         boolean saldoDevidoEhMaiorQueZero();
 
-        void salvarAmortizacao(final long idBlocoRecibo);
+        BlocoRecibo salvarAmortizacao(final long idBlocoRecibo);
 
         void setOrdenarSelecaoAutomaticaDasNotas();
 

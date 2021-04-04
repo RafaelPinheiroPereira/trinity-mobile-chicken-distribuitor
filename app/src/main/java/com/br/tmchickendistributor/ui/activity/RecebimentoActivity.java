@@ -24,6 +24,8 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
+
+import com.br.tmchickendistributor.data.model.BlocoRecibo;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
 import com.br.tmchickendistributor.ui.adapter.ContaAdapter;
@@ -96,6 +98,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
   TextView txtValorTotalDevido;
 
   private String nomeFoto;
+  private BlocoRecibo blocoRecibo;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -189,7 +192,9 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == CameraUtil.RESULTADO_INTENCAO_FOTO) {
       if (resultCode == RESULT_OK) {
-
+        if(mPresenter.getBlocoRecibo()==null){
+          mPresenter.setBlocoRecibo(blocoRecibo);
+        }
         mPresenter.getBlocoRecibo().setNomeFoto(nomeFoto + ".jpg");
         mPresenter.alterarBlocoRecibo(mPresenter.getBlocoRecibo());
 
@@ -278,28 +283,29 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
   public void salvarRecebimento() {
 
     if (!mPresenter.getConta().getId().equals("F")) {
-      //if (mPresenter.getImpresssora().isAtivo()) {
+      if (mPresenter.getImpresssora().isAtivo()) {
 
         long idBlocoRecibo = mPresenter.configurarSequenceDoRecebimento();
         if (idBlocoRecibo > 0) {
-          mPresenter.salvarAmortizacao(idBlocoRecibo);
+          blocoRecibo= mPresenter.salvarAmortizacao(idBlocoRecibo);
+          mPresenter.setBlocoRecibo(blocoRecibo);
           mPresenter.atualizarRecycleView();
 
-          AbstractActivity.showToast(
+        /*  AbstractActivity.showToast(
               mPresenter.getContext(), "Recebimento realizado com sucesso!.\n");
-           NavUtils.navigateUpFromSameTask(this);
+           NavUtils.navigateUpFromSameTask(this);*/
         } else {
 
           AbstractActivity.showToast(
               mPresenter.getContext(),
               "Dados do recibo não atualizados com o servidor.\nContate o suporte do sistema");
         }
-       // mPresenter.esperarPorConexao();
-    //  } else {
-      //  AbstractActivity.showToast(
-        //    mPresenter.getContext(),
-          //  "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
-      //}
+        mPresenter.esperarPorConexao();
+      } else {
+        AbstractActivity.showToast(
+           mPresenter.getContext(),
+           "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
+      }
     } else {
       AbstractActivity.showToast(
           mPresenter.getContext(), "Por favor, selecione um tipo de recebimento.\n");

@@ -188,7 +188,7 @@ public class Model implements IVendaMVP.IModel {
         PedidoORM pedidoORM = new PedidoORM(pedido);
         pedidoORM.setItens(PedidoORM.converterListModelParaListRealm(pedido.getItens()));
         mPedidoDAO.alterar(pedidoORM);
-        mPresenter.setPedido(pedido);
+
     }
 
     @Override

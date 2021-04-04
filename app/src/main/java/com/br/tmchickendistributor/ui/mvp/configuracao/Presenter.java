@@ -37,7 +37,7 @@ public class Presenter implements IPresenter {
   @Override
   public void criarPastasDasImagens() {
     this.mArquivoUtils = new ArquivoUtils();
-    this.mArquivoUtils.criarPastas((Activity) this.getContext());
+    this.mArquivoUtils.criarPastasDasImagens((Activity) this.getContext());
   }
 
   @Override

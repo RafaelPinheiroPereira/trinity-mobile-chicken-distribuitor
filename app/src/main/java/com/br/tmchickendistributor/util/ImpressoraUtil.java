@@ -362,7 +362,12 @@ public class ImpressoraUtil {
         dialog.setMessage("Conectando o dispositivo");
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
+
+        if(!((Activity) this.activity).isFinishing())
+        {
+            dialog.show();
+        }
+
 
         final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         final Thread t =

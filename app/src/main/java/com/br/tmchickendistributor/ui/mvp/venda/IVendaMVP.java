@@ -148,7 +148,7 @@ public interface IVendaMVP {
 
     void setTotalProductValue(BigDecimal totalProductValue);
 
-    void salvarVenda(final long sequencePedido) throws ParseException;
+    Pedido salvarVenda(final long sequencePedido) throws ParseException;
 
     void updateTxtAmountOrderSale();
 
