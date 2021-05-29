@@ -152,7 +152,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
     ArrayAdapter<CharSequence> adaptadorLotes;
 
     private String nomeFoto;
-    Pedido pedido;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +169,6 @@ public class VendasActivity extends AppCompatActivity implements IView {
 
         mPresenter = new Presenter(this);
         mPresenter.getParametros();
-
 
         if (mPresenter.getFuncionario().getAlteraPreco().equals(ConstantsUtil.TEM_PERMISSAO_PARA_ALTERAR_PRECO)) {
             cetPrecoUnitario.setEnabled(true);
@@ -239,11 +238,8 @@ public class VendasActivity extends AppCompatActivity implements IView {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CameraUtil.RESULTADO_INTENCAO_FOTO) {
             if (resultCode == RESULT_OK) {
-                if(mPresenter.getPedido()==null){
-                    mPresenter.setPedido(pedido);
-                }
-                this.mPresenter.getPedido().setNomeFoto(nomeFoto + ".jpg");
-                this.mPresenter.atualizarPedido(mPresenter.getPedido());
+
+
                 AbstractActivity.showToast(
                         mPresenter.getContext(),
                         "Imagem salva: " + CameraUtil.LOCAL_ONDE_A_IMAGEM_FOI_SALVA);
@@ -349,9 +345,6 @@ public class VendasActivity extends AppCompatActivity implements IView {
                 FormatacaoMoeda.converterParaReal(mPresenter.getValorTotalProduto().doubleValue()));
     }
 
-    @Override
-    public void atualizarViewPrecoPosFoto() {
-    }
 
     @Override
     public void atualizarSpinnerLotes() {
@@ -398,9 +391,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
         ) {
             // Realiza Update do PedidoORM
             if (mPresenter.getPedido() != null) {
-
                 List<ItemPedido> itensDTO = mPresenter.getItens();
-
                 mPresenter.getPedido().setItens((itensDTO));
                 mPresenter.getPedido().setValorTotal(mPresenter.calcularTotalDaVenda());
                 mPresenter.atualizarPedido(mPresenter.getPedido());
@@ -412,7 +403,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
                             mPresenter.configurarSequenceDoPedido();
 
                     if (sequencePedido > 0) {
-                        pedido= mPresenter.salvarVenda(sequencePedido);
+                        Pedido pedido = mPresenter.salvarVenda(sequencePedido);
                         mPresenter.setPedido(pedido);
                     } else {
                         AbstractActivity.showToast(
@@ -506,6 +497,9 @@ public class VendasActivity extends AppCompatActivity implements IView {
                 String.format("%02d", mPresenter.getPedido().getIdNucleo())
                         + String.format("%03d", mPresenter.getPedido().getCodigoFuncionario())
                         + String.format("%08d", mPresenter.getPedido().getIdVenda());
+
+        this.mPresenter.getPedido().setNomeFoto(nomeFoto + ".jpg");
+        this.mPresenter.atualizarPedido(mPresenter.getPedido());
 
         CameraUtil cameraUtil = new CameraUtil((Activity) mPresenter.getContext());
         try {

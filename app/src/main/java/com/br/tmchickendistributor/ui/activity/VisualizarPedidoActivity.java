@@ -146,6 +146,9 @@ public class VisualizarPedidoActivity extends AppCompatActivity implements IView
                         + String.format("%03d", mPresenter.getPedido().getCodigoFuncionario())
                         + String.format("%08d", mPresenter.getPedido().getIdVenda());
 
+        mPresenter.getPedido().setNomeFoto(nomeFoto+".jpg");
+        mPresenter.atualizarPedido(mPresenter.getPedido());
+
         CameraUtil cameraUtil = new CameraUtil((Activity) mPresenter.getContext());
         try {
             cameraUtil.tirarFoto(CAMINHO_IMAGEM_VENDAS, nomeFoto);
@@ -209,8 +212,7 @@ public class VisualizarPedidoActivity extends AppCompatActivity implements IView
             if (resultCode == RESULT_OK) {
 
 
-                mPresenter.getPedido().setNomeFoto(nomeFoto+".jpg");
-                mPresenter.atualizarPedido(mPresenter.getPedido());
+
 
                 AbstractActivity.showToast(
                         mPresenter.getContext(),

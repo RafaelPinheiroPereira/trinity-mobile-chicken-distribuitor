@@ -98,7 +98,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
   TextView txtValorTotalDevido;
 
   private String nomeFoto;
-  private BlocoRecibo blocoRecibo;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -192,11 +192,8 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == CameraUtil.RESULTADO_INTENCAO_FOTO) {
       if (resultCode == RESULT_OK) {
-        if(mPresenter.getBlocoRecibo()==null){
-          mPresenter.setBlocoRecibo(blocoRecibo);
-        }
-        mPresenter.getBlocoRecibo().setNomeFoto(nomeFoto + ".jpg");
-        mPresenter.alterarBlocoRecibo(mPresenter.getBlocoRecibo());
+
+
 
         AbstractActivity.showToast(
             mPresenter.getContext(), "Imagem salva: " + CameraUtil.LOCAL_ONDE_A_IMAGEM_FOI_SALVA);
@@ -251,6 +248,8 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
     nomeFoto =
         String.format("%02d", mPresenter.getNucleo().getId())
             .concat(String.format("%08d", mPresenter.getFuncionario().getMaxIdRecibo()));
+    mPresenter.getBlocoRecibo().setNomeFoto(nomeFoto + ".jpg");
+    mPresenter.alterarBlocoRecibo(mPresenter.getBlocoRecibo());
     CameraUtil cameraUtil = new CameraUtil((Activity) mPresenter.getContext());
     try {
       cameraUtil.tirarFoto(CAMINHO_IMAGEM_RECEBIMENTOS, nomeFoto);
@@ -287,7 +286,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
 
         long idBlocoRecibo = mPresenter.configurarSequenceDoRecebimento();
         if (idBlocoRecibo > 0) {
-          blocoRecibo= mPresenter.salvarAmortizacao(idBlocoRecibo);
+         BlocoRecibo  blocoRecibo= mPresenter.salvarAmortizacao(idBlocoRecibo);
           mPresenter.setBlocoRecibo(blocoRecibo);
           mPresenter.atualizarRecycleView();
 

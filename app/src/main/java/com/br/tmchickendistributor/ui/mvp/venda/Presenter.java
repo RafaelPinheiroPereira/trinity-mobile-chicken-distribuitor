@@ -136,10 +136,7 @@ public class Presenter implements IVendaMVP.IPresenter {
         }
     }
 
-    @Override
-    public void atulizarViewPrecoPosFoto() {
-        this.mView.atualizarViewPrecoPosFoto();
-    }
+
 
     @Override
     public void setBicos(final int bicos) {

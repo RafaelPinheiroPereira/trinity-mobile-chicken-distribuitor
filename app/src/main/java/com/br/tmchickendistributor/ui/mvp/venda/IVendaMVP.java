@@ -1,7 +1,9 @@
 package com.br.tmchickendistributor.ui.mvp.venda;
 
 import android.content.Context;
+
 import androidx.appcompat.app.AlertDialog;
+
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Funcionario;
@@ -15,6 +17,7 @@ import com.br.tmchickendistributor.data.model.Produto;
 import com.br.tmchickendistributor.data.model.Unidade;
 import com.br.tmchickendistributor.data.realm.PedidoORM;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -22,235 +25,234 @@ import java.util.List;
 
 public interface IVendaMVP {
 
-  interface IPresenter {
+    interface IPresenter {
 
-    Impressora getImpressora();
+        Impressora getImpressora();
 
-    Nucleo getNucleo();
+        Nucleo getNucleo();
 
-    void salvarNomeFoto(final Pedido pedido);
+        void salvarNomeFoto(final Pedido pedido);
 
-    Funcionario getFuncionario();
+        Funcionario getFuncionario();
 
-    void atualizarActCodigoProduto();
+        void atualizarActCodigoProduto();
 
-    void atualizarProdutoSelecionadoView();
+        void atualizarProdutoSelecionadoView();
 
-    void atualizarRecyclerItens();
+        void atualizarRecyclerItens();
 
-    void atualizarSpinnerLotes();
+        void atualizarSpinnerLotes();
 
-    long configurarSequenceDoPedido();
+        long configurarSequenceDoPedido();
 
-    DriveServiceHelper getDriveServiceHelper();
+        DriveServiceHelper getDriveServiceHelper();
 
-    void setDriveServiceHelper(DriveServiceHelper driveServiceHelper);
+        void setDriveServiceHelper(DriveServiceHelper driveServiceHelper);
 
-    void error(String msg);
+        void error(String msg);
 
-    void esperarPorConexao();
+        void esperarPorConexao();
 
-    void atulizarViewPrecoPosFoto();
+        Double calcularTotalDaVenda();
 
-    Double calcularTotalDaVenda();
+        void exibirBotaoFotografar();
 
-    void exibirBotaoFotografar();
+        void dissmis();
 
-    void dissmis();
+        void atualizarPedido(Pedido orderSale);
 
-    void atualizarPedido(Pedido orderSale);
+        AlertDialog getAlertDialog();
 
-    AlertDialog getAlertDialog();
+        ArrayList<String> carregarIdProdutos(List<Produto> produtos);
 
-    ArrayList<String> carregarIdProdutos(List<Produto> produtos);
+        void fecharConexaoAtiva();
 
-    void fecharConexaoAtiva();
+        int getBicos();
 
-    int getBicos();
+        Empresa pesquisarEmpresaRegistrada();
 
-    Empresa pesquisarEmpresaRegistrada();
+        void setAlertDialog(AlertDialog alertDialog);
 
-    void setAlertDialog(AlertDialog alertDialog);
+        List<Produto> carregarProdutos();
 
-    List<Produto> carregarProdutos();
+        ArrayList<String> carregarProdutosPorNome(List<Produto> produtos);
 
-    ArrayList<String> carregarProdutosPorNome(List<Produto> produtos);
+        Context getContext();
 
-    Context getContext();
+        void setBicos(int bicos);
 
-    void setBicos(int bicos);
+        ItemPedido getItemPedido();
 
-    ItemPedido getItemPedido();
+        void setItemPedido(ItemPedido itemPedido);
 
-    void setItemPedido(ItemPedido itemPedido);
+        List<ItemPedido> getItens();
 
-    List<ItemPedido> getItens();
+        void setItens(List<ItemPedido> itens);
 
-    void setItens(List<ItemPedido> itens);
+        void carregarVenda() throws Throwable;
 
-    void carregarVenda() throws Throwable;
+        Preco getPreco();
 
-    Preco getPreco();
+        void setPreco(final Preco preco);
 
-    void setPreco(final Preco preco);
+        Produto getProdutoSelecionado();
 
-    Produto getProdutoSelecionado();
+        void setProdutoSelecionado(final Produto produtoSelecionado);
 
-    void setProdutoSelecionado(final Produto produtoSelecionado);
+        List<Unidade> carregarUnidades();
 
-    List<Unidade> carregarUnidades();
+        ArrayList<String> carregarUnidadesEmString(List<Unidade> unidades);
 
-    ArrayList<String> carregarUnidadesEmString(List<Unidade> unidades);
+        Unidade carregarUnidadePadraoDoProduto();
 
-    Unidade carregarUnidadePadraoDoProduto();
+        void desabilitarBotaoSalvarPedido();
 
-    void desabilitarBotaoSalvarPedido();
+        void exibirDialogAlterarItemPedido(int position);
 
-    void exibirDialogAlterarItemPedido(int position);
+        Cliente getCliente();
 
-    Cliente getCliente();
+        void setCliente(final Cliente cliente);
 
-    void setCliente(final Cliente cliente);
+        void getParametros();
 
-    void getParametros();
+        Pedido getPedido();
 
-    Pedido getPedido();
+        Unidade getUnidadeSelecionada();
 
-    Unidade getUnidadeSelecionada();
+        void setPedido(Pedido Pedido);
 
-    void setPedido(Pedido Pedido);
+        BigDecimal getQuantidadeProdutos();
 
-    BigDecimal getQuantidadeProdutos();
+        void setUnidadeSelecionada(Unidade unidadeSelecionada);
 
-    void setUnidadeSelecionada(Unidade unidadeSelecionada);
+        void setQuantidadeProdutos(BigDecimal quantidadeProdutos);
 
-    void setQuantidadeProdutos(BigDecimal quantidadeProdutos);
+        Preco pesquisarPrecoDaUnidadePorProduto(String unityID);
 
-    Preco pesquisarPrecoDaUnidadePorProduto(String unityID);
+        Produto pesquisarProdutoPorId(long parseLong);
 
-    Produto pesquisarProdutoPorId(long parseLong);
+        Produto pesquisarProdutoPorNome(String productName);
 
-    Produto pesquisarProdutoPorNome(String productName);
+        BigDecimal getTotalDaVenda();
 
-    BigDecimal getTotalDaVenda();
+        void setTotalDaVenda(BigDecimal totalDaVenda);
 
-    void setTotalDaVenda(BigDecimal totalDaVenda);
+        BigDecimal getValorTotalProduto();
 
-    BigDecimal getValorTotalProduto();
+        Cliente pesquisarClientePorId(long codigoCliente);
 
-    Cliente pesquisarClientePorId(long codigoCliente);
+        Preco pesquisarPrecoPorProduto();
 
-    Preco pesquisarPrecoPorProduto();
+        Pedido pesquisarVendaPorId(long keyPedido);
 
-    Pedido pesquisarVendaPorId(long keyPedido);
+        void setSpinnerProdutoSelecionado();
 
-    void setSpinnerProdutoSelecionado();
+        void setTotalProductValue(BigDecimal totalProductValue);
 
-    void setTotalProductValue(BigDecimal totalProductValue);
+        Pedido salvarVenda(final long sequencePedido) throws ParseException;
 
-    Pedido salvarVenda(final long sequencePedido) throws ParseException;
+        void updateTxtAmountOrderSale();
 
-    void updateTxtAmountOrderSale();
+        void updateTxtAmountProducts();
 
-    void updateTxtAmountProducts();
+        void imprimirComprovante();
 
-    void imprimirComprovante();
+        boolean validarCamposAntesDeAdicionarItem();
 
-    boolean validarCamposAntesDeAdicionarItem();
+        void setLoteSelecionado(String loteSelecionado);
 
-    void setLoteSelecionado(String loteSelecionado);
+        String getLoteSelecionado();
+    }
 
-    String getLoteSelecionado();
-  }
+    interface IView {
 
-  interface IView {
+        void atualizarSpinnerLotes();
 
-    void atualizarSpinnerLotes();
+        void atualizarViewsDoProdutoSelecionado();
 
-    void atualizarViewsDoProdutoSelecionado();
+        void atualizarTextViewTotalVenda();
 
-    void atualizarTextViewTotalVenda();
+        void dissmiss();
 
-    void dissmiss();
+        void error(String msg);
 
-    void error(String msg);
+        void carregarVenda() throws Throwable;
 
-    void carregarVenda() throws Throwable;
+        void exibirBotaoImprimir();
 
-    void exibirBotaoImprimir();
+        void atualizarTextViewValorTotalProduto();
 
-    void atualizarTextViewValorTotalProduto();
+        void desabilitarCliqueBotaoSalvarVenda();
 
-    void desabilitarCliqueBotaoSalvarVenda();
+        void exibirBotaoFotografar();
 
-    void exibirBotaoFotografar();
+        void setSpinnerProductSelected();
 
-    void setSpinnerProductSelected();
 
-    void atualizarViewPrecoPosFoto();
+        void exibirDialogAlterarItemPedido(int position);
 
-    void exibirDialogAlterarItemPedido(int position);
+        void updateActCodigoProduto();
 
-    void updateActCodigoProduto();
+        void updateRecyclerItens();
 
-    void updateRecyclerItens();
+        void getParametros();
 
-    void getParametros();
+        boolean validarCamposAntesDeAdicionarItem();
+    }
 
-    boolean validarCamposAntesDeAdicionarItem();
-  }
+    interface IModel {
 
-  interface IModel {
+        long addItemPedido(ItemPedido item);
 
-    long addItemPedido(ItemPedido item);
+        void atualizarChaveItemPedido(ItemPedidoID chavesItemPedido);
 
-    void atualizarChaveItemPedido(ItemPedidoID chavesItemPedido);
+        void atualizarItemPedido(ItemPedido item);
 
-    void atualizarItemPedido(ItemPedido item);
+        Preco carregarPrecoPorProduto();
 
-    Preco carregarPrecoPorProduto();
+        Preco carregarPrecoUnidadePorProduto(String item);
 
-    Preco carregarPrecoUnidadePorProduto(String item);
+        ArrayList<String> carregarProdutoPorId(List<Produto> products);
 
-    ArrayList<String> carregarProdutoPorId(List<Produto> products);
+        long configurarSequenceDoPedido();
 
-    long configurarSequenceDoPedido();
+        void copyOrUpdateSaleOrder(Pedido pedido);
 
-    void copyOrUpdateSaleOrder(Pedido pedido);
+        ArrayList<String> carregarProdutoPorNome(List<Produto> produto);
 
-    ArrayList<String> carregarProdutoPorNome(List<Produto> produto);
+        ArrayList<String> converterUnidadeParaString(List<Unidade> unidades);
 
-    ArrayList<String> converterUnidadeParaString(List<Unidade> unidades);
+        void criarChaveItemPedido(ItemPedidoID chavesItemPedido);
 
-    void criarChaveItemPedido(ItemPedidoID chavesItemPedido);
+        Cliente pesquisarClientePorId(Long id);
 
-    Cliente pesquisarClientePorId(Long id);
+        long pesquisarCodigoMaximoDeVendaDoFuncionario(int idUsuario);
 
-    long pesquisarCodigoMaximoDeVendaDoFuncionario(int idUsuario);
+        Empresa pesquisarEmpresaRegistrada();
 
-    Empresa pesquisarEmpresaRegistrada();
+        Funcionario pesquisarFuncionarioAtivo();
 
-    Funcionario pesquisarFuncionarioAtivo();
+        Impressora pesquisarImpressoraAtiva();
 
-    Impressora pesquisarImpressoraAtiva();
+        Nucleo pesquisarNucleoAtivo();
 
-    Nucleo pesquisarNucleoAtivo();
+        Produto pesquisarProdutoPorId(long id);
 
-    Produto pesquisarProdutoPorId(long id);
+        Produto pesquisarProdutoPorNome(String productName);
 
-    Produto pesquisarProdutoPorNome(String productName);
+        List<Produto> getAllProducts();
 
-    List<Produto> getAllProducts();
+        List<Unidade> getAllUnitys();
 
-    List<Unidade> getAllUnitys();
+        void atualizarIdMaximoDeVenda(long idVendaMaxima);
 
-    void atualizarIdMaximoDeVenda(long idVendaMaxima);
+        Unidade pesquisarUnidadePadraoDoProduto();
 
-    Unidade pesquisarUnidadePadraoDoProduto();
+        Pedido pesquisarVendaPorId(Long id);
 
-    Pedido pesquisarVendaPorId(Long id);
-
-    /** @return saleOrderIdSaved */
-    void salvarPedido(final PedidoORM saleOrderToSave);
-  }
+        /**
+         * @return saleOrderIdSaved
+         */
+        void salvarPedido(final PedidoORM saleOrderToSave);
+    }
 }

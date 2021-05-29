@@ -59,9 +59,6 @@ public class ImpressoraUtil {
     public synchronized boolean esperarPorConexao(Impressora impressora) {
 
         status(null);
-        fecharConexaoAtiva();
-
-
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter.isEnabled()) {
             // Checa conexao
