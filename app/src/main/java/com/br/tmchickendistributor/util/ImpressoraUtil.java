@@ -211,7 +211,7 @@ public class ImpressoraUtil {
                     abstractActivity.runOnUiThread(
                             () -> {
                                 if (!activity.isFinishing()) {
-                                    esperarPorConexao(impressora);
+                                  //  esperarPorConexao(impressora);
                                 }
                             });
                 });
@@ -389,33 +389,12 @@ public class ImpressoraUtil {
 
 
                                 } catch (IOException e) {
-                                    try {
-                                        mBluetoothSocket =
-                                                btDevice.createRfcommSocketToServiceRecord(uuid);
-                                        Thread.sleep(30);
-                                        in = mBluetoothSocket.getInputStream();
-                                        out = mBluetoothSocket.getOutputStream();
-                                        mBluetoothSocket.connect();
-
-                                    } catch (IOException ioException) {
-                                        ioException.printStackTrace();
-                                        activity.runOnUiThread(
-                                                () -> {
-                                                    AbstractActivity.showToast(
-                                                            this.activity,
-                                                            "Impressora desligada/desabilitada.\nFalha ao conectar:  "
-                                                                    + e.getMessage());
-                                                });
-                                    } catch (InterruptedException interruptedException) {
-                                        interruptedException.printStackTrace();
-                                        activity.runOnUiThread(
-                                                () -> {
-                                                    AbstractActivity.showToast(
-                                                            this.activity,
-                                                            "Impressora desligada/desabilitada.\nFalha ao conectar:  "
-                                                                    + e.getMessage());
-                                                });
-                                    }
+                                    //                                        mBluetoothSocket =
+//                                                btDevice.createRfcommSocketToServiceRecord(uuid);
+//                                        Thread.sleep(30);
+//                                        in = mBluetoothSocket.getInputStream();
+//                                        out = mBluetoothSocket.getOutputStream();
+//                                        mBluetoothSocket.connect();
 
 
                                     return;
@@ -433,17 +412,20 @@ public class ImpressoraUtil {
                             }
                         });
         t.start();
-        fecharConexaoBluetooth();
+
 
     }
 
     private synchronized void fecharConexaoBluetooth() {
-        BluetoothSocket s = mBluetoothSocket;
-        mBluetoothSocket = null;
-        if (s != null) {
+
+        if (mBluetoothSocket != null) {
 
             try {
-                s.close();
+                mBluetoothSocket.close();
+                if(mBluetoothSocket.isConnected()){
+                    mBluetoothSocket.close();
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -88,20 +88,23 @@ public class VisualizarPedidoActivity extends AppCompatActivity implements IView
         setContentView(R.layout.activity_visualizar_pedido);
         ButterKnife.bind(this);
         iniciarViews();
+        mPresenter = new Presenter(this);
+        mPresenter.esperarPorConexao();
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        mPresenter = new Presenter(this);
+
         mPresenter.setPedido(mPresenter.getParametrosDaVenda(getIntent().getExtras()));
         mPresenter.setCliente(
                 mPresenter.pesquisarClientePorID(mPresenter.getPedido().getCodigoCliente()));
         mPresenter.verificarCredenciaisGoogleDrive();
         mPresenter.setDataView();
 
-        mPresenter.esperarPorConexao();
+
     }
 
     @Override
@@ -132,6 +135,7 @@ public class VisualizarPedidoActivity extends AppCompatActivity implements IView
 
     @OnClick(R.id.btnImprimir)
     public void setBtnImprimirOnClicked(View view) {
+
         for (int i = 0; i < 2; i++) {
             this.mPresenter.imprimirComprovante();
         }
@@ -140,7 +144,7 @@ public class VisualizarPedidoActivity extends AppCompatActivity implements IView
 
     @OnClick(R.id.btnFotografar)
     public void fotografarComprovante(View view) {
-
+        this.mPresenter.fecharConexaoAtiva();
         nomeFoto =
                 String.format("%02d", mPresenter.getPedido().getIdNucleo())
                         + String.format("%03d", mPresenter.getPedido().getCodigoFuncionario())

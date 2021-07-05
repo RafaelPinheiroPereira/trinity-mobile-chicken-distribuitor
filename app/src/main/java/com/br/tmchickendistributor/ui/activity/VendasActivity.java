@@ -243,7 +243,10 @@ public class VendasActivity extends AppCompatActivity implements IView {
                 AbstractActivity.showToast(
                         mPresenter.getContext(),
                         "Imagem salva: " + CameraUtil.LOCAL_ONDE_A_IMAGEM_FOI_SALVA);
-                this.finish();
+
+
+                NavUtils.navigateUpFromSameTask(this);
+
 
             } else {
                 AbstractActivity.showToast(mPresenter.getContext(), "Imagem não foi salva");
@@ -253,8 +256,11 @@ public class VendasActivity extends AppCompatActivity implements IView {
 
     @Override
     protected void onDestroy() {
+
         super.onDestroy();
-        mPresenter.fecharConexaoAtiva();
+        this.mPresenter.fecharConexaoAtiva();
+
+
     }
 
     @OnClick(R.id.btnAddItem)
@@ -493,6 +499,9 @@ public class VendasActivity extends AppCompatActivity implements IView {
 
     @OnClick(R.id.btnFotografar)
     public void fotografarComprovante(View view) {
+
+        this.mPresenter.fecharConexaoAtiva();
+
         nomeFoto =
                 String.format("%02d", mPresenter.getPedido().getIdNucleo())
                         + String.format("%03d", mPresenter.getPedido().getCodigoFuncionario())

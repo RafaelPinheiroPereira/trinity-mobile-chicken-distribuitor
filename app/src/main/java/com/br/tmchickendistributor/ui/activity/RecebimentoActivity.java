@@ -197,8 +197,8 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
 
         AbstractActivity.showToast(
             mPresenter.getContext(), "Imagem salva: " + CameraUtil.LOCAL_ONDE_A_IMAGEM_FOI_SALVA);
+        NavUtils.navigateUpFromSameTask(this);
 
-        this.finish();
       } else {
         AbstractActivity.showToast(mPresenter.getContext(), "Imagem não foi salva");
       }
@@ -244,7 +244,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
 
   @OnClick(R.id.btnFotografar)
   public void fotografarComprovante(View view) {
-
+    this.mPresenter.fecharConexaoAtiva();
     nomeFoto =
         String.format("%02d", mPresenter.getNucleo().getId())
             .concat(String.format("%08d", mPresenter.getFuncionario().getMaxIdRecibo()));
