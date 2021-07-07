@@ -15,7 +15,7 @@ public class Conta implements Serializable {
     private String id;
     private String descricao;
     private String agencia;
-    private String conta;
+    private String numeroConta;
 
 
 
@@ -23,7 +23,7 @@ public class Conta implements Serializable {
         this.id = contaORM.getId();
         this.descricao=contaORM.getDescricao();
         this.agencia=contaORM.getAgencia();
-        this.conta = contaORM.getConta();
+        this.numeroConta = contaORM.getNunmeroConta();
 
     }
 }
