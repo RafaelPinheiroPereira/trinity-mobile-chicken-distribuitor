@@ -136,10 +136,7 @@ public class Presenter implements IVendaMVP.IPresenter {
         }
     }
 
-    @Override
-    public void atulizarViewPrecoPosFoto() {
-        this.mView.atualizarViewPrecoPosFoto();
-    }
+
 
     @Override
     public void setBicos(final int bicos) {
@@ -376,11 +373,11 @@ public class Presenter implements IVendaMVP.IPresenter {
     }
 
     @Override
-    public void salvarVenda(final long sequencePedido) throws ParseException {
+    public Pedido salvarVenda(final long sequencePedido) throws ParseException {
 
         Pedido pedido = new Pedido();
-        pedido.setDataPedido(
-                DateUtils.formatarDateParaddMMyyyyhhmm(new Date(System.currentTimeMillis())));
+        pedido.setDataPedido(  DateUtils.formatarDateParaddMMyyyyhhmm(
+                new Date(System.currentTimeMillis())));
         // Agora setar o id definitivo do item do pedido
 
         if (VERSION.SDK_INT >= VERSION_CODES.N) {
@@ -427,7 +424,9 @@ public class Presenter implements IVendaMVP.IPresenter {
 
         this.mModel.copyOrUpdateSaleOrder(pedido);
 
+
         this.mModel.atualizarIdMaximoDeVenda( sequencePedido);
+        return pedido;
     }
 
     @Override

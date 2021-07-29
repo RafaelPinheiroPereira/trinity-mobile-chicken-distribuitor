@@ -20,13 +20,13 @@ public class ContaORM  extends RealmObject implements Serializable {
     private String id;
     private String descricao;
     private String agencia;
-    private String conta;
+    private String nunmeroConta;
 
     public ContaORM(Conta conta) {
         this.id = conta.getId();
         this.descricao = conta.getDescricao();
         this.agencia = conta.getAgencia();
-        this.conta= conta.getConta();
+        this.nunmeroConta = conta.getNumeroConta();
 
     }
 

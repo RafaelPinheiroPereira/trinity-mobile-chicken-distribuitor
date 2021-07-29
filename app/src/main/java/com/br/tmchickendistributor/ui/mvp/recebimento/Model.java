@@ -290,7 +290,7 @@ public class Model implements IRecebimentoMVP.IModel {
   }
 
   @Override
-  public void salvarAmortizacao(final long idBlocoRecibo) {
+  public BlocoRecibo salvarAmortizacao(final long idBlocoRecibo) {
 
     BlocoRecibo blocoRecibo = new BlocoRecibo();
     blocoRecibo.setId(idBlocoRecibo);
@@ -344,6 +344,7 @@ public class Model implements IRecebimentoMVP.IModel {
     }
 
     this.atualizarIdReciboMaximo(idBlocoRecibo);
+    return  blocoRecibo;
   }
 
   private void atualizarIdReciboMaximo(long idRecibo) {

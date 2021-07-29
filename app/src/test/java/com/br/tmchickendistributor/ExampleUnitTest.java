@@ -19,7 +19,7 @@ public class ExampleUnitTest {
         public void lerFotos() {
 
             ArquivoUtils arquivoUtils = new ArquivoUtils();
-           assertEquals(3, arquivoUtils.lerFotosDoDiretorio(ConstantsUtil.CAMINHO_IMAGEM_VENDAS).length);
+             assertEquals(3, arquivoUtils.lerFotosDoDiretorio(ConstantsUtil.CAMINHO_IMAGEM_VENDAS).length);
 
 
         }

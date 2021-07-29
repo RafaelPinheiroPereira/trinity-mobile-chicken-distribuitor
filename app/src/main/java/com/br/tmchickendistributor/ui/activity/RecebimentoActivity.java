@@ -24,6 +24,8 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
+
+import com.br.tmchickendistributor.data.model.BlocoRecibo;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
 import com.br.tmchickendistributor.ui.adapter.ContaAdapter;
@@ -96,6 +98,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
   TextView txtValorTotalDevido;
 
   private String nomeFoto;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -190,13 +193,12 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
     if (requestCode == CameraUtil.RESULTADO_INTENCAO_FOTO) {
       if (resultCode == RESULT_OK) {
 
-        mPresenter.getBlocoRecibo().setNomeFoto(nomeFoto + ".jpg");
-        mPresenter.alterarBlocoRecibo(mPresenter.getBlocoRecibo());
+
 
         AbstractActivity.showToast(
             mPresenter.getContext(), "Imagem salva: " + CameraUtil.LOCAL_ONDE_A_IMAGEM_FOI_SALVA);
+        NavUtils.navigateUpFromSameTask(this);
 
-        this.finish();
       } else {
         AbstractActivity.showToast(mPresenter.getContext(), "Imagem não foi salva");
       }
@@ -242,10 +244,12 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
 
   @OnClick(R.id.btnFotografar)
   public void fotografarComprovante(View view) {
-
+    this.mPresenter.fecharConexaoAtiva();
     nomeFoto =
         String.format("%02d", mPresenter.getNucleo().getId())
             .concat(String.format("%08d", mPresenter.getFuncionario().getMaxIdRecibo()));
+    mPresenter.getBlocoRecibo().setNomeFoto(nomeFoto + ".jpg");
+    mPresenter.alterarBlocoRecibo(mPresenter.getBlocoRecibo());
     CameraUtil cameraUtil = new CameraUtil((Activity) mPresenter.getContext());
     try {
       cameraUtil.tirarFoto(CAMINHO_IMAGEM_RECEBIMENTOS, nomeFoto);
@@ -278,28 +282,29 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
   public void salvarRecebimento() {
 
     if (!mPresenter.getConta().getId().equals("F")) {
-      //if (mPresenter.getImpresssora().isAtivo()) {
+      if (mPresenter.getImpresssora().isAtivo()) {
 
         long idBlocoRecibo = mPresenter.configurarSequenceDoRecebimento();
         if (idBlocoRecibo > 0) {
-          mPresenter.salvarAmortizacao(idBlocoRecibo);
+         BlocoRecibo  blocoRecibo= mPresenter.salvarAmortizacao(idBlocoRecibo);
+          mPresenter.setBlocoRecibo(blocoRecibo);
           mPresenter.atualizarRecycleView();
 
-          AbstractActivity.showToast(
+        /*  AbstractActivity.showToast(
               mPresenter.getContext(), "Recebimento realizado com sucesso!.\n");
-           NavUtils.navigateUpFromSameTask(this);
+           NavUtils.navigateUpFromSameTask(this);*/
         } else {
 
           AbstractActivity.showToast(
               mPresenter.getContext(),
               "Dados do recibo não atualizados com o servidor.\nContate o suporte do sistema");
         }
-       // mPresenter.esperarPorConexao();
-    //  } else {
-      //  AbstractActivity.showToast(
-        //    mPresenter.getContext(),
-          //  "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
-      //}
+        mPresenter.esperarPorConexao();
+      } else {
+        AbstractActivity.showToast(
+           mPresenter.getContext(),
+           "Endereço MAC da impressora não encontrado.\nHabilite no Menu: Configurar impressora");
+      }
     } else {
       AbstractActivity.showToast(
           mPresenter.getContext(), "Por favor, selecione um tipo de recebimento.\n");

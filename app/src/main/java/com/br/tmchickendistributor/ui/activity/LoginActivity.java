@@ -17,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,9 +45,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.api.services.drive.DriveScopes;
 
 public class LoginActivity extends AppCompatActivity implements IView {
-
-
-
 
 
     @BindView(R.id.btnLogin)
@@ -96,11 +95,12 @@ public class LoginActivity extends AppCompatActivity implements IView {
         spnNucleo.setAdapter(mAdapterNucleo);
         spnNucleo.setPrompt("Todas os Nucleos");
 
-        Empresa empresa=presenter.pesquisarEmpresaRegistrada();
+        Empresa empresa = presenter.pesquisarEmpresaRegistrada();
         presenter.setEmpresa(empresa);
 
 
     }
+
     @OnItemSelected(R.id.spnNucleo)
     void onItemSelected(int position) {
         if (position != 0) {
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity implements IView {
 
             } catch (final Exception e) {
                 LoginActivity.this.runOnUiThread(
-                        ()->AbstractActivity.showToast(presenter.getContexto(), e.getMessage()));
+                        () -> AbstractActivity.showToast(presenter.getContexto(), e.getMessage()));
             }
         }
     }
@@ -160,14 +160,14 @@ public class LoginActivity extends AppCompatActivity implements IView {
     @Override
     public void solicitarLoginGoogleDrive() {
 
-            GoogleSignInOptions signInOptions =
-                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestEmail()
-                            .requestScopes(new Scope(DriveScopes.DRIVE_FILE))
-                            .build();
+        GoogleSignInOptions signInOptions =
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .requestScopes(new Scope(DriveScopes.DRIVE_FILE))
+                        .build();
 
-            GoogleSignInClient client = GoogleSignIn.getClient(this, signInOptions);
-            startActivityForResult(client.getSignInIntent(), ConstantsUtil.REQUEST_CODE_SIGN_IN);
+        GoogleSignInClient client = GoogleSignIn.getClient(this, signInOptions);
+        startActivityForResult(client.getSignInIntent(), ConstantsUtil.REQUEST_CODE_SIGN_IN);
 
 
     }
@@ -185,8 +185,8 @@ public class LoginActivity extends AppCompatActivity implements IView {
             edtSenha.requestFocus();
             return false;
         }
-        if(spnNucleo.getSelectedItemPosition()==0) {
-            Toast.makeText(presenter.getContexto(),"Selecione um Núcleo!",Toast.LENGTH_LONG).show();
+        if (spnNucleo.getSelectedItemPosition() == 0) {
+            Toast.makeText(presenter.getContexto(), "Selecione um Núcleo!", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity implements IView {
 
         // Inicializacao a fim de testes
         //edtMatricula.setText("1");
-       // edtSenha.setText("1234");
+        // edtSenha.setText("1234");
     }
 
     @Override
@@ -210,17 +210,18 @@ public class LoginActivity extends AppCompatActivity implements IView {
         // activity
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         switch (requestCode) {
             case REQUEST_CODE_SIGN_IN:
-               if (resultCode == Activity.RESULT_OK && resultData != null) {
+                if (resultCode == Activity.RESULT_OK && resultData != null) {
 
                     handleSignInResult(resultData);
 
                 } else {
                     AbstractActivity.showToast(
-                           presenter.getContexto(),
+                            presenter.getContexto(),
                             "Não foi possível realizar o vínculo  da conta com Google Drive");
                 }
                 break;

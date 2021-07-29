@@ -246,9 +246,9 @@ public class Presenter implements IRecebimentoMVP.IPresenter {
   }
 
   @Override
-  public void salvarAmortizacao(final long idBlocoRecibo) {
+  public BlocoRecibo salvarAmortizacao(final long idBlocoRecibo) {
 
-    this.mModel.salvarAmortizacao(idBlocoRecibo);
+    return this.mModel.salvarAmortizacao(idBlocoRecibo);
   }
 
   @Override
