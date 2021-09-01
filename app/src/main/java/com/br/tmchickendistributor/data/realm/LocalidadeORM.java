@@ -17,8 +17,11 @@ import lombok.NoArgsConstructor;
 public class LocalidadeORM extends RealmObject implements Serializable {
 
     @PrimaryKey
-    private String id;
+    private long id;
     private String nome;
+    private double idEmpresa;
+    private long idRota;
+
 
 
 
@@ -26,6 +29,8 @@ public class LocalidadeORM extends RealmObject implements Serializable {
     public LocalidadeORM(Localidade localidade) {
         this.id=localidade.getId();
         this.nome = localidade.getNome();
+        this.idEmpresa=localidade.getIdEmpresa();
+        this.idRota= localidade.getIdRota();
 
 
     }

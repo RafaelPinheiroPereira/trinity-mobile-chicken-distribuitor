@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 public class Localidade implements Serializable {
 
 
-
+    private long id;
     private String nome;
-    LocalidadeID pkLocalidade;
-    private String id;
+    private double idEmpresa;
+    private long idRota;
 
 
 
@@ -26,6 +26,8 @@ public class Localidade implements Serializable {
 
         this.id=localidadeORM.getId();
         this.nome = localidadeORM.getNome();
+        this.idEmpresa=localidadeORM.getIdEmpresa();
+        this.idRota=localidadeORM.getIdRota();
 
     }
 }

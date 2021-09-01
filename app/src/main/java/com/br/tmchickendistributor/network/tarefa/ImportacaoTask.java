@@ -12,6 +12,7 @@ import com.br.tmchickendistributor.data.model.Preco;
 import com.br.tmchickendistributor.data.model.PrecoID;
 import com.br.tmchickendistributor.data.model.Produto;
 import com.br.tmchickendistributor.data.model.Recebimento;
+import com.br.tmchickendistributor.data.model.Rota;
 import com.br.tmchickendistributor.data.model.Unidade;
 import com.br.tmchickendistributor.data.model.UnidadeProdutoID;
 import com.br.tmchickendistributor.data.realm.ClienteGrupoORM;
@@ -21,6 +22,7 @@ import com.br.tmchickendistributor.data.realm.FuncionarioORM;
 import com.br.tmchickendistributor.data.realm.PrecoORM;
 import com.br.tmchickendistributor.data.realm.ProdutoORM;
 import com.br.tmchickendistributor.data.realm.RecebimentoORM;
+import com.br.tmchickendistributor.data.realm.RotaORM;
 import com.br.tmchickendistributor.data.realm.UnidadeORM;
 import com.br.tmchickendistributor.network.RetrofitConfig;
 import com.br.tmchickendistributor.network.servico.ImportacaoService;
@@ -95,6 +97,23 @@ public class ImportacaoTask extends AsyncTask<Void, Void, Boolean> {
     }
     realm.commitTransaction();
     Log.d("Importacao Clientes", "Sucess");
+  }
+
+
+  private void salvarRotas(List<Rota> rotas){
+    Realm realm = Realm.getDefaultInstance();
+    realm.beginTransaction();
+    if (VERSION.SDK_INT >= VERSION_CODES.N) {
+      rotas.forEach(
+              rota -> realm.copyToRealmOrUpdate(new RotaORM(rota)));
+    } else {
+      for (Rota rota : rotas) {
+        realm.copyToRealmOrUpdate(new RotaORM(rota));
+      }
+    }
+    realm.commitTransaction();
+    Log.d("Importacao Rotas", "Sucess");
+
   }
 
   private void salvarClientesGrupos(List<ClienteGrupo> clienteGrupos) {
@@ -291,7 +310,8 @@ public class ImportacaoTask extends AsyncTask<Void, Void, Boolean> {
         salvarPrecos(importacao.getPrecos());
         salvarRecebimentos(importacao.getRecebimentosDTO());
         salvarContas(importacao.getContas());
-        salvarClientesGrupos(importacao.getClientesGrupos());
+        //salvarClientesGrupos(importacao.getClientesGrupos());
+        salvarRotas(importacao.getRotas());
         mHomePresenter.getFuncionario().setMaxIdRecibo(importacao.getFuncionario().getMaxIdRecibo());
         this.atualizarStatusSincronizacaoDoFuncionario();
       }

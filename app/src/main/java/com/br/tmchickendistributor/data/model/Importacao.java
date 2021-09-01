@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class Importacao {
     List<Cliente> clientes;
-    
     List<Produto> produtos;
     List<Unidade> unidades;
     List<Preco> precos;
     List<Recebimento> recebimentosDTO;
     List<Conta> contas;
     List<ClienteGrupo> clientesGrupos;
+    List<Rota> rotas;
     Funcionario funcionario;
 
 

@@ -5,6 +5,7 @@ import android.os.Build.VERSION_CODES;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.ClienteGrupo;
 import com.br.tmchickendistributor.data.model.Pedido;
+import com.br.tmchickendistributor.data.model.Rota;
 import com.br.tmchickendistributor.data.realm.ClienteORM;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -76,6 +77,22 @@ public class ClienteDAO extends GenericsDAO<ClienteORM> {
     public List<Cliente> todos() {
         ArrayList<Cliente> clientes = new ArrayList<>();
         RealmResults<ClienteORM> results = where().sort("nome",Sort.ASCENDING).findAll();
+        if (VERSION.SDK_INT >= VERSION_CODES.N) {
+            results.forEach(item->clientes.add(new Cliente(item)));
+        } else {
+            for (ClienteORM item : results) {
+                clientes.add(new Cliente(item));
+            }
+        }
+        return clientes;
+    }
+
+    public List<Cliente> pesquisarClientePorRota(Rota rota) {
+        List<Cliente> clientes = new ArrayList<>();
+        RealmResults<ClienteORM> results =
+                where().equalTo("mLocalidadeORM.idRota", rota.getId())
+                        .sort("nome", Sort.ASCENDING)
+                        .findAll();
         if (VERSION.SDK_INT >= VERSION_CODES.N) {
             results.forEach(item->clientes.add(new Cliente(item)));
         } else {

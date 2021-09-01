@@ -2,6 +2,7 @@ package com.br.tmchickendistributor.ui.mvp.home;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import com.br.tmchickendistributor.data.model.BlocoRecibo;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.ClienteGrupo;
@@ -10,7 +11,10 @@ import com.br.tmchickendistributor.data.model.Funcionario;
 import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.model.Recebimento;
+import com.br.tmchickendistributor.data.model.Rota;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
+
+import java.util.Collection;
 import java.util.List;
 
 public interface IHomeMVP {
@@ -57,9 +61,13 @@ public interface IHomeMVP {
 
         List<ClienteGrupo> obterTodasRedes();
 
+        List<Rota> obterTodasRotas();
+
         List<Cliente> obterTodosClientes();
 
         List<Cliente> pesquisarClientePorRede(ClienteGrupo ClienteGrupo);
+
+        List<Cliente> pesquisarClientePorRota(Rota rota);
 
         List<Recebimento> pesquisarRecebimentoPorCliente(Cliente cliente);
 
@@ -81,7 +89,6 @@ public interface IHomeMVP {
         void setDrawer(final Bundle savedInstanceState);
 
 
-
         void importar();
 
         void setAdapters();
@@ -99,11 +106,6 @@ public interface IHomeMVP {
         void verificarCredenciaisGoogleDrive();
 
 
-
-
-
-
-
         List<Pedido> getFotosPedidos();
 
         void setFotosPedidos(List<Pedido> fotosPedidos);
@@ -111,6 +113,7 @@ public interface IHomeMVP {
         List<BlocoRecibo> getFotosRecibos();
 
         void setFotosRecibos(List<BlocoRecibo> fotosRecibos);
+
 
 
     }
@@ -156,6 +159,8 @@ public interface IHomeMVP {
 
         List<ClienteGrupo> obterTodasRedes();
 
+        List<Rota> obterTodasRotas();
+
         List<Cliente> obterTodosClientes();
 
         List<Pedido> obterTodosPedidos();
@@ -183,6 +188,9 @@ public interface IHomeMVP {
         void sincronizarFotos();
 
         void salvarRecebimento(Recebimento recebimento);
+
         void excluirRecebimentos();
+
+        List<Cliente> pesquisarClientePorRota(Rota rota);
     }
 }

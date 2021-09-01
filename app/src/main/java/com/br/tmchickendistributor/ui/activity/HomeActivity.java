@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
@@ -20,11 +21,14 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemSelected;
+
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.ClienteGrupo;
+import com.br.tmchickendistributor.data.model.Rota;
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
 import com.br.tmchickendistributor.ui.adapter.ClienteAdapter;
 import com.br.tmchickendistributor.ui.listener.IDrawer;
@@ -51,433 +55,438 @@ import com.google.api.services.drive.DriveScopes;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class HomeActivity extends AppCompatActivity
-    implements RecyclerViewOnClickListenerHack, IView {
+        implements RecyclerViewOnClickListenerHack, IView {
 
-  private static String SPINNER_POICAO_KEY = "posicaoSpinnerRede";
+    private static String SPINNER_POICAO_KEY = "posicaoSpinnerRede";
 
-  ClienteAdapter mClientAdapter;
+    ClienteAdapter mClientAdapter;
 
-  ArrayAdapter mRedeAdapter;
+    ArrayAdapter rotaAdapter;
 
-  IPresenter presenter;
+    IPresenter presenter;
 
-  @BindView(R.id.rcvCliente)
-  RecyclerView rvCliente;
+    @BindView(R.id.rcvCliente)
+    RecyclerView rvCliente;
 
-  @BindView(R.id.spnClienteGrupo)
-  Spinner spnClienteGrupo;
+    @BindView(R.id.spnClienteGrupo)
+    Spinner rotaSpinner;
 
-  @BindView(R.id.toolbar)
-  Toolbar toolbar;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
-  @BindView(R.id.txt_data_ultima_sincronizacao)
-  TextView txtDataUltimaSincronizacao;
+    @BindView(R.id.txt_data_ultima_sincronizacao)
+    TextView txtDataUltimaSincronizacao;
 
-  private SearchView searchView;
+    private SearchView searchView;
 
-  private Drawer result;
+    private Drawer result;
 
-  private IDrawer navigateDrawer;
+    private IDrawer navigateDrawer;
 
-  private ProgressDialog mProgressDialog;
-  private static Bundle mBundleState;
+    private ProgressDialog mProgressDialog;
+    private static Bundle mBundleState;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_home);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
 
-    ButterKnife.bind(this);
-    // Verifica se o user esta logado
-    presenter = new Presenter(this);
-    presenter.setFuncionario(presenter.pesquisarUsuarioDaSesao());
-    presenter.setNucleo(presenter.pesquisarNucleoAtivo());
+        ButterKnife.bind(this);
+        // Verifica se o user esta logado
+        presenter = new Presenter(this);
+        presenter.setFuncionario(presenter.pesquisarUsuarioDaSesao());
+        presenter.setNucleo(presenter.pesquisarNucleoAtivo());
 
-    initViews();
-    presenter.setDrawer(savedInstanceState);
-  }
-
-  @Override
-  protected void onStart() {
-    super.onStart();
-    presenter.setAdapters();
-
-    presenter.verificarCredenciaisGoogleDrive();
-    mClientAdapter.setRecyclerViewOnClickListenerHack(this);
-
-    presenter.setFuncionario(presenter.pesquisarUsuarioDaSesao());
-
-    try {
-      String dataUltimaSincronizacao =
-          DateUtils.converterDateParaStringYYYYMMDDHHMM(
-              presenter.getFuncionario().getDataUltimaSincronizacao());
-      txtDataUltimaSincronizacao.setText("SINC.: " + dataUltimaSincronizacao);
-
-    } catch (ParseException e) {
-      e.printStackTrace();
+        initViews();
+        presenter.setDrawer(savedInstanceState);
     }
-  }
 
-  @Override
-  public void fecharDrawer() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.setAdapters();
 
-    if (result != null && result.isDrawerOpen()) {
-      result.closeDrawer();
-    }
-  }
+        presenter.verificarCredenciaisGoogleDrive();
+        mClientAdapter.setRecyclerViewOnClickListenerHack(this);
 
-  @Override
-  public void obterClientesAposImportarDados() {
-    mClientAdapter.notifyDataSetChanged();
-  }
+        presenter.setFuncionario(presenter.pesquisarUsuarioDaSesao());
 
-  @Override
-  public void obterRotasAposImportarDados() {
-    mRedeAdapter.notifyDataSetChanged();
-  }
+        try {
+            String dataUltimaSincronizacao =
+                    DateUtils.converterDateParaStringYYYYMMDDHHMM(
+                            presenter.getFuncionario().getDataUltimaSincronizacao());
+            txtDataUltimaSincronizacao.setText("SINC.: " + dataUltimaSincronizacao);
 
-  @Override
-  public void onHideProgressDialog() {
-    if (getProgressDialog().isShowing()) {
-      getProgressDialog().dismiss();
-    }
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-    mBundleState = new Bundle();
-    mBundleState.putInt(SPINNER_POICAO_KEY, spnClienteGrupo.getSelectedItemPosition());
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-
-    if (mBundleState != null) {
-      int mPosicao = mBundleState.getInt(SPINNER_POICAO_KEY);
-
-      spnClienteGrupo.setSelection(mPosicao);
-    }
-  }
-
-  @Override
-  public void onShowProgressDialog() {
-    if (getProgressDialog().isShowing()) {
-      return;
-    }
-    getProgressDialog().show();
-  }
-
-  public ProgressDialog getProgressDialog() {
-    if (mProgressDialog == null) {
-      mProgressDialog = new ProgressDialog(this);
-      mProgressDialog.setTitle("Sincronização de dados");
-      mProgressDialog.setCancelable(false);
-      mProgressDialog.setMessage("Carregando dados, Por favor aguarde...");
-    }
-    return mProgressDialog;
-  }
-
-  @Override
-  public void onBackPressed() {
-    // handle the back press :D close the drawer first and if the drawer is closed close the
-    // activity
-    if (result != null && result.isDrawerOpen()) {
-      result.closeDrawer();
-    } else {
-      // super.onBackPressed();
-    }
-  }
-
-  @Override
-  public void onClickListener(View view, int position) {
-
-    switch (view.getId()) {
-      case R.id.btnVender:
-        presenter.navigateToSalesActivity(mClientAdapter.getItem(position));
-        break;
-
-      case R.id.btnReceber:
-        if (presenter.pesquisarRecebimentoPorCliente(mClientAdapter.getItem(position)).size() > 0) {
-          presenter.navigateToReceiptsActivity(mClientAdapter.getItem(position));
-        } else {
-          AbstractActivity.showToast(presenter.getContext(), "Cliente sem notas em aberto!");
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        break;
-      case R.id.imgInfo:
-        presenter.exibirDialogClient(mClientAdapter.getItem(position));
-
-        break;
     }
-  }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.info_cliente_menu, menu);
+    @Override
+    public void fecharDrawer() {
 
-    // Associate searchable configuration with the SearchView
-    SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-    searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-    searchView.setMaxWidth(Integer.MAX_VALUE);
+        if (result != null && result.isDrawerOpen()) {
+            result.closeDrawer();
+        }
+    }
 
-    // listening to search query text change
-    searchView.setOnQueryTextListener(
-        new SearchView.OnQueryTextListener() {
-          @Override
-          public boolean onQueryTextChange(String query) {
-            // filter recycler view when text is changed
-            mClientAdapter.getFilter().filter(query);
-            return false;
-          }
+    @Override
+    public void obterClientesAposImportarDados() {
+        mClientAdapter.notifyDataSetChanged();
+    }
 
-          @Override
-          public boolean onQueryTextSubmit(String query) {
-            // filter recycler view when query submitted
-            mClientAdapter.getFilter().filter(query);
-            return false;
-          }
-        });
-    return true;
-  }
+    @Override
+    public void obterRotasAposImportarDados() {
+        rotaAdapter.notifyDataSetChanged();
+    }
 
-  @Override
-  public void onLongPressClickListener(final View view, final int position) {}
+    @Override
+    public void onHideProgressDialog() {
+        if (getProgressDialog().isShowing()) {
+            getProgressDialog().dismiss();
+        }
+    }
 
-  @Override
-  public void setAdapters() {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mBundleState = new Bundle();
+        mBundleState.putInt(SPINNER_POICAO_KEY, rotaSpinner.getSelectedItemPosition());
+    }
 
-    mClientAdapter = new ClienteAdapter(this, new ArrayList<>());
-    mClientAdapter.notifyDataSetChanged();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-    mClientAdapter = new ClienteAdapter(this, presenter.obterTodosClientes());
+        if (mBundleState != null) {
+            int mPosicao = mBundleState.getInt(SPINNER_POICAO_KEY);
 
-    rvCliente.setAdapter(mClientAdapter);
+            rotaSpinner.setSelection(mPosicao);
+        }
+    }
 
-    mRedeAdapter =
-        new ArrayAdapter(this, android.R.layout.simple_list_item_1, presenter.obterTodasRedes());
+    @Override
+    public void onShowProgressDialog() {
+        if (getProgressDialog().isShowing()) {
+            return;
+        }
+        getProgressDialog().show();
+    }
 
-    spnClienteGrupo.setAdapter(mRedeAdapter);
-    spnClienteGrupo.setSelection(0);
-    spnClienteGrupo.setPrompt("Todas as Redes");
-  }
+    public ProgressDialog getProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setTitle("Sincronização de dados");
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.setMessage("Carregando dados, Por favor aguarde...");
+        }
+        return mProgressDialog;
+    }
 
-  @Override
-  public void setDrawer(final Bundle savedInstanceState) {
+    @Override
+    public void onBackPressed() {
+        // handle the back press :D close the drawer first and if the drawer is closed close the
+        // activity
+        if (result != null && result.isDrawerOpen()) {
+            result.closeDrawer();
+        } else {
+            // super.onBackPressed();
+        }
+    }
 
-    navigateDrawer = new NavigateDrawer(this);
-    result =
-        navigateDrawer.builder(
-            this, toolbar, savedInstanceState, presenter.getFuncionario().getNome());
+    @Override
+    public void onClickListener(View view, int position) {
 
-    result.setOnDrawerItemClickListener(
-        new Drawer.OnDrawerItemClickListener() {
-          @Override
-          public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-            switch (position) {
-              case 1:
-                AbstractActivity.navigateToActivity(
-                    presenter.getContext(), new Intent(presenter.getContext(), HomeActivity.class));
+        switch (view.getId()) {
+            case R.id.btnVender:
+                presenter.navigateToSalesActivity(mClientAdapter.getItem(position));
                 break;
-              case 2:
-                MaterialDialog mDialog =
-                    new MaterialDialog.Builder(HomeActivity.this)
-                        .setTitle("Importar Dados?")
-                        .setMessage(
-                            "Você deseja realmente realizar a importação dos dados?\nCaso exista recebimentos realizados no dispositivos os mesmos serão deletados")
-                        .setCancelable(true)
-                        .setNegativeButton(
-                            "Não",
-                            R.mipmap.ic_close,
-                            (dialogInterface, which) -> dialogInterface.dismiss())
-                        .setPositiveButton(
-                            "Sim",
-                            R.mipmap.ic_download,
-                            (dialogInterface, which) -> {
-                              presenter.excluirRecebimentos();
-                              presenter.excluirBlocos();
-                              presenter.importar();
-                              dialogInterface.dismiss();
-                            })
+
+            case R.id.btnReceber:
+                if (presenter.pesquisarRecebimentoPorCliente(mClientAdapter.getItem(position)).size() > 0) {
+                    presenter.navigateToReceiptsActivity(mClientAdapter.getItem(position));
+                } else {
+                    AbstractActivity.showToast(presenter.getContext(), "Cliente sem notas em aberto!");
+                }
+                break;
+            case R.id.imgInfo:
+                presenter.exibirDialogClient(mClientAdapter.getItem(position));
+
+                break;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.info_cliente_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(
+                new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextChange(String query) {
+                        // filter recycler view when text is changed
+                        mClientAdapter.getFilter().filter(query);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        // filter recycler view when query submitted
+                        mClientAdapter.getFilter().filter(query);
+                        return false;
+                    }
+                });
+        return true;
+    }
+
+    @Override
+    public void onLongPressClickListener(final View view, final int position) {
+    }
+
+    @Override
+    public void setAdapters() {
+
+        mClientAdapter = new ClienteAdapter(this, new ArrayList<>());
+        mClientAdapter.notifyDataSetChanged();
+
+        mClientAdapter = new ClienteAdapter(this, presenter.obterTodosClientes());
+
+        rvCliente.setAdapter(mClientAdapter);
+
+        rotaAdapter =
+                new ArrayAdapter(this, android.R.layout.simple_list_item_1, presenter.obterTodasRotas());
+
+        rotaSpinner.setAdapter(rotaAdapter);
+        rotaSpinner.setSelection(0);
+        rotaSpinner.setPrompt("Todas as Rotas");
+    }
+
+    @Override
+    public void setDrawer(final Bundle savedInstanceState) {
+
+        navigateDrawer = new NavigateDrawer(this);
+        result =
+                navigateDrawer.builder(
+                        this, toolbar, savedInstanceState, presenter.getFuncionario().getNome());
+
+        result.setOnDrawerItemClickListener(
+                new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        switch (position) {
+                            case 1:
+                                AbstractActivity.navigateToActivity(
+                                        presenter.getContext(), new Intent(presenter.getContext(), HomeActivity.class));
+                                break;
+                            case 2:
+                                MaterialDialog mDialog =
+                                        new MaterialDialog.Builder(HomeActivity.this)
+                                                .setTitle("Importar Dados?")
+                                                .setMessage(
+                                                        "Você deseja realmente realizar a importação dos dados?\nCaso exista recebimentos realizados no dispositivos os mesmos serão deletados")
+                                                .setCancelable(true)
+                                                .setNegativeButton(
+                                                        "Não",
+                                                        R.mipmap.ic_close,
+                                                        (dialogInterface, which) -> dialogInterface.dismiss())
+                                                .setPositiveButton(
+                                                        "Sim",
+                                                        R.mipmap.ic_download,
+                                                        (dialogInterface, which) -> {
+                                                            presenter.excluirRecebimentos();
+                                                            presenter.excluirBlocos();
+                                                            presenter.importar();
+                                                            dialogInterface.dismiss();
+                                                        })
+                                                .build();
+
+                                mDialog.show();
+
+                                break;
+                            case 3:
+                                break;
+
+                            case 4:
+                                AbstractActivity.navigateToActivity(
+                                        presenter.getContext(),
+                                        new Intent(presenter.getContext(), PedidoActivity.class));
+                                break;
+                            case 5:
+                                AbstractActivity.navigateToActivity(
+                                        presenter.getContext(),
+                                        new Intent(presenter.getContext(), DeviceListActivity.class));
+
+                                break;
+
+                            case 6:
+                                if (presenter.getFuncionario().getIdPastaVendas() != null
+                                        && presenter.getFuncionario().getIdPastaPagamentos() != null) {
+
+                                    presenter.setFotosPedidos(presenter.consultarPedidosNaoMigrados());
+                                    presenter.setFotosRecibos(presenter.consultarRecibosNaoMigrados());
+
+                                    presenter.salvarFotosNoDrive();
+                                } else {
+                                    AbstractActivity.showToast(
+                                            presenter.getContext(), "Por favor realize a importação dos dados!");
+                                }
+
+                                break;
+
+                            case 7:
+                                presenter.exportar();
+                                break;
+
+                            case 8:
+                                AbstractActivity.navigateToActivity(
+                                        presenter.getContext(),
+                                        new Intent(presenter.getContext(), ExclusaoActivity.class));
+                                break;
+
+                            case 9:
+                                presenter.exibirDialogLogout();
+
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+        navigateDrawer.addItemInDrawer(result);
+    }
+
+    @Override
+    public void showDialogLogout() {
+        AlertDialog.Builder builder = new Builder(presenter.getContext());
+        builder.setTitle("Realizar Logout");
+        builder.setMessage("Deseja realmente sair do sistema?");
+        String positiveText = "Sim";
+        builder.setPositiveButton(
+                positiveText,
+                (dialog, which) -> {
+                    // positive button logic
+
+                    //  presenter.logout();
+
+                    GoogleSignInClient mGoogleSignInClient =
+                            GoogleSignIn.getClient(
+                                    HomeActivity.this,
+                                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                            .requestEmail()
+                                            .build());
+                    mGoogleSignInClient
+                            .signOut()
+                            .addOnCompleteListener(
+                                    new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull final Task<Void> task) {
+                                            AbstractActivity.showToast(
+                                                    presenter.getContext(), "Logout do Google Drive realizado com sucesso.");
+                                        }
+                                    });
+
+                    presenter.retirarFuncionarioDaSessao();
+                    presenter.desativarNucleo();
+                    dialog.dismiss();
+                    finish();
+
+                    return;
+                });
+
+        String negativeText = "Não";
+        builder.setNegativeButton(
+                negativeText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // negative button logic
+                        return;
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display mProgressDialog
+        dialog.show();
+    }
+
+    @Override
+    public void verificarCredenciaisGoogleDrive() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        GoogleAccountCredential credential =
+                GoogleAccountCredential.usingOAuth2(this, Collections.singleton(DriveScopes.DRIVE_FILE));
+        credential.setSelectedAccount(account.getAccount());
+        Drive googleDriveService =
+                new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), credential)
+                        .setApplicationName("Minas Frangos")
                         .build();
 
-                mDialog.show();
-
-                break;
-              case 3:
-                break;
-
-              case 4:
-                AbstractActivity.navigateToActivity(
-                    presenter.getContext(),
-                    new Intent(presenter.getContext(), PedidoActivity.class));
-                break;
-              case 5:
-                AbstractActivity.navigateToActivity(
-                    presenter.getContext(),
-                    new Intent(presenter.getContext(), DeviceListActivity.class));
-
-                break;
-
-              case 6:
-                if (presenter.getFuncionario().getIdPastaVendas() != null
-                    && presenter.getFuncionario().getIdPastaPagamentos() != null) {
-
-                  presenter.setFotosPedidos(presenter.consultarPedidosNaoMigrados());
-                  presenter.setFotosRecibos(presenter.consultarRecibosNaoMigrados());
-
-                  presenter.salvarFotosNoDrive();
-                } else {
-                  AbstractActivity.showToast(
-                      presenter.getContext(), "Por favor realize a importação dos dados!");
-                }
-
-                break;
-
-              case 7:
-                presenter.exportar();
-                break;
-
-              case 8:
-                AbstractActivity.navigateToActivity(
-                    presenter.getContext(),
-                    new Intent(presenter.getContext(), ExclusaoActivity.class));
-                break;
-
-              case 9:
-                presenter.exibirDialogLogout();
-
-                break;
-            }
-            return true;
-          }
-        });
-
-    navigateDrawer.addItemInDrawer(result);
-  }
-
-  @Override
-  public void showDialogLogout() {
-    AlertDialog.Builder builder = new Builder(presenter.getContext());
-    builder.setTitle("Realizar Logout");
-    builder.setMessage("Deseja realmente sair do sistema?");
-    String positiveText = "Sim";
-    builder.setPositiveButton(
-        positiveText,
-        (dialog, which) -> {
-          // positive button logic
-
-          //  presenter.logout();
-
-          GoogleSignInClient mGoogleSignInClient =
-              GoogleSignIn.getClient(
-                  HomeActivity.this,
-                  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                      .requestEmail()
-                      .build());
-          mGoogleSignInClient
-              .signOut()
-              .addOnCompleteListener(
-                  new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull final Task<Void> task) {
-                      AbstractActivity.showToast(
-                          presenter.getContext(), "Logout do Google Drive realizado com sucesso.");
-                    }
-                  });
-
-          presenter.retirarFuncionarioDaSessao();
-          presenter.desativarNucleo();
-          dialog.dismiss();
-          finish();
-
-          return;
-        });
-
-    String negativeText = "Não";
-    builder.setNegativeButton(
-        negativeText,
-        new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            // negative button logic
-            return;
-          }
-        });
-
-    AlertDialog dialog = builder.create();
-    // display mProgressDialog
-    dialog.show();
-  }
-
-  @Override
-  public void verificarCredenciaisGoogleDrive() {
-    GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-    GoogleAccountCredential credential =
-        GoogleAccountCredential.usingOAuth2(this, Collections.singleton(DriveScopes.DRIVE_FILE));
-    credential.setSelectedAccount(account.getAccount());
-    Drive googleDriveService =
-        new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), credential)
-            .setApplicationName("Minas Frangos")
-            .build();
-
-    presenter.setDriveServiceHelper(new DriveServiceHelper(googleDriveService));
-  }
-
-  @Override
-  public void showDialogClient(final Cliente cliente) {
-
-    AlertDialogClient alertDialogClient = new AlertDialogClient(presenter);
-    AlertDialog b = alertDialogClient.builder(cliente);
-    b.show();
-  }
-
-  @OnItemSelected(R.id.spnClienteGrupo)
-  void onItemSelected(int position) {
-
-    presenter.pesquisarClientePorRede((ClienteGrupo) mRedeAdapter.getItem(position));
-    mClientAdapter.notifyDataSetChanged();
-    spnClienteGrupo.setSelection(position);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the HomeActivity/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_search) {
-      return true;
+        presenter.setDriveServiceHelper(new DriveServiceHelper(googleDriveService));
     }
 
-    return super.onOptionsItemSelected(item);
-  }
+    @Override
+    public void showDialogClient(final Cliente cliente) {
 
-  private void initViews() {
-    LinearLayoutManager layoutManager = new LinearLayoutManager(HomeActivity.this);
-    rvCliente.setLayoutManager(layoutManager);
-    toolbar.setTitle("Trinity Mobile");
-    setSupportActionBar(toolbar);
-  }
+        AlertDialogClient alertDialogClient = new AlertDialogClient(presenter);
+        AlertDialog b = alertDialogClient.builder(cliente);
+        b.show();
+    }
 
-  @Override
-  protected void onRestart() {
-    super.onRestart();
+    @OnItemSelected(R.id.spnClienteGrupo)
+    void onItemSelected(int position) {
+        if (position != 0) {
+            presenter.pesquisarClientePorRota((Rota) rotaAdapter.getItem(position));
+        }
 
-    // first clear the recycler view so items are not populated twice
-    // clear list
-    mClientAdapter = new ClienteAdapter(this, new ArrayList<>());
-    mClientAdapter.notifyDataSetChanged();
+        // presenter.pesquisarClientePorRede((ClienteGrupo) rotaAdapter.getItem(position));
+        mClientAdapter.notifyDataSetChanged();
+        rotaSpinner.setSelection(position);
+    }
 
-    mRedeAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, new ArrayList());
-    mRedeAdapter.notifyDataSetChanged();
-  }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the HomeActivity/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_search) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void initViews() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(HomeActivity.this);
+        rvCliente.setLayoutManager(layoutManager);
+        toolbar.setTitle("Trinity Mobile");
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        // first clear the recycler view so items are not populated twice
+        // clear list
+        mClientAdapter = new ClienteAdapter(this, new ArrayList<>());
+        mClientAdapter.notifyDataSetChanged();
+
+        rotaAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, new ArrayList());
+        rotaAdapter.notifyDataSetChanged();
+    }
 }

@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
+
 import com.br.tmchickendistributor.data.model.BlocoRecibo;
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.ClienteGrupo;
@@ -17,6 +19,7 @@ import com.br.tmchickendistributor.data.model.ListaPedido;
 import com.br.tmchickendistributor.data.model.Nucleo;
 import com.br.tmchickendistributor.data.model.Pedido;
 import com.br.tmchickendistributor.data.model.Recebimento;
+import com.br.tmchickendistributor.data.model.Rota;
 import com.br.tmchickendistributor.network.tarefa.ExportacaoTask;
 import com.br.tmchickendistributor.network.tarefa.ImportacaoTask;
 import com.br.tmchickendistributor.ui.abstracts.AbstractActivity;
@@ -27,6 +30,7 @@ import com.br.tmchickendistributor.ui.mvp.home.IHomeMVP.IView;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,10 +39,11 @@ import java.util.List;
 public class Presenter implements IHomeMVP.IPresenter {
 
 
-
     private List<Cliente> clients = new ArrayList<>();
 
     private List<ClienteGrupo> redes = new ArrayList<>();
+
+    private List<Rota> rotas = new ArrayList<>();
 
     private DriveServiceHelper mDriveServiceHelper;
 
@@ -47,7 +52,6 @@ public class Presenter implements IHomeMVP.IPresenter {
     private List<BlocoRecibo> fotosRecibos;
 
     private IModel model;
-
 
 
     private IView view;
@@ -62,7 +66,6 @@ public class Presenter implements IHomeMVP.IPresenter {
     private Nucleo nucleo;
 
 
-
     public Presenter(final IView view) {
         this.view = view;
         this.model = new Model(this);
@@ -72,11 +75,11 @@ public class Presenter implements IHomeMVP.IPresenter {
     public Funcionario getFuncionario() {
         return mFuncionario;
     }
+
     @Override
     public void setFuncionario(final Funcionario funcionario) {
         mFuncionario = funcionario;
     }
-
 
 
     @Override
@@ -135,14 +138,10 @@ public class Presenter implements IHomeMVP.IPresenter {
     }
 
 
-
-
-
     @Override
     public void salvarFotosNoDrive() {
         this.model.sincronizarFotos();
     }
-
 
 
     @Override
@@ -204,6 +203,13 @@ public class Presenter implements IHomeMVP.IPresenter {
     }
 
     @Override
+    public List<Rota> obterTodasRotas() {
+        rotas.clear();
+        rotas.addAll(model.obterTodasRotas());
+        return rotas;
+    }
+
+    @Override
     public List<Cliente> obterTodosClientes() {
         clients.clear();
         clients.addAll(model.obterTodosClientes());
@@ -217,6 +223,16 @@ public class Presenter implements IHomeMVP.IPresenter {
     }
 
     @Override
+    public List<Cliente> pesquisarClientePorRota(Rota rota) {
+        clients.clear();
+        //clients.addAll(model.pesquisarClientePorRede(clienteGrupo));
+        clients.addAll(model.pesquisarClientePorRota(rota));
+
+        return clients;
+    }
+
+
+    @Override
     public Context getContext() {
         return (Context) view;
     }
@@ -225,8 +241,6 @@ public class Presenter implements IHomeMVP.IPresenter {
     public void fecharDrawer() {
         this.view.fecharDrawer();
     }
-
-
 
 
     @Override
@@ -256,11 +270,8 @@ public class Presenter implements IHomeMVP.IPresenter {
         Funcionario funcionario = this.model.pesquisarFuncionarioDaSessao();
         funcionario.setIdEmpresa(this.model.pesquisarEmpresaRegistrada().getId());
         this.setFuncionario(funcionario);
-        new ImportacaoTask( this).execute();
+        new ImportacaoTask(this).execute();
     }
-
-
-
 
 
     @Override
@@ -271,22 +282,19 @@ public class Presenter implements IHomeMVP.IPresenter {
 
     @Override
     public void obterRotasAposImportarDados() {
-        obterTodasRedes();
+        obterTodasRotas();
         this.view.obterRotasAposImportarDados();
     }
 
     @Override
     public void setNucleo(final Nucleo nucleo) {
-        this.nucleo=nucleo;
+        this.nucleo = nucleo;
     }
 
     @Override
     public void verificarCredenciaisGoogleDrive() {
         this.view.verificarCredenciaisGoogleDrive();
     }
-
-
-
 
 
     @Override
@@ -306,21 +314,21 @@ public class Presenter implements IHomeMVP.IPresenter {
 
     @Override
     public void atualizarBlocoReciboPorNomeDaFoto(final String name) {
-       BlocoRecibo blocoRecibo= this.model.pesquisarBlocoReciboPorNomeDaFoto(name);
-       blocoRecibo.setFotoMigrada(true);
-       this.model.atualizarBlocoReciboParaMigrado(blocoRecibo);
+        BlocoRecibo blocoRecibo = this.model.pesquisarBlocoReciboPorNomeDaFoto(name);
+        blocoRecibo.setFotoMigrada(true);
+        this.model.atualizarBlocoReciboParaMigrado(blocoRecibo);
     }
 
     @Override
     public void atualizarPedidoPorNomeDaFoto(final String name) {
-       Pedido pedido= this.model.consultarPedidoPorNomeDaFoto(name);
-       pedido.setFotoMigrada(true);
-       this.model.atualizarPedidoParaMigrado(pedido);
+        Pedido pedido = this.model.consultarPedidoPorNomeDaFoto(name);
+        pedido.setFotoMigrada(true);
+        this.model.atualizarPedidoParaMigrado(pedido);
     }
 
     @Override
     public List<Pedido> consultarPedidosNaoMigrados() {
-       return this.model.pesquisarPedidosNaoMigrados();
+        return this.model.pesquisarPedidosNaoMigrados();
     }
 
     @Override
@@ -377,16 +385,16 @@ public class Presenter implements IHomeMVP.IPresenter {
     public void setFotosPedidos(final List<Pedido> fotosPedidos) {
         this.fotosPedidos = fotosPedidos;
     }
+
     @Override
     public List<BlocoRecibo> getFotosRecibos() {
         return fotosRecibos;
     }
+
     @Override
     public void setFotosRecibos(final List<BlocoRecibo> fotosRecibos) {
         this.fotosRecibos = fotosRecibos;
     }
-
-
 
 
 }
