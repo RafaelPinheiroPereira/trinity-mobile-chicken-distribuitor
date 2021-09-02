@@ -467,6 +467,11 @@ public class Presenter implements IVendaMVP.IPresenter {
     }
 
     @Override
+    public List<Unidade> carregarUnidadesPorProduto(Produto produtoSelecionado) {
+        return mModel.carregarUnidadesPorProduto(produtoSelecionado);
+    }
+
+    @Override
     public Impressora getImpressora() {
         return this.mModel.pesquisarImpressoraAtiva();
     }

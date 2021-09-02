@@ -12,6 +12,7 @@ public class ConstantsUtil {
     public static final int EQUAL = 0;
 
     public static final String TEM_PERMISSAO_PARA_ALTERAR_PRECO = "S";
+    public static final String TEM_PERMISSAO_PARA_OLHAR_PRECO = "S";
 
 
 

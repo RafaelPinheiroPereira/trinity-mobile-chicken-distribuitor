@@ -37,6 +37,7 @@ public class FuncionarioORM extends RealmObject implements Serializable {
     private String idPastaPagamentos;
 
     private String alteraPreco;
+    private String vePreco;
     private Date dataUltimaSincronizacao;
 
     private boolean sincronizou=false;
@@ -57,5 +58,6 @@ public class FuncionarioORM extends RealmObject implements Serializable {
         this.alteraPreco=funcionario.getAlteraPreco();
         this.dataUltimaSincronizacao=funcionario.getDataUltimaSincronizacao();
         this.ativo=funcionario.isAtivo();
+        this.vePreco=funcionario.getVePreco();
     }
 }

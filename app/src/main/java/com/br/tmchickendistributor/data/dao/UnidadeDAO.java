@@ -8,6 +8,8 @@ import com.br.tmchickendistributor.data.realm.ProdutoORM;
 import com.br.tmchickendistributor.data.realm.UnidadeORM;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,7 @@ public class UnidadeDAO extends GenericsDAO<UnidadeORM> {
                         .findFirst();
         return unity!=null ?new Unidade(unity):null;
     }
+
 
 
     public List<String> findUnitysOfProductsToString(ProdutoORM product) {
@@ -74,4 +77,19 @@ public class UnidadeDAO extends GenericsDAO<UnidadeORM> {
     }
 
 
+    public List<Unidade> carregarUnidadesPorProduto(Produto produtoSelecionado) {
+        List<Unidade> unidades = new ArrayList<>();
+        RealmResults<UnidadeORM> results =  where().equalTo("chavesUnidadeORM.idProduto", produtoSelecionado.getId())
+                .findAll();
+        results.sort("unidadePadrao", Sort.DESCENDING);
+        if (VERSION.SDK_INT >= VERSION_CODES.N) {
+            results.forEach(item->unidades.add(new Unidade(item)));
+        } else {
+            for (UnidadeORM unidadeORM : results) {
+                unidades.add(new Unidade(unidadeORM));
+            }
+
+        }
+        return unidades;
+    }
 }

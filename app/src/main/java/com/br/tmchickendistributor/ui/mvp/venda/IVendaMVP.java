@@ -162,6 +162,8 @@ public interface IVendaMVP {
         void setLoteSelecionado(String loteSelecionado);
 
         String getLoteSelecionado();
+
+        List<Unidade> carregarUnidadesPorProduto(Produto produtoSelecionado);
     }
 
     interface IView {
@@ -254,5 +256,7 @@ public interface IVendaMVP {
          * @return saleOrderIdSaved
          */
         void salvarPedido(final PedidoORM saleOrderToSave);
+
+        List<Unidade> carregarUnidadesPorProduto(Produto produtoSelecionado);
     }
 }

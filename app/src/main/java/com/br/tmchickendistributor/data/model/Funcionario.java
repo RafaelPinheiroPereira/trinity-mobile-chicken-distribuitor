@@ -35,6 +35,7 @@ public class Funcionario implements Serializable {
     private String idPastaPagamentos;
 
     private String alteraPreco;
+    private String vePreco;
 
     private Date dataUltimaSincronizacao;
 
@@ -56,6 +57,7 @@ public class Funcionario implements Serializable {
         this.alteraPreco=funcionarioORM.getAlteraPreco();
         this.dataUltimaSincronizacao=funcionarioORM.getDataUltimaSincronizacao();
         this.ativo=funcionarioORM.isAtivo();
+        this.vePreco=funcionarioORM.getVePreco();
 
     }
 }

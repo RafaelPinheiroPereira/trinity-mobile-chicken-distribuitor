@@ -286,6 +286,11 @@ public class Model implements IVendaMVP.IModel {
     }
 
     @Override
+    public List<Unidade> carregarUnidadesPorProduto(Produto produtoSelecionado) {
+        return unidadeDAO.carregarUnidadesPorProduto(produtoSelecionado);
+    }
+
+    @Override
     public void atualizarIdMaximoDeVenda( final long idVendaMaxima) {
         Funcionario funcionarioPesquisado =this.mFuncionarioDAO.pesquisarFuncionarioAtivo();
         funcionarioPesquisado.setMaxIdVenda(idVendaMaxima);

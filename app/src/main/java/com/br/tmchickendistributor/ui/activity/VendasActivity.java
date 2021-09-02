@@ -367,17 +367,26 @@ public class VendasActivity extends AppCompatActivity implements IView {
     public void atualizarViewsDoProdutoSelecionado() {
         mPresenter.setSpinnerProdutoSelecionado();
 
-        Unidade unidade = mPresenter.carregarUnidadePadraoDoProduto();
+        adaptadorUnidades.clear();
+        List<Unidade> unidades = mPresenter.carregarUnidadesPorProduto(mPresenter.getProdutoSelecionado());
+        adaptadorUnidades.addAll(mPresenter.carregarUnidadesEmString(unidades));
+        adaptadorUnidades.notifyDataSetChanged();
 
-        if (unidade != null) {
-            mPresenter.setUnidadeSelecionada(unidade);
 
-        } else {
+//        Unidade unidade = mPresenter.carregarUnidadePadraoDoProduto();
+//
+//        if (unidade != null) {
+//            mPresenter.setUnidadeSelecionada(unidade);
+//
+//        } else {
+//
+//            mPresenter.setUnidadeSelecionada(mPresenter.carregarUnidades().get(0));
+//        }
+//        spnUnidades.setSelection(
+//                adaptadorUnidades.getPosition(mPresenter.getUnidadeSelecionada().getId().split("-")[0]));
 
-            mPresenter.setUnidadeSelecionada(mPresenter.carregarUnidades().get(0));
-        }
-        spnUnidades.setSelection(
-                adaptadorUnidades.getPosition(mPresenter.getUnidadeSelecionada().getId().split("-")[0]));
+        mPresenter.setUnidadeSelecionada(unidades.get(0));
+        spnUnidades.setSelection(POSICAO_INICIAL);
 
         mPresenter.setQuantidadeProdutos(new BigDecimal("1"));
         mPresenter.setPreco(mPresenter.pesquisarPrecoPorProduto());
@@ -610,8 +619,8 @@ public class VendasActivity extends AppCompatActivity implements IView {
 
         if (mPresenter
                 .getFuncionario()
-                .getAlteraPreco()
-                .equals(ConstantsUtil.TEM_PERMISSAO_PARA_ALTERAR_PRECO)) {
+                .getVePreco()
+                .equals(ConstantsUtil.TEM_PERMISSAO_PARA_OLHAR_PRECO)) {
 
             mPresenter.setPreco(
                     mPresenter.pesquisarPrecoDaUnidadePorProduto(
@@ -829,21 +838,23 @@ public class VendasActivity extends AppCompatActivity implements IView {
 
         adaptadorItensPedido = new ItemPedidoAdapter(mPresenter);
 
-        List<Unidade> unidades = mPresenter.carregarUnidades();
+        //List<Unidade> unidades = mPresenter.carregarUnidades();
+
+
+        actCodigoProduto.setAdapter(adaptadorCodigoProduto);
+        spnProdutos.setAdapter(adaptadorDescricoesProduto);
+
+        rcvItens.setAdapter(adaptadorItensPedido);
+
+
+        List<Unidade> unidades = mPresenter.carregarUnidadesPorProduto(produtos.get(POSICAO_INICIAL));
+
 
         adaptadorUnidades =
                 new ArrayAdapter<>(
                         mPresenter.getContext(),
                         android.R.layout.simple_spinner_item,
                         mPresenter.carregarUnidadesEmString(unidades));
-
-        actCodigoProduto.setAdapter(adaptadorCodigoProduto);
-        spnProdutos.setAdapter(adaptadorDescricoesProduto);
-
-        rcvItens.setAdapter(adaptadorItensPedido);
-        spnUnidades.setAdapter(adaptadorUnidades);
-
-        spnProdutos.setSelection(POSICAO_INICIAL);
 
         actCodigoProduto.setOnItemClickListener(
                 (adapterView, view, i, l) -> {
@@ -858,6 +869,8 @@ public class VendasActivity extends AppCompatActivity implements IView {
                         mPresenter.getContext(),
                         R.array.lotes,
                         android.R.layout.simple_spinner_item);
+        spnUnidades.setAdapter(adaptadorUnidades);
+        spnProdutos.setSelection(POSICAO_INICIAL);
         spnLote.setAdapter(adaptadorLotes);
         spnLote.setSelection(POSICAO_INICIAL);
 
