@@ -114,6 +114,9 @@ public class VendasActivity extends AppCompatActivity implements IView {
     @BindView(R.id.edtQTDProducts)
     CurrencyEditText edtQuantidadeProduto;
 
+    @BindView(R.id.edtObservacao)
+    EditText edtObservacao;
+
     IVendaMVP.IPresenter mPresenter;
 
     @BindView(R.id.btnSalvarVenda)
@@ -404,6 +407,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
 
                     if (sequencePedido > 0) {
                         Pedido pedido = mPresenter.salvarVenda(sequencePedido);
+                        pedido.setObservacao(edtObservacao.getText().toString());
                         mPresenter.setPedido(pedido);
                     } else {
                         AbstractActivity.showToast(

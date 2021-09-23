@@ -286,6 +286,34 @@ public class ImpressoraUtil {
             }
             textBuffer.append("{b}PESO: " + String.format("%.2f",pesoTotal) + " KG" + "{br}");
         }
+
+
+        if (VERSION.SDK_INT >= VERSION_CODES.N) {
+            double peso=pedido.getItens().stream().mapToDouble(ItemPedido::getQuantidade).sum();
+            int bicos=pedido.getItens().stream().mapToInt(ItemPedido::getBicos).sum();
+            double media=peso/bicos;
+            textBuffer.append(
+                    "{b}MÉDIA: "
+                            + String.format("%.2f", media)
+                            + " KG/Bicos"
+                            + "{br}");
+        } else {
+            Double pesoTotal = 0.0;
+            for (ItemPedido itemPedido : pedido.getItens()) {
+                pesoTotal += itemPedido.getQuantidade();
+            }
+
+            int quantidadeBicos = 0;
+            for (ItemPedido itemPedido : pedido.getItens()) {
+                quantidadeBicos += itemPedido.getBicos();
+            }
+
+            double media=pesoTotal/quantidadeBicos;
+
+            textBuffer.append("{b}MÉDIA: " + String.format("%.2f",media) + " KG/Bicos" + "{br}");
+        }
+
+
         textBuffer.append("VENDEDOR: ".concat(funcionario.getNome()));
         textBuffer.append("{br}");
         textBuffer.append("{reset}{left}{w}{h}________________");

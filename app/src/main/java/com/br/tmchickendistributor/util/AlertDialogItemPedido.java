@@ -46,11 +46,16 @@ public class AlertDialogItemPedido {
     @BindView(R.id.spnUnitDialog)
     Spinner spnUnitDialog;
 
+    @BindView(R.id.spnLote)
+    Spinner spnLotes;
+
     @BindView(R.id.txtNameProductDialog)
     TextView txtNameProductDialog;
 
     @BindView(R.id.txtProductIDDialog)
     TextView txtProductIDDialog;
+
+    ArrayAdapter<CharSequence> adaptadorLotes;
 
     public AlertDialogItemPedido(final IVendaMVP.IPresenter IPresenter) {
         mIPresenter = IPresenter;
@@ -95,6 +100,15 @@ public class AlertDialogItemPedido {
         spnUnitDialog.setSelection(
                 adapterUnidade.getPosition(
                         mIPresenter.getItemPedido().getChavesItemPedido().getIdUnidade()));
+
+
+        adaptadorLotes =
+                ArrayAdapter.createFromResource(
+                        mIPresenter.getContext(),
+                        R.array.lotes,
+                        android.R.layout.simple_spinner_item);
+        spnLotes.setAdapter(adaptadorLotes);
+        spnLotes.setSelection(adaptadorLotes.getPosition(mIPresenter.getItemPedido().getLote()));
 
         return dialogBuilder.create();
     }
@@ -141,5 +155,12 @@ public class AlertDialogItemPedido {
                                 .pesquisarPrecoDaUnidadePorProduto(adapterUnidade.getItem(position))
                                 .getValor());*/
         //cetPriceDialog.setText(FormatacaoMoeda.converterParaDolar(mIPresenter.getItemPedido().getValorUnitario()));
+    }
+
+    @OnItemSelected(R.id.spnLote)
+    public void setSpnLoteOnSelected(int position) {
+        mIPresenter
+                .getItemPedido()
+                .setLote(adaptadorLotes.getItem(position).toString());
     }
 }

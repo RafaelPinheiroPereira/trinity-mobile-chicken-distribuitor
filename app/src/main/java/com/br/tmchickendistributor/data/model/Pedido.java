@@ -42,6 +42,9 @@ public class Pedido implements Serializable {
 
     private boolean fotoMigrada = false;
 
+    private String observacao;
+
+
     public static List<ItemPedido> converterListItemPedidoRealmParaModel(PedidoORM pedidoORM) {
         List<ItemPedido> itens = new ArrayList<>();
         if (VERSION.SDK_INT >= VERSION_CODES.N) {
@@ -66,5 +69,6 @@ public class Pedido implements Serializable {
         this.idNucleo = pedidoORM.getIdNucleo();
         this.nomeFoto = pedidoORM.getNomeFoto();
         this.fotoMigrada = pedidoORM.isFotoMigrada();
+        this.observacao=pedidoORM.getObservacao();
     }
 }
