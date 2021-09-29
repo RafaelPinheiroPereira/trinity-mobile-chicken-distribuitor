@@ -293,7 +293,7 @@ public class ImpressoraUtil {
             int bicos=pedido.getItens().stream().mapToInt(ItemPedido::getBicos).sum();
             double media=peso/bicos;
             textBuffer.append(
-                    "{b}MÉDIA: "
+                    "{b}MEDIA: "
                             + String.format("%.2f", media)
                             + " KG/Bicos"
                             + "{br}");
@@ -310,7 +310,7 @@ public class ImpressoraUtil {
 
             double media=pesoTotal/quantidadeBicos;
 
-            textBuffer.append("{b}MÉDIA: " + String.format("%.2f",media) + " KG/Bicos" + "{br}");
+            textBuffer.append("{b}MEDIA: " + String.format("%.2f",media) + " KG/Bicos" + "{br}");
         }
 
 

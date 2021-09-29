@@ -65,6 +65,7 @@ public class Presenter implements IVendaMVP.IPresenter {
     private DriveServiceHelper mDriveServiceHelper;
 
 
+    private String observacao;
 
 
 
@@ -402,6 +403,8 @@ public class Presenter implements IVendaMVP.IPresenter {
         pedido.setValorTotal(calcularTotalDaVenda());
         pedido.setIdNucleo(this.getNucleo().getId());
 
+        pedido.setObservacao(this.getObservacao());
+
         pedido.setIdVenda(sequencePedido);
         PedidoORM pedidoORM = new PedidoORM(pedido);
 
@@ -486,5 +489,14 @@ public class Presenter implements IVendaMVP.IPresenter {
         return this.mModel.pesquisarFuncionarioAtivo();
     }
 
+    @Override
+    public String getObservacao() {
+        return observacao;
+    }
+
+    @Override
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
 
 }

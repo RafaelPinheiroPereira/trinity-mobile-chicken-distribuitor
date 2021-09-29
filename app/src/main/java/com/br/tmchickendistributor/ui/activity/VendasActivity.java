@@ -397,6 +397,10 @@ public class VendasActivity extends AppCompatActivity implements IView {
                 List<ItemPedido> itensDTO = mPresenter.getItens();
                 mPresenter.getPedido().setItens((itensDTO));
                 mPresenter.getPedido().setValorTotal(mPresenter.calcularTotalDaVenda());
+
+                if(!TextUtils.isEmpty(edtObservacao.getText().toString())){
+                    mPresenter.getPedido().setObservacao(edtObservacao.getText().toString());
+                }
                 mPresenter.atualizarPedido(mPresenter.getPedido());
 
             } else {
@@ -406,8 +410,8 @@ public class VendasActivity extends AppCompatActivity implements IView {
                             mPresenter.configurarSequenceDoPedido();
 
                     if (sequencePedido > 0) {
+                        mPresenter.setObservacao(edtObservacao.getText().toString());
                         Pedido pedido = mPresenter.salvarVenda(sequencePedido);
-                        pedido.setObservacao(edtObservacao.getText().toString());
                         mPresenter.setPedido(pedido);
                     } else {
                         AbstractActivity.showToast(

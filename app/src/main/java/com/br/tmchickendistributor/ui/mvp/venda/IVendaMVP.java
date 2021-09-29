@@ -162,6 +162,10 @@ public interface IVendaMVP {
         void setLoteSelecionado(String loteSelecionado);
 
         String getLoteSelecionado();
+
+        public String getObservacao() ;
+
+        public void setObservacao(String observacao) ;
     }
 
     interface IView {
