@@ -2,7 +2,9 @@ package com.br.tmchickendistributor.ui.mvp.venda;
 
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+
 import com.br.tmchickendistributor.data.dao.ClienteDAO;
+import com.br.tmchickendistributor.data.dao.ClienteVendedorDAO;
 import com.br.tmchickendistributor.data.dao.EmpresaDAO;
 import com.br.tmchickendistributor.data.dao.FuncionarioDAO;
 import com.br.tmchickendistributor.data.dao.ImpressoraDAO;
@@ -15,6 +17,7 @@ import com.br.tmchickendistributor.data.dao.PrecoIDDAO;
 import com.br.tmchickendistributor.data.dao.ProdutoDAO;
 import com.br.tmchickendistributor.data.dao.UnidadeDAO;
 import com.br.tmchickendistributor.data.model.Cliente;
+import com.br.tmchickendistributor.data.model.ClienteVendedor;
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Funcionario;
 import com.br.tmchickendistributor.data.model.Impressora;
@@ -26,6 +29,7 @@ import com.br.tmchickendistributor.data.model.Preco;
 import com.br.tmchickendistributor.data.model.Produto;
 import com.br.tmchickendistributor.data.model.Unidade;
 import com.br.tmchickendistributor.data.realm.ClienteORM;
+import com.br.tmchickendistributor.data.realm.ClienteVendedorORM;
 import com.br.tmchickendistributor.data.realm.EmpresaORM;
 import com.br.tmchickendistributor.data.realm.FuncionarioORM;
 import com.br.tmchickendistributor.data.realm.ImpressoraORM;
@@ -37,7 +41,9 @@ import com.br.tmchickendistributor.data.realm.PrecoIDORM;
 import com.br.tmchickendistributor.data.realm.PrecoORM;
 import com.br.tmchickendistributor.data.realm.ProdutoORM;
 import com.br.tmchickendistributor.data.realm.UnidadeORM;
+
 import io.realm.Sort;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,11 +73,11 @@ public class Model implements IVendaMVP.IModel {
 
     FuncionarioDAO mFuncionarioDAO = FuncionarioDAO.getInstace(FuncionarioORM.class);
 
-    ImpressoraDAO impressoraDAO= ImpressoraDAO.getInstance(ImpressoraORM.class);
+    ImpressoraDAO impressoraDAO = ImpressoraDAO.getInstance(ImpressoraORM.class);
 
     NucleoDAO nucleoDAO = NucleoDAO.getInstace(NucleoORM.class);
 
-
+    ClienteVendedorDAO clienteVendedorDAO = ClienteVendedorDAO.getInstace(ClienteVendedorORM.class);
 
 
     private com.br.tmchickendistributor.ui.mvp.venda.Presenter mPresenter;
@@ -97,7 +103,7 @@ public class Model implements IVendaMVP.IModel {
 
     @Override
     public Preco carregarPrecoPorProduto() {
-        return this.mPrecoDAO.carregaPrecoProduto(mPresenter.getProdutoSelecionado(),mPresenter.getUnidadeSelecionada());
+        return this.mPrecoDAO.carregaPrecoProduto(mPresenter.getProdutoSelecionado(), mPresenter.getUnidadeSelecionada());
     }
 
     @Override
@@ -133,41 +139,39 @@ public class Model implements IVendaMVP.IModel {
     @Override
     public long configurarSequenceDoPedido() {
 
-        Funcionario funcionarioPesquisado= mFuncionarioDAO.pesquisarFuncionarioAtivo();
+        Funcionario funcionarioPesquisado = mFuncionarioDAO.pesquisarFuncionarioAtivo();
 
         PedidoORM pedidoORM = mPedidoDAO.where().findFirst();
         /**Já houve pedido salvo no tablet*/
-        if(pedidoORM!=null){
+        if (pedidoORM != null) {
             PedidoORM pedidoORMRecente = mPedidoDAO.where().sort("id", Sort.DESCENDING).findAll().first();
-            Pedido pedidoMaisRecente=new Pedido(pedidoORMRecente);
+            Pedido pedidoMaisRecente = new Pedido(pedidoORMRecente);
 
-            if(funcionarioPesquisado.getMaxIdVenda()<pedidoMaisRecente.getIdVenda() && funcionarioPesquisado.getMaxIdVenda()==0){
+            if (funcionarioPesquisado.getMaxIdVenda() < pedidoMaisRecente.getIdVenda() && funcionarioPesquisado.getMaxIdVenda() == 0) {
                 /**Houve delete no banco */
                 return -1;
 
-            }else{
+            } else {
                 /** Segue fluxo normal**/
-                return pedidoMaisRecente.getIdVenda()+1;
+                return pedidoMaisRecente.getIdVenda() + 1;
             }
 
         }
         /**Pode nao ter pedido no tablet , mas ja existiu vendas para aquele funcionario em outra versao*/
-        else if (funcionarioPesquisado.getMaxIdVenda()>0){
+        else if (funcionarioPesquisado.getMaxIdVenda() > 0) {
 
-            return funcionarioPesquisado.getMaxIdVenda()+1;
+            return funcionarioPesquisado.getMaxIdVenda() + 1;
 
         }
         /** A primeira venda do funcionario*/
-        else if (funcionarioPesquisado.getMaxIdVenda()==0){
+        else if (funcionarioPesquisado.getMaxIdVenda() == 0) {
 
-                 return funcionarioPesquisado.getMaxIdVenda()+1;
+            return funcionarioPesquisado.getMaxIdVenda() + 1;
         }
 
 
-
-      return -1;
+        return -1;
     }
-
 
 
     @Override
@@ -282,12 +286,19 @@ public class Model implements IVendaMVP.IModel {
 
     @Override
     public void salvarPedido(final PedidoORM saleOrderToSave) {
-         this.mPedidoDAO.salvarPedido(saleOrderToSave);
+        this.mPedidoDAO.salvarPedido(saleOrderToSave);
     }
 
     @Override
-    public void atualizarIdMaximoDeVenda( final long idVendaMaxima) {
-        Funcionario funcionarioPesquisado =this.mFuncionarioDAO.pesquisarFuncionarioAtivo();
+    public Funcionario pesquisarFuncionarioDoCliente(Cliente cliente) {
+        ClienteVendedor clienteVendedor = this.clienteVendedorDAO.pesquisarFuncionarioPorCliente(cliente);
+        Funcionario funcionario = this.mFuncionarioDAO.pesquisarPorId(clienteVendedor.getChavesClienteVendedorID().getIdFuncionario());
+        return funcionario;
+    }
+
+    @Override
+    public void atualizarIdMaximoDeVenda(final long idVendaMaxima) {
+        Funcionario funcionarioPesquisado = this.mFuncionarioDAO.pesquisarFuncionarioAtivo();
         funcionarioPesquisado.setMaxIdVenda(idVendaMaxima);
         this.mFuncionarioDAO.alterar(new FuncionarioORM(funcionarioPesquisado));
     }

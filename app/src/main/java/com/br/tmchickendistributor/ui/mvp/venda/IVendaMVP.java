@@ -166,6 +166,12 @@ public interface IVendaMVP {
         public String getObservacao() ;
 
         public void setObservacao(String observacao) ;
+
+        Funcionario getFuncionarioCliente();
+
+        void setFuncionarioCliente(Funcionario funcionarioCliente);
+
+        Funcionario pesquisarFuncionarioDoCLiente(Cliente cliente);
     }
 
     interface IView {
@@ -258,5 +264,7 @@ public interface IVendaMVP {
          * @return saleOrderIdSaved
          */
         void salvarPedido(final PedidoORM saleOrderToSave);
+
+        Funcionario pesquisarFuncionarioDoCliente(Cliente cliente);
     }
 }

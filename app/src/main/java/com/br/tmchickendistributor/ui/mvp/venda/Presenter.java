@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+
 import androidx.appcompat.app.AlertDialog;
+
 import com.br.tmchickendistributor.data.model.Cliente;
 import com.br.tmchickendistributor.data.model.Empresa;
 import com.br.tmchickendistributor.data.model.Funcionario;
@@ -20,6 +22,7 @@ import com.br.tmchickendistributor.ui.mvp.venda.IVendaMVP.IView;
 import com.br.tmchickendistributor.util.DateUtils;
 import com.br.tmchickendistributor.util.DriveServiceHelper;
 import com.br.tmchickendistributor.util.ImpressoraUtil;
+
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -29,44 +32,26 @@ import java.util.List;
 public class Presenter implements IVendaMVP.IPresenter {
 
     Cliente cliente;
-
     ItemPedido itemPedido;
-
     List<ItemPedido> itens = new ArrayList<>();
+    Pedido pedido;
+    Preco preco;
+    Produto produtoSelecionado;
+    BigDecimal quantidadeProdutos;
+    BigDecimal totalDaVenda;
+    BigDecimal totalProductValue;
+    Unidade unidadeSelecionada;
+    int bicos;
+    String loteSelecionado;
+    Funcionario funcionarioCliente;
 
     IVendaMVP.IModel mModel;
-
     IVendaMVP.IView mView;
-
-    Pedido pedido;
-
-    Preco preco;
-
-    Produto produtoSelecionado;
-
-    BigDecimal quantidadeProdutos;
-
-
-
-    BigDecimal totalDaVenda;
-
-    BigDecimal totalProductValue;
-
-    Unidade unidadeSelecionada;
-
     ImpressoraUtil mImpressoraUtil;
 
-    int bicos;
-
-    String loteSelecionado;
-
     private AlertDialog mAlertDialog;
-
     private DriveServiceHelper mDriveServiceHelper;
-
-
     private String observacao;
-
 
 
     public Presenter(final IView view) {
@@ -136,7 +121,6 @@ public class Presenter implements IVendaMVP.IPresenter {
             this.mView.exibirBotaoImprimir();
         }
     }
-
 
 
     @Override
@@ -299,7 +283,7 @@ public class Presenter implements IVendaMVP.IPresenter {
     @Override
     public void imprimirComprovante() {
 
-        this.mImpressoraUtil.imprimirComprovantePedido(getPedido(), getCliente(),this.getNucleo(),this.getFuncionario());
+        this.mImpressoraUtil.imprimirComprovantePedido(getPedido(), getCliente(), this.getNucleo(),this.getFuncionarioCliente());
     }
 
     @Override
@@ -377,7 +361,7 @@ public class Presenter implements IVendaMVP.IPresenter {
     public Pedido salvarVenda(final long sequencePedido) throws ParseException {
 
         Pedido pedido = new Pedido();
-        pedido.setDataPedido(  DateUtils.formatarDateParaddMMyyyyhhmm(
+        pedido.setDataPedido(DateUtils.formatarDateParaddMMyyyyhhmm(
                 new Date(System.currentTimeMillis())));
         // Agora setar o id definitivo do item do pedido
 
@@ -428,7 +412,7 @@ public class Presenter implements IVendaMVP.IPresenter {
         this.mModel.copyOrUpdateSaleOrder(pedido);
 
 
-        this.mModel.atualizarIdMaximoDeVenda( sequencePedido);
+        this.mModel.atualizarIdMaximoDeVenda(sequencePedido);
         return pedido;
     }
 
@@ -436,7 +420,6 @@ public class Presenter implements IVendaMVP.IPresenter {
     public void setSpinnerProdutoSelecionado() {
         this.mView.setSpinnerProductSelected();
     }
-
 
 
     @Override
@@ -499,4 +482,19 @@ public class Presenter implements IVendaMVP.IPresenter {
         this.observacao = observacao;
     }
 
+
+    @Override
+    public Funcionario getFuncionarioCliente() {
+        return funcionarioCliente;
+    }
+
+    @Override
+    public void setFuncionarioCliente(Funcionario funcionarioCliente) {
+        this.funcionarioCliente = funcionarioCliente;
+    }
+
+    @Override
+    public Funcionario pesquisarFuncionarioDoCLiente(Cliente cliente) {
+        return this.mModel.pesquisarFuncionarioDoCliente(cliente);
+    }
 }

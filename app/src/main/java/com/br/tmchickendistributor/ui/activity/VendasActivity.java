@@ -531,7 +531,9 @@ public class VendasActivity extends AppCompatActivity implements IView {
             Cliente cliente =
                     mPresenter.pesquisarClientePorId(mPresenter.getPedido().getCodigoCliente());
             mPresenter.setCliente(cliente);
+
         }
+        mPresenter.setFuncionarioCliente(mPresenter.pesquisarFuncionarioDoCLiente(mPresenter.getCliente()));
     }
 
     @OnClick(R.id.btnImprimir)
