@@ -267,7 +267,7 @@ public class RecebimentoActivity extends AppCompatActivity implements IRecebimen
 
   @OnClick(R.id.btnImprimirRecebimento)
   public void imprimirComprovante(View view) {
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 1; i++) {
       this.mPresenter.imprimirComprovante();
     }
     this.mPresenter.exibirBotaoFotografar();

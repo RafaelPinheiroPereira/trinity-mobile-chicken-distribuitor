@@ -539,7 +539,7 @@ public class VendasActivity extends AppCompatActivity implements IView {
     @OnClick(R.id.btnImprimir)
     public void imprimirComprovante() {
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             this.mPresenter.imprimirComprovante();
         }
         this.mPresenter.desabilitarBotaoSalvarPedido();
