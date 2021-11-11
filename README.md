@@ -1,2 +1,2 @@
-# digital-bank
-Technical challenge for a mobile developer position
+# Trinity-Mobile
+Versão mobile desenvolvida em android nativo (Java) do sistema Trinity.
